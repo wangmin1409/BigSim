@@ -1,0 +1,36 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N__1936243052[color = aliceblue label = "SysClk=0"];
+ N__1936243052
+ [shape=circle, color=lightblue2, style=filled];
+N__1936243052[ shape = doublecircle, color=lightblue2, style=filled, label="N__1936243052"];
+ N__1936243052 -> N_516339536[ label = "r_0
+System Clock: 0"];
+N__1403774287[ label="N__1403774287"];
+ N__1403774287 -> N__571381312[ label = "r_3
+System Clock: 0"];
+N_1464735492[ label="N_1464735492"];
+ N_1464735492 -> N__571381312[ label = "r_0
+System Clock: 0"];
+N_2126220193[ label="N_2126220193"];
+ N_2126220193 -> N_2113766785[ label = "r_4
+System Clock: 0"];
+ N_2126220193 -> N__571381312[ label = "r_3
+System Clock: 0"];
+N_2113766785[ label="N_2113766785"];
+ N_2113766785 -> N__571381312[ label = "r_3
+System Clock: 0"];
+N__571381312[ label="N__571381312"];
+ N__571381312 -> N__1403774287[ label = "r_2
+System Clock: 0"];
+ N__571381312 -> N_1464735492[ label = "r_1
+System Clock: 0"];
+N_516339536[ label="N_516339536"];
+ N_516339536 -> N__1936243052[ label = "r_1
+System Clock: 0"];
+ N_516339536 -> N_2126220193[ label = "r_2
+System Clock: 0"];
+}

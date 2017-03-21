@@ -1,0 +1,55 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N__408529307[color = aliceblue label = "wExpr==0.0
+"];
+ N__408529307
+ [shape=circle, color=lightblue2, style=filled];
+N_350860183[ label="N_350860183"];
+ N__408529307 -> N_350860183[ color = purple label = "SysClk:1.0
+r_ae_enter_airport -> List(p1)"];
+N__1138645628[ label="N__1138645628"];
+ N_350860183 -> N__1138645628[ color = purple label = "SysClk:3.0
+r_ae_enter_airport -> List(p2)"];
+N__509992711[ label="N__509992711"];
+ N__1138645628 -> N__509992711[ color = purple label = "SysClk:4.0
+r_ae_enter_checkin -> List(p2)"];
+N_1574336808[ label="N_1574336808"];
+ N__509992711 -> N_1574336808[ color = purple label = "SysClk:5.0
+r_ae_enter_checkin -> List(p1)"];
+N_702592698[ label="N_702592698"];
+ N_1574336808 -> N_702592698[ color = purple label = "SysClk:7.0
+r_ae_check_ticket_with_Luggage -> List(p2)"];
+N__1726417163[ label="N__1726417163"];
+ N_702592698 -> N__1726417163[ color = purple label = "SysClk:9.0
+r_ae_check_ticket_with_Luggage -> List(p1),r_ae_enter_security -> List(p2)"];
+N__2063787329[ label="N__2063787329"];
+ N__1726417163 -> N__2063787329[ color = purple label = "SysClk:11.0
+r_ae_enter_security -> List(p1)"];
+N_1378819541[ label="N_1378819541"];
+ N__2063787329 -> N_1378819541[ color = purple label = "SysClk:12.0
+r_ae_check_danger -> List(p2)"];
+N_1034135458[ label="N_1034135458"];
+ N_1378819541 -> N_1034135458[ color = purple label = "SysClk:14.0
+r_ae_enter_shoppingzone -> List(p2),r_ae_check_danger -> List(p1)"];
+N_907995993[ label="N_907995993"];
+ N_1034135458 -> N_907995993[ color = purple label = "SysClk:15.0
+r_ae_traffic_gatelounge -> List(p1),r_ae_update_billboard -> List(p2)"];
+N__966964403[ label="N__966964403"];
+ N_907995993 -> N__966964403[ color = purple label = "SysClk:16.0
+r_ae_enter_gatelounge -> List(p2)"];
+N__1695952479[ label="N__1695952479"];
+ N__966964403 -> N__1695952479[ color = purple label = "SysClk:17.0
+r_ae_update_light -> List(p1)"];
+N__1551292171[ label="N__1551292171"];
+ N__1695952479 -> N__1551292171[ color = purple label = "SysClk:18.0
+r_ae_update_light -> List(p2)"];
+N__766778172[ label="N__766778172"];
+ N__1551292171 -> N__766778172[ color = purple label = "SysClk:26.0
+r_ae_onboard -> List(p2, p1)"];
+N_296789533[ label="N_296789533"];
+ N__766778172 -> N_296789533[ color = purple label = "SysClk:35.0
+r_take_off -> List(ap)"];
+}

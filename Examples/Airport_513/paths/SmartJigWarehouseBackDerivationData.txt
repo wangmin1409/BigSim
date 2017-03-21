@@ -1,0 +1,11 @@
+1{
+r_breaken_bluetooth
+r_bus_light_led
+r_ble_call_bus
+r_coapserver_call_ble
+r_aggregator_call_coapserver
+r_operator_choose_and_commit
+r_aggregator_connectdb_right_result
+r_aggregator_connectdb_suc
+r_operator_input_right_search_condition
+}

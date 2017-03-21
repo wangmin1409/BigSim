@@ -1,0 +1,95 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N_1325080797[color = aliceblue label = "wExpr==0.0
+AD=5.0,A=5.0,B=0.0,CB=0.0,C=15.0,SysClk=0.0,CD=0.0,AB=10.0"];
+ N_1325080797
+ [shape=circle, color=lightblue2, style=filled];
+N_1889863481[ label="N_1889863481"];
+ N_1889863481 -> N_251114741[ label = "displacement
+System Clock: 3.352949106944183
+AD=1.0,A=10.0,B=0,CB=1.0,C=10.0,SysClk=0.0,CD=4.0,AB=9.0"];
+N_262168249[ label="N_262168249"];
+ N_262168249 -> N__501686659[ label = "double_decomposition
+System Clock: 14.475555439849643
+AD=5.0,A=6.0,B=0,CB=1.0,C=14.0,SysClk=0.0,CD=0.0,AB=9.0"];
+N__561184911[ label="N__561184911"];
+ N__561184911 -> N_262168249[ label = "displacement
+System Clock: 8.068992234794024
+AD=4.0,A=6.0,B=0,CB=0.0,C=14.0,SysClk=0.0,CD=1.0,AB=10.0"];
+N__1470138011[ label="N__1470138011"];
+ N__1470138011 -> N__858032639[ label = "displacement
+System Clock: 0.8771555503687987
+AD=0,A=15.0,B=0,CB=5.0,C=5.0,SysClk=0.0,CD=5,AB=5.0"];
+N_1985753685[ label="N_1985753685"];
+ N_1985753685 -> N_468984249[ label = "displacement
+System Clock: 4.74695173164512
+AD=3.0,A=8.0,B=0,CB=1.0,C=12.0,SysClk=0.0,CD=2.0,AB=9.0"];
+N_1255286217[ label="N_1255286217"];
+ N_1255286217 -> N_621933857[ label = "displacement
+System Clock: 0.20922772913847398
+AD=0,A=18.0,B=0,CB=8.0,C=2.0,SysClk=0.0,CD=5,AB=2.0"];
+N_1026342373[ label="N_1026342373"];
+ N_1026342373 -> N__1470138011[ label = "displacement
+System Clock: 0.6941316304612344
+AD=0,A=16.0,B=0,CB=6.0,C=4.0,SysClk=0.0,CD=5,AB=4.0"];
+N_621933857[ label="N_621933857"];
+ N_621933857 -> N_1026342373[ label = "displacement
+System Clock: 0.40768488809131026
+AD=0,A=17.0,B=0,CB=7.0,C=3.0,SysClk=0.0,CD=5,AB=3.0"];
+N__499192407[ label="N__499192407"];
+ N__499192407 -> N_534449693[ label = "displacement
+System Clock: 1.3924973630005475
+AD=0,A=13.0,B=0,CB=3.0,C=7.0,SysClk=0.0,CD=5,AB=7.0"];
+N__898697995[ label="N__898697995"];
+ N__898697995 -> N_1985753685[ label = "displacement
+System Clock: 4.470797350580456
+AD=3.0,A=9.0,B=0,CB=2.0,C=11.0,SysClk=0.0,CD=2.0,AB=8.0"];
+N_468984249[ label="N_468984249"];
+ N_468984249 -> N_134181361[ label = "displacement
+System Clock: 5.066771322405647
+AD=3.0,A=7.0,B=0,CB=0.0,C=13.0,SysClk=0.0,CD=2.0,AB=10.0"];
+N__267677203[ label="N__267677203"];
+ N__267677203 -> N__57087951[ label = "double_decomposition
+System Clock: 2.7738753861587133
+AD=1.0,A=12.0,B=0,CB=3.0,C=8.0,SysClk=0.0,CD=4.0,AB=7.0"];
+N_251114741[ label="N_251114741"];
+ N_251114741 -> N_649688625[ label = "double_decomposition
+System Clock: 4.331683414175347
+AD=2.0,A=10.0,B=0,CB=2.0,C=10.0,SysClk=0.0,CD=3.0,AB=8.0"];
+N_649688625[ label="N_649688625"];
+ N_649688625 -> N__898697995[ label = "double_decomposition
+System Clock: 4.374019377370886
+AD=3.0,A=10.0,B=0,CB=3.0,C=10.0,SysClk=0.0,CD=2.0,AB=7.0"];
+N__501686659[ label="N__501686659"];
+ N__501686659 -> N__1244196444[ label = "decomposition
+System Clock: 15.864890185321421
+AD=5.0,A=6.0,B=1.0,CB=0.0,C=15.0,SysClk=0.0,CD=0.0,AB=9.0"];
+N_534449693[ label="N_534449693"];
+ N_534449693 -> N__267677203[ label = "displacement
+System Clock: 1.8321838510663637
+AD=0,A=12.0,B=0,CB=2.0,C=8.0,SysClk=0.0,CD=5,AB=8.0"];
+N__57087951[ label="N__57087951"];
+ N__57087951 -> N_1889863481[ label = "displacement
+System Clock: 3.1890701300014803
+AD=1.0,A=11.0,B=0,CB=2.0,C=9.0,SysClk=0.0,CD=4.0,AB=8.0"];
+N_134181361[ label="N_134181361"];
+ N_134181361 -> N__561184911[ label = "double_decomposition
+System Clock: 6.631294431618838
+AD=4.0,A=7.0,B=0,CB=1.0,C=13.0,SysClk=0.0,CD=1.0,AB=9.0"];
+N_1489087757[ label="N_1489087757"];
+N__1244196444[ label="N__1244196444"];
+ N__1244196444 -> N_1489087757[ label = "combination
+System Clock: 18.317134749479646
+AD=5.0,A=5.0,B=0.0,CB=0.0,C=15.0,SysClk=0.0,CD=0.0,AB=10.0"];
+N_1325080797[ label="N_1325080797"];
+ N_1325080797 -> N_1255286217[ label = "displacement
+System Clock: 0.07142587099301928
+AD=0,A=19.0,B=0,CB=9.0,C=1.0,SysClk=0.0,CD=5,AB=1.0"];
+N__858032639[ label="N__858032639"];
+ N__858032639 -> N__499192407[ label = "displacement
+System Clock: 1.021776225011847
+AD=0,A=14.0,B=0,CB=4.0,C=6.0,SysClk=0.0,CD=5,AB=6.0"];
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Patterns name="Patterns For BigMC">
+	<PatternRelationship>
+		<Pattern details="r_ae_enter_airport">
+			<NextPattern details="r_ae_enter_checkin" />
+		</Pattern>
+		<Pattern details="r_ae_enter_security">
+			<NextPattern details="r_ae_check_danger" />
+		</Pattern>
+		<Pattern details="r_ae_onboard">
+			<NextPattern details="r_take_off" />
+		</Pattern>
+	</PatternRelationship>
+	<IntrestedPatterns>
+		<IntrestedPattern details="r_ae_enter_shoppingzone" />
+		<IntrestedPattern details="r_ae_update_billboard" />
+	</IntrestedPatterns>
+</Patterns>

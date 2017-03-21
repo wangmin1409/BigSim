@@ -1,0 +1,21 @@
+#Aggregator
+aggregator.flag	Int	0	unit
+aggregator.searchDB	String	false	boolean
+aggregator.searchMatched	String	false	boolean
+aggregator.aggregatorReceived	String	false	boolean
+aggregator.LEDLighten	String	false	boolean
+aggregator.finished	String	false	boolean
+aggregator.slotInfo	String	null	unit
+#Operator
+operator.returnFixture	String	false	boolean
+operator.committed	String	false	boolean
+operator.findSlot	String	false	boolean
+operator.leaveSlot	String	false	boolean
+#WebUI
+webUI.searchCondition	String	false	boolean
+#CoAP Server
+coap.CoAPReceived	String	false	boolean
+#BLE
+ble.BLEReceived	String	false	boolean
+#Bus
+bus.busReceived	String	false	boolean

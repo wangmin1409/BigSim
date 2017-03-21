@@ -1,0 +1,41 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 2;
+%passive LightZone : 0;
+%active Light : 0;
+%active Aiport : 0;
+%active UpdateBillboard : 0;
+%active UpdateLight : 0;
+%active Passenger : 0;
+%passive ShoppingZone : 0;
+%active Billboard : 0;
+
+# Rules
+%rule r_0 Aiport.(LightZone.$2 | Passenger.$1 | ShoppingZone.$0) -> Aiport.(LightZone.($2 | Passenger.$1) | ShoppingZone.$0){SysClk:1};
+
+%rule r_1 Aiport.(LightZone.(Passenger.$0 | $1) | ShoppingZone.$2) -> Aiport.(LightZone.$1 | ShoppingZone.($2 | Passenger.$0)){SysClk:1};
+
+%rule r_2 Aiport.(ShoppingZone.(Billboard | Passenger.$1) | LightZone.$0) -> Aiport.(ShoppingZone.$2 | LightZone.$0) | Passenger.$1{SysClk:1};
+
+%rule r_3 Aiport.(ShoppingZone.(Billboard | Passenger.$1) | LightZone.$0) -> Aiport.(ShoppingZone.(Billboard | Passenger.$1) | LightZone.$0){SysClk:2	Cond:Passenger.age>18&&Passenger.age<50,Passenger.updateBillboard=='false'	Exp:f.content='Adult',Passenger.updateBillboard='true'};
+
+%rule r_4 Aiport.(ShoppingZone.(Billboard | Passenger.$1) | LightZone.$0) -> Aiport.(ShoppingZone.(Billboard | Passenger.($1 | UpdateBillboard)) | LightZone.$0){SysClk:2	Cond:Passenger.age<18&&Passenger.updateBillboard=='false'	Exp:f.content='Kid',Passenger.updateBillboard='true'};
+
+%rule r_5 Aiport.(ShoppingZone.(Billboard | Passenger.$1) | LightZone.$0) -> Aiport.(ShoppingZone.(Billboard | Passenger.$1) | LightZone.$0){SysClk:2	Cond:Passenger.age>50&&Passenger.updateBillboard=='false'	Exp:f.content='Old',Passenger.updateBillboard='true'};
+
+%rule r_6 Aiport.(LightZone.(Light | Passenger.$1) | ShoppingZone.$0) -> Aiport.(LightZone.(Light | Passenger.$1) | ShoppingZone.$0){SysClk:2	Cond:Passenger.age>18&&Passenger.age<50,Passenger.updateLight=='false'	Exp:e.illum=Passenger.light,Passenger.updateLight='true'};
+
+%rule r_7 Aiport.(LightZone.(Light | Passenger.$1) | ShoppingZone.$0) -> Aiport.(LightZone.(Light | Passenger.($1 | UpdateLight)) | ShoppingZone.$0){SysClk:2	Cond:Passenger.age<18&&Passenger.updateLight=='false'	Exp:e.illum=Passenger.light,Passenger.updateLight='true'};
+
+%rule r_8 Aiport.(LightZone.(Light | Passenger.$1) | ShoppingZone.$0) -> Aiport.(LightZone.(Light | Passenger.$1) | ShoppingZone.$0){SysClk:2	Cond:Passenger.age>50&&Passenger.updateLight=='false'	Exp:e.illum=Passenger.light,Passenger.updateLight='true'};
+
+
+# Model
+%agent a:Aiport.(c:LightZone.e:Light | p1:Passenger | d:ShoppingZone.f:Billboard);
+
+# Go!
+%check;

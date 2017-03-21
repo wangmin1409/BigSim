@@ -1,0 +1,22 @@
+# Controls
+%active Customer : 0;
+%active Operator : 0;
+%active Router : 0;
+
+
+# Rules
+# r_0 enter router
+%rule r_0 Router.$1 | Customer.$0 | $2 -> $0 | Router.(Customer | $1) | $2 {SysClk:0	Cond:SysClk%3==0	Expr:customer=customer+1	React:Customer};
+
+# r_1 if operator is idle, pick up the call of customer
+%rule r_1 Router.(Customer | $1) | Operator -> Router.$1 | Operator.Customer {SysClk:1	React:Operator,Customer};
+
+#r_2 operate the call
+%rule r_2 Operator.Customer -> Operator {SysClk:5	React:Customer,Operator};
+
+# Model
+
+%agent r:Router | op1:Operator | op2: Operator | c1:Customer.c2:Customer.c3:Customer.c4:Customer;
+
+# Go!
+%check;

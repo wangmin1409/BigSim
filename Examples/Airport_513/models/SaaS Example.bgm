@@ -1,0 +1,79 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 2;
+%active Application : 0;
+%active GUI : 0;
+%active Workflow : 0;
+%active HTML : 3;
+%active CSS : 1;
+%active JS : 1;
+%active Activation : 3;
+%active Service : 4;
+%active Data : 2;
+%active String : 0;
+%active Integer : 0;
+%active Boolean : 0;
+%active Function_Matching_Degree : 0;
+%active Running_Response_Time : 0;
+%active Failure_Rate : 0;
+%active Template_Fee : 0;
+%active Access_Time : 0;
+
+%rule r_1 Application | GUI.$1 | $0 -> Application.GUI.$1 | $0{};
+
+%rule r_2 Application.GUI.$1 | SelectGoods1:Workflow.$2 | $0 -> Application.(GUI.$1 | SelectGoods1:Workflow.(w2a1:Activation[w2f1:edge,idle,idle] | w2a2:Activation[w2f2:edge,w2f1:edge,idle] | w2a3:Activation[idle,w2f2:edge,idle])) | $0{};
+
+%rule r_3 Application.GUI.$1 | SelectGoods2:Workflow.$2 | $0 -> Application.(GUI.$1 | SelectGoods2:Workflow.$2) | $0{};
+
+%rule r_4 Application.(GUI.$1 | SelectGoods2:Workflow.(w3a1:Activation[w3f1:edge,idle,idle] | w3a2:Activation[w3f2:edge,w3f1:edge,idle] | w3a3:Activation[idle,w3f2:edge,idle])) | S4:Service[idle,idle,idle,idle] | S5:Service[idle,idle,idle,idle] | S6:Service[idle,idle,idle,idle] | $0 -> Application.(GUI.$1 | SelectGoods2:Workflow.(w3a1:Activation[w3f1:edge,idle,idle] | w3a2:Activation[w3f2:edge,w3f1:edge,idle] | w3a3:Activation[idle,w3f2:edge,idle]) | S4:Service[idle,idle,idle,idle] | S5:Service[idle,idle,idle,idle] | S6:Service[idle,idle,idle,idle]) | $0{};
+
+%rule r_5 Application.(GUI.$1 | SelectGoods2:Workflow.(w3a1:Activation[w3f1:edge,idle,idle] | w3a2:Activation[w3f2:edge,w3f1:edge,idle] | w3a3:Activation[idle,w3f2:edge,idle]) | S4:Service[idle,idle,idle,idle] | S5:Service[idle,idle,idle,idle] | S6:Service[idle,idle,idle,idle]) | $0 -> Application.(GUI.$1 | SelectGoods2:Workflow.(w3a1:Activation[w3f1:edge,idle,c:edge] | w3a2:Activation[w3f2:edge,w3f1:edge,d:edge] | w3a3:Activation[idle,w3f2:edge,e:edge]) | S4:Service[c:edge,idle,idle,idle] | S5:Service[d:edge,idle,idle,idle] | S6:Service[e:edge,idle,idle,idle]) | $0{};
+
+%rule r_6 Application.(GUI.$1 | SelectGoods1:Workflow.(w2a1:Activation[w2f1:edge,idle,idle] | w2a2:Activation[w2f2:edge,w2f1:edge,idle] | w2a3:Activation[idle,w2f2:edge,idle])) | S1:Service[idle,idle,idle,idle] | S2:Service[idle,idle,idle,idle] | S3:Service[idle,idle,idle,idle] | $0 -> Application.(GUI.$1 | SelectGoods1:Workflow.(w2a1:Activation[w2f1:edge,idle,idle] | w2a2:Activation[w2f2:edge,w2f1:edge,idle] | w2a3:Activation[idle,w2f2:edge,idle]) | S1:Service[idle,idle,idle,idle] | S2:Service[idle,idle,idle,idle] | S3:Service[idle,idle,idle,idle]) | $0{};
+
+%rule r_7 Application.(GUI.$1 | SelectGoods1:Workflow.(w2a1:Activation[w2f1:edge,idle,idle] | w2a2:Activation[w2f2:edge,w2f1:edge,idle] | w2a3:Activation[idle,w2f2:edge,idle]) | S1:Service[idle,idle,idle,idle] | S2:Service[idle,idle,idle,idle] | S3:Service[idle,idle,idle,idle]) | $0 -> Application.(GUI.$1 | SelectGoods1:Workflow.(w2a1:Activation[w2f1:edge,idle,c:edge] | w2a2:Activation[w2f2:edge,w2f1:edge,d:edge] | w2a3:Activation[idle,w2f2:edge,e:edge]) | S1:Service[c:edge,idle,idle,idle] | S2:Service[d:edge,idle,idle,idle] | S3:Service[e:edge,idle,idle,idle]) | $0{};
+
+%rule r_8 Application.(GUI.$1 | Workflow.(Activation[w2f1:edge,idle,c:edge] | Activation[w2f2:edge,w2f1:edge,d:edge] | Activation[idle,w2f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle]) | Users:Data[idle,idle] | $0 -> Application.(GUI.$1 | Workflow.(Activation[w2f1:edge,idle,c:edge] | Activation[w2f2:edge,w2f1:edge,d:edge] | Activation[idle,w2f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle]) | $0{};
+
+%rule r_9 Application.(GUI.$1 | Workflow.(Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle]) | Users:Data[idle,idle] | $0 -> Application.(GUI.$1 | Workflow.(Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle]) | $0{};
+
+%rule r_10 Application.(GUI.$1 | Workflow.(Activation[w2f1:edge,idle,c:edge] | Activation[w2f2:edge,w2f1:edge,d:edge] | Activation[idle,w2f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Data[idle,idle]) | Cards:Data[idle,idle] | $0 -> Application.(GUI.$1 | Workflow.(Activation[w2f1:edge,idle,c:edge] | Activation[w2f2:edge,w2f1:edge,d:edge] | Activation[idle,w2f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Data[idle,idle] | Cards:Data[idle,idle]) | $0{};
+
+%rule r_11 Application.(GUI.$1 | Workflow.(Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Data[idle,idle]) | Cards:Data[idle,idle] | $0 -> Application.(GUI.$1 | Workflow.(Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Data[idle,idle] | Cards:Data[idle,idle]) | $0{};
+
+%rule r_12 Application.(GUI.$1 | Workflow.(Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle]) | Goods1:Data[idle,idle] | $0 -> Application.(GUI.$1 | Workflow.(Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods1:Data[idle,idle]) | $0{};
+
+%rule r_13 Application.(GUI.$1 | Workflow.(Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle]) | Goods2:Data[idle,idle] | $0 -> Application.(GUI.$1 | Workflow.(Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods2:Data[idle,idle]) | $0{};
+
+%rule r_14 Application.(GUI.$1 | Workflow.(Activation[w2f1:edge,idle,c:edge] | Activation[w2f2:edge,w2f1:edge,d:edge] | Activation[idle,w2f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle]) | Goods1:Data[idle,idle] | $0 -> Application.(GUI.$1 | Workflow.(Activation[w2f1:edge,idle,c:edge] | Activation[w2f2:edge,w2f1:edge,d:edge] | Activation[idle,w2f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods1:Data[idle,idle]) | $0{};
+
+%rule r_15 Application.(GUI.(HTML[G11:edge,G12:edge,f:edge] | $1) | Workflow.(Activation[w3f1:edge,g:edge,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods1:Data[idle,idle] | Request:Data[f:edge,g:edge]) | $0 -> Application.(GUI.(HTML[G11:edge,G12:edge,idle] | $1) | Workflow.(w3a1:Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | S4:Service[c:edge,idle,idle,f:edge] | S5:Service[d:edge,idle,idle,g:edge] | S6:Service[e:edge,idle,idle,h:edge] | Users:Data[f:edge,idle] | Cards:Data[g:edge,idle] | Goods1:Data[h:edge,idle]) | $0{};
+
+%rule r_16 Application.(GUI.(HTML[G11:edge,G12:edge,f:edge] | $1) | Workflow.(Activation[w3f1:edge,g:edge,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods2:Data[idle,idle] | Request:Data[f:edge,g:edge]) | $0 -> Application.(GUI.(HTML[G11:edge,G12:edge,idle] | $1) | Workflow.(w3a1:Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | S4:Service[c:edge,idle,idle,f:edge] | S5:Service[d:edge,idle,idle,g:edge] | S6:Service[e:edge,idle,idle,h:edge] | Users:Data[f:edge,idle] | Cards:Data[g:edge,idle] | Goods2:Data[h:edge,idle]) | $0{};
+
+%rule r_17 Application.(GUI.(HTML[G11:edge,G12:edge,f:edge] | $1) | Workflow.(Activation[w2f1:edge,g:edge,c:edge] | Activation[w2f2:edge,w2f1:edge,d:edge] | Activation[idle,w2f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods1:Data[idle,idle] | Request:Data[f:edge,g:edge]) | $0 -> Application.(GUI.(HTML[G11:edge,G12:edge,idle] | $1) | Workflow.(w2a1:Activation[w2f1:edge,idle,c:edge] | Activation[w2f2:edge,w2f1:edge,d:edge] | Activation[idle,w2f2:edge,e:edge]) | S1:Service[c:edge,idle,idle,f:edge] | S2:Service[d:edge,idle,idle,g:edge] | S3:Service[e:edge,idle,idle,h:edge] | Users:Data[f:edge,idle] | Cards:Data[g:edge,idle] | Goods1:Data[h:edge,idle]) | $0{};
+
+%rule r_18 Application.(GUI.(HTML[G11:edge,G12:edge,idle] | $1) | Workflow.(w3a1:Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods1:Data[idle,idle]) | $0 -> Application.(GUI.(HTML[G11:edge,G12:edge,f:edge] | $1) | Workflow.(w3a1:Activation[w3f1:edge,g:edge,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods1:Data[idle,idle] | Request:Data[f:edge,g:edge]) | $0{};
+
+%rule r_19 Application.(GUI.(HTML[G11:edge,G12:edge,idle] | $1) | Workflow.(Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods2:Data[idle,idle]) | $0 -> Application.(GUI.(HTML[G11:edge,G12:edge,f:edge] | $1) | Workflow.(w3a1:Activation[w3f1:edge,g:edge,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods2:Data[idle,idle] | Request:Data[f:edge,g:edge]) | $0{};
+
+%rule r_20 Application.(GUI.(HTML[G11:edge,G12:edge,idle] | $1) | Workflow.(Activation[w2f1:edge,idle,c:edge] | Activation[w2f2:edge,w2f1:edge,d:edge] | Activation[idle,w2f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods1:Data[idle,idle]) | $0 -> Application.(GUI.(HTML[G11:edge,G12:edge,f:edge] | $1) | Workflow.(w2a1:Activation[w2f1:edge,g:edge,c:edge] | Activation[w2f2:edge,w2f1:edge,d:edge] | Activation[idle,w2f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods1:Data[idle,idle] | Request:Data[f:edge,g:edge]) | $0{};
+
+%rule r_21 Application.(GUI.(HTML[G11:edge,G12:edge,idle] | $1) | Workflow.(Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,f:edge] | Service[d:edge,idle,idle,g:edge] | Service[e:edge,idle,idle,h:edge] | Data[f:edge,idle] | Data[g:edge,idle] | Goods1:Data[h:edge,idle]) | $0 -> Application.(GUI.(HTML[G11:edge,G12:edge,j:edge] | $1) | Workflow.(Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f2:edge,d:edge] | Activation[i:edge,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods1:Data[idle,idle] | Response:Data[j:edge,i:edge]) | $0{};
+
+%rule r_22 Application.(GUI.(HTML[G11:edge,G12:edge,idle] | $1) | Workflow.(Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f1:edge,d:edge] | Activation[idle,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,f:edge] | Service[d:edge,idle,idle,g:edge] | Service[e:edge,idle,idle,h:edge] | Data[f:edge,idle] | Data[g:edge,idle] | Goods2:Data[h:edge,idle]) | $0 -> Application.(GUI.(HTML[G11:edge,G12:edge,j:edge] | $1) | Workflow.(Activation[w3f1:edge,idle,c:edge] | Activation[w3f2:edge,w3f2:edge,d:edge] | Activation[i:edge,w3f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods2:Data[idle,idle] | Response:Data[j:edge,i:edge]) | $0{};
+
+%rule r_23 Application.(GUI.(HTML[G11:edge,G12:edge,idle] | $1) | Workflow.(Activation[w2f1:edge,idle,c:edge] | Activation[w2f2:edge,w2f1:edge,d:edge] | Activation[idle,w2f2:edge,e:edge]) | Service[c:edge,idle,idle,f:edge] | Service[d:edge,idle,idle,g:edge] | Service[e:edge,idle,idle,h:edge] | Data[f:edge,idle] | Data[g:edge,idle] | Goods1:Data[h:edge,idle]) | $0 -> Application.(GUI.(HTML[G11:edge,G12:edge,j:edge] | $1) | Workflow.(Activation[w2f1:edge,idle,c:edge] | Activation[w2f2:edge,w2f2:edge,d:edge] | Activation[i:edge,w2f2:edge,e:edge]) | Service[c:edge,idle,idle,idle] | Service[d:edge,idle,idle,idle] | Service[e:edge,idle,idle,idle] | Users:Data[idle,idle] | Cards:Data[idle,idle] | Goods1:Data[idle,idle] | Response:Data[j:edge,i:edge]) | $0{};
+
+# pattern
+%pattern S1:Service[idle,idle,idle,idle];
+
+# Model
+%agent S1:Service[idle,idle,idle,idle] | S5:Service[idle,idle,idle,idle] | S2:Service[idle,idle,idle,idle] | S6:Service[idle,idle,idle,idle] | S3:Service[idle,idle,idle,idle] | Users:Data[idle,idle] | GoodList1:GUI.(Grid1:HTML[G11:edge,G12:edge,idle] | Yellow1:CSS[G12:edge] | Hidden1:JS[G11:edge]) | online_shopping:Application | SelectGoods1:Workflow.(w2a1:Activation[w2f1:edge,idle,idle] | w2a2:Activation[w2f2:edge,w2f1:edge,idle] | w2a3:Activation[idle,w2f2:edge,idle]) | S4:Service[idle,idle,idle,idle] | SelectGoods2:Workflow.(w3a1:Activation[w3f1:edge,idle,idle] | w3a2:Activation[w3f2:edge,w3f1:edge,idle] | w3a3:Activation[idle,w3f2:edge,idle]) | Cards:Data[idle,idle] | Goods1:Data[idle,idle] | Goods2:Data[idle,idle];
+
+# Go!
+%check;

@@ -1,0 +1,85 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 2;
+%active Airport : 0;
+%active Checkin : 0;
+%active Security : 0;
+%active PassagewayToShop : 0;
+%passive ShoppingZone : 0;
+%active GateLounge : 0;
+%active ApronZone : 0;
+%active Passenger : 11;
+%active Light : 1;
+%active BillBoard : 1;
+%active Computer : 2;
+%active PreIllum : 4;
+%active PreValue : 1;
+%active CurIllum : 4;
+%active PreUpper : 1;
+%active PreLower : 1;
+%active CurValue : 1;
+%active CurUpper : 1;
+%active CurLower : 1;
+%active AdverCont : 3;
+%active Content : 1;
+%active AgeLimit : 1;
+%active Age : 1;
+%active personinfo : 1;
+%active luggageinfo : 1;
+%active SecurityInfo : 1;
+%active shoppinginfo : 1;
+%active Commodity : 1;
+%active wayready : 0;
+%active PassagewayToGate : 0;
+%active gateready : 0;
+%active PassagewayToSecurity : 0;
+%active Store : 0;
+%active Ticket : 1;
+%active database : 1;
+%active dataPassenger : 10;
+%active dataTicket : 5;
+%active dataHangLuggage : 3;
+%active datacheckinLuggage : 4;
+%active dataAD : 2;
+%active dataShopPrefer : 2;
+%active dataProduct : 3;
+%active hangLuggage : 2;
+%active checkinLuggage : 1;
+%active dataDangerousList : 1;
+%active true : 1;
+%active false : 1;
+%active value : 1;
+%active hasdangerous : 2;
+%active broading : 0;
+%active small : 1;
+%active old : 1;
+%active nomal : 1;
+%active disable : 1;
+%active business : 1;
+%active economy : 1;
+%active directPassageWay : 0;
+%active parentandchild : 1;
+
+# Rules
+%rule r_0 Airport.$0 -> Airport.($0 | Passenger[idle,idle,isParentandchild:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(parentandchild[isParentandchild:edge] | business[isBusiness:edge])){SysClk:210	Cond:parentandchild.cur<parentandchild.max,flightTime-SysClk>40	Expr:parentandchild.cur=parentandchild.cur+1};
+
+%rule r_1 Airport.(Passenger[idle,idle,isParentandchild:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(parentandchild[isParentandchild:edge] | business[isBusiness:edge]) | Checkin.$1 | $0) -> Airport.(Checkin.($1 | Passenger[idle,idle,isParentandchild:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(business[isBusiness:edge] | parentandchild[isParentandchild:edge])) | $0){SysClk:10};
+
+%rule r_2 Airport.(Checkin.(Passenger[idle,idle,isParentandchild:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(business[isBusiness:edge] | parentandchild[isParentandchild:edge]) | $1) | Security.$2 | $0) -> Airport.(Checkin.$1 | Security.($2 | Passenger[idle,idle,isParentandchild:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(parentandchild[isParentandchild:edge] | business[isBusiness:edge])) | $0){SysClk:15};
+
+%rule r_3 Airport.(Security.(Passenger[idle,idle,isParentandchild:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(parentandchild[isParentandchild:edge] | business[isBusiness:edge]) | $1) | ShoppingZone.$2 | $0) -> Airport.(Security.$1 | ShoppingZone.($2 | Passenger[idle,idle,isParentandchild:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(business[isBusiness:edge] | parentandchild[isParentandchild:edge])) | $0){SysClk:60	Cond:parentandchild.traffic=='false'};
+
+%rule r_4 Airport.(ShoppingZone.(Passenger[idle,idle,isParentandchild:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(business[isBusiness:edge] | parentandchild[isParentandchild:edge]) | $1) | GateLounge.$2 | $0) -> Airport.(ShoppingZone.$1 | GateLounge.($2 | Passenger[idle,idle,isParentandchild:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(parentandchild[isParentandchild:edge] | business[isBusiness:edge])) | $0){SysClk:25};
+
+%rule r_5 Airport.(Security.(Passenger[idle,idle,isParentandchild:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(parentandchild[isParentandchild:edge] | business[isBusiness:edge]) | $1) | GateLounge.$2 | $0) -> Airport.(Security.$1 | GateLounge.($2 | Passenger[idle,idle,isParentandchild:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(business[isBusiness:edge] | parentandchild[isParentandchild:edge])) | $0){SysClk:10	Cond:parentandchild.traffic=='true'};
+
+
+# Model
+%agent a:Airport.(d:Security | f:ShoppingZone | h:GateLounge | b:Checkin);
+
+# Go!
+%check;

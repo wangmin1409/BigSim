@@ -1,0 +1,7 @@
+1{
+a:Airport.(c:LightZone.(e:Light.nil|p1:Passenger.nil)|d:ShoppingZone.f:Billboard.nil)
+a:Airport.(c:LightZone.(e:Light.nil|p1:Passenger.UpdateLight.nil)|d:ShoppingZone.f:Billboard.nil)
+a:Airport.(c:LightZone.e:Light.nil|d:ShoppingZone.(f:Billboard.nil|p1:Passenger.nil))
+a:Airport.(c:LightZone.e:Light.nil|d:ShoppingZone.(f:Billboard.nil|p1:Passenger.UpdateBillboard.nil))
+(a:Airport.(c:LightZone.e:Light.nil|d:ShoppingZone.nil)|p1:Passenger.nil)
+}

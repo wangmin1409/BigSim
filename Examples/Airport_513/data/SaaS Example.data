@@ -1,0 +1,4 @@
+#Data
+Users.AccessTime	Double	1.2	mins
+#Service
+S3.FailureRate	Double	0.8	percents

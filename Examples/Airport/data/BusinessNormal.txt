@@ -1,0 +1,7 @@
+normal.max	Double	1	people
+normal.traffic	String	false	boolean
+normal.cur	Double	0	people
+flightTime	Double	360	time
+fee	Double	0	yuan
+#networkType	Double	2	3G
+#networkType	Double	3	2G

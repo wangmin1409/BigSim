@@ -1,0 +1,34 @@
+#Aggregator
+aggregator.flag	Int	1	unit
+aggregator.searchCondition	String	false	boolean
+aggregator.searchMatched	String	true	boolean
+aggregator.searchResult	String	true	boolean
+aggregator.aggregatorReceived	String	true	boolean
+aggregator.LEDLighten	String	true	boolean
+aggregator.finished	String	false	boolean
+aggregator.slotInfo	String	A11006	unit
+aggregator.damaged	String	false	boolean
+aggregator.connectdb	String	true	boolean
+#Operator
+operator.getJig	String	false	boolean
+operator.committed	String	true	boolean
+operator.findSlot	String	false	boolean
+operator.leaveSlot	String	false	boolean
+#WebUI
+webUI.searchCondition	String	right	unit
+#CoAP Server
+coap.CoAPReceived	String	true	boolean
+raspberrypi.damaged	String	false	boolean
+#BLE
+ble.BLEReceived	String	true	boolean
+ble.damaged	String	false	boolean
+#Bus
+bus.busReceived	String	true	boolean
+bus.damaged	String	false	boolean
+#LED
+led.damaged	String	false	boolean
+#connect
+wifi.connected	String	true	boolean
+bluetooth.connected	String	false	boolean
+blebuswired.connected	String	true	boolean
+busledwired.connected	String	true	boolean

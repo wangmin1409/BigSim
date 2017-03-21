@@ -1,0 +1,69 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 2;
+%passive Airport : 0;
+%passive Zone : 0;
+%passive PoliceStation : 0;
+%passive Community : 0;
+%passive China : 0;
+%passive USA : 0;
+%passive CBD : 0;
+%passive School : 0;
+%passive BusinessBuilding : 0;
+%passive CheckinLounge : 0;
+%active Commodity : 0;
+%active BusinessContract : 0;
+%active Ticket : 1;
+%active BoardingPass : 2;
+%active Danger : 0;
+%active ClaimTag : 1;
+%active Taxi : 0;
+%active Airplane : 0;
+%active Computer : 1;
+%active Passenger : 1;
+%active Staff : 2;
+%active Student : 1;
+%active Professor : 1;
+%active BusinessMan : 1;
+%active CheckInStaff : 1;
+%active SecurityStaff : 1;
+%active ShoppingInStaff : 1;
+%active ShoppingOutStaff : 1;
+%active GateLoungeStaff : 1;
+%active PoliceMan : 1;
+
+# Rules
+
+%rule r_1 China.(CBD.(Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $3) | $2) | Taxi | $1) | $0 -> China.(CBD.$2 | Taxi.Passenger[isBusinessMan:edge].($3 | BusinessMan[isBusinessMan:edge]) | $1) | $0{SysClk:1	Expr:taxi.businessfee=(cbd.distance-10)*2+10};
+
+%rule r_2 China.(Taxi.Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $2) | Airport.(CheckIn:Zone.$4 | $3) | $1) | $0 -> China.(Taxi | Airport.(CheckIn:Zone.($4 | Passenger[isBusinessMan:edge].($2 | BusinessMan[isBusinessMan:edge])) | $3) | $1) | $0{SysClk:2	React:Passenger	Cond:Passenger.hasChecked=='false'};
+
+%rule r_3 China.(Airport.(CheckIn:Zone.($1 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $2 | Ticket[idle] | CheckinLounge)) | $0)| $3)  | $4 -> China.(Airport.(CheckIn:Zone.$1 | Passenger[isBusinessMan:edge].($2 | Ticket[d:edge] | BusinessMan[isBusinessMan:edge] | ClaimTag[e:edge] | BoardingPass[d:edge,e:edge]) | $0)| $3)  | $4{SysClk:1	React:Passenger	Cond:Passenger.hasCheckinLuggage=='true'	Expr:Passenger.hasChecked='true',checkInComputer.passengers=checkInComputer.passengers+1};
+
+%rule r_4 China.(Airport.(Security:Zone.$2 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $3) | $1)| $4)  | $0 -> China.(Airport.(Security:Zone.($2 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $3)) | $1) | $4)  | $0 {SysClk:2	React:Passenger	Cond:Passenger.hasSecurityChecked=='false'&&Passenger.hasChecked=='true'};
+
+%rule r_5 China.(Airport.(Security:Zone.($1 | Passenger[isBusinessMan:edge].(Danger | BusinessMan[isBusinessMan:edge] | $2)) | $3)| $4)  | $0 -> China.(Airport.(Security:Zone.$1 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $2) | $3)| $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasDanger=='true'	Expr:Passenger.hasSecurityChecked='true',securityComputer.passengers=securityComputer.passengers+1};
+
+
+%rule r_6 China.(PoliceStation.Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | Ticket[idle] | Danger) | Community | $1) | $0 -> China.(PoliceStation.Danger | Community.Passenger[isPoliceMan:edge].(Ticket[idle] | PoliceMan[isPoliceMan:edge]) | $1) | $0{SysClk:1};
+
+%rule r_7 China.(Community.Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $2) | Taxi | $1) | $0 -> China.(Community | Taxi.Passenger[isPoliceMan:edge].($2 | PoliceMan[isPoliceMan:edge]) | $1) | $0{SysClk:2	Expr:taxi.communityfee=(community.distance-10)*2+10};
+
+%rule r_8 China.(Taxi.Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $2) | Airport.(CheckIn:Zone.$4 | $3) | $1) | $0 -> China.(Taxi | Airport.(CheckIn:Zone.($4 | Passenger[isPoliceMan:edge].($2 | PoliceMan[isPoliceMan:edge])) | $3) | $1) | $0{SysClk:1	React:Passenger	Cond:Passenger.hasChecked=='false'};
+
+%rule r_9 China.(Airport.(CheckIn:Zone.($1 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $2 | Ticket[idle])) | $0) | $3)  | $4-> China.(Airport.(CheckIn:Zone.$1 | Passenger[isPoliceMan:edge].($2 | Ticket[d:edge] | PoliceMan[isPoliceMan:edge] | BoardingPass[d:edge,idle]) | $0) | $3)  | $4{SysClk:2	React:Passenger	Cond:Passenger.hasCheckinLuggage=='false'	Expr:Passenger.hasChecked='true',checkInComputer.passengers=checkInComputer.passengers+1};
+
+%rule r_10 China.(Airport.(Security:Zone.$2 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $3) | $1)| $4)  | $0 -> China.(Airport.(Security:Zone.($2 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $3)) | $1) | $4)  | $0 {SysClk:3	React:Passenger	Cond:Passenger.hasSecurityChecked=='false'&&Passenger.hasChecked=='true'};
+
+%rule r_11 China.(Airport.(Security:Zone.($1 | Passenger[isPoliceMan:edge].(Danger | PoliceMan[isPoliceMan:edge] | $2)) | $3)| $4)  | $0 -> China.(Airport.(Security:Zone.$1 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $2) | $3)| $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasDanger=='true'	Expr:Passenger.hasSecurityChecked='true',securityComputer.passengers=securityComputer.passengers+1};
+
+
+# Model
+%agent china:China.(cbd:CBD.David:Passenger[isBusinessMan:edge].(businessMan:BusinessMan[isBusinessMan:edge] | d:Ticket[idle] | e:Danger | f:CheckinLounge) | policeStation:PoliceStation.Tim:Passenger[isPoliceMan:edge].(policeMan:PoliceMan[isPoliceMan:edge] | c:Ticket[idle] | g:Danger) | community:Community | taxi:Taxi | airport:Airport.(CheckIn:Zone.(Lucy:Staff[isCheckin:edge,isCheckInC:edge].checkinStaff:CheckInStaff[isCheckin:edge] | checkInComputer:Computer[isCheckInC:edge]) | Security:Zone.(Tina:Staff[isSecurity:edge,isSecurityC:edge].securityStaff:SecurityStaff[isSecurity:edge] | securityComputer:Computer[isSecurityC:edge]) | ShoppingZoneOut:Zone.(Henry:Staff[isShoppingOut:edge,isShoppingOutC:edge].shoppingOutStaff:ShoppingOutStaff[isShoppingOut:edge] | shoppingOutComputer:Computer[isShoppingOutC:edge]) | ShoppingZoneIn:Zone.(Ada:Staff[isShoppingIn:edge,isShoppingInC:edge].shoppingInStaff:ShoppingInStaff[isShoppingIn:edge] | shoppingInComputer:Computer[isShoppingInC:edge]) | GateLounge:Zone.(Tom:Staff[isGateLounge:edge,isGateLoungeC:edge].gateLoungeStaff:GateLoungeStaff[isGateLounge:edge] | gateLoungeComputer:Computer[isGateLoungeC:edge]) | airplane:Airplane));
+
+# Go!
+%check;

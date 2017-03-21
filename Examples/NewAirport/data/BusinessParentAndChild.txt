@@ -1,0 +1,5 @@
+parentandchild.max	Double	1	people
+parentandchild.traffic	String	false	boolean
+parentandchild.cur	Double	0	people
+flightTime	Double	360	time
+fee	Double	0	yuan

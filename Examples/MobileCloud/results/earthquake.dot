@@ -1,0 +1,77 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N__1475456885[color = aliceblue label = "wExpr=0.3*speed+0.7*m1.power=51.5
+speed=20,networkType=3,m1.power=65,"];
+ N__1475456885
+ [shape=circle, color=lightblue2, style=filled];
+N__1475456885
+[ ];
+ N__1475456885 -> N__544394425[ label = "r_0
+System Clock: 1
+Cond:m1.power>60"];
+N_757626349
+[ ];
+ N_757626349 -> N__1453528787[ label = "r_9
+System Clock: 16
+Cond:"];
+N_1560063496
+[ ];
+ N_1560063496 -> N_1824733310[ label = "r_11
+System Clock: 18
+Cond:"];
+N__689363957
+[ ];
+ N__689363957 -> N__48427246[ label = "r_3
+System Clock: 5
+Cond:"];
+N__544394425
+[ ];
+ N__544394425 -> N__1771500441[ label = "r_1
+System Clock: 3
+Cond:"];
+N__48427246
+[ ];
+ N__48427246 -> N_452254395[ label = "r_4
+System Clock: 7
+Cond:"];
+N_452254395
+[ ];
+ N_452254395 -> N_1870137723[ label = "r_5
+System Clock: 10
+Cond:"];
+N__1771500441
+[ ];
+ N__1771500441 -> N__689363957[ label = "r_2
+System Clock: 4
+Cond:"];
+N__462907809
+[ ];
+ N__462907809 -> N_757626349[ label = "r_8
+System Clock: 15
+Cond:"];
+N_1870137723
+[ ];
+ N_1870137723 -> N_1351164977[ label = "r_6
+System Clock: 11
+Cond:"];
+N__1453528787
+[ ];
+ N__1453528787 -> N_1560063496[ label = "r_10
+System Clock: 17
+Cond:"];
+N_1824733310
+[ ];
+ N_1824733310 -> N_742694792[ label = "r_12
+System Clock: 32
+Cond:"];
+N_1351164977
+[ ];
+ N_1351164977 -> N__462907809[ label = "r_7
+System Clock: 14
+Cond:"];
+N_742694792
+[ shape = doublecircle, color=lightblue2, style=filled, ];
+}

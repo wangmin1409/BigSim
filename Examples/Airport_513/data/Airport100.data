@@ -1,0 +1,97 @@
+#Airplane
+ap.boardingTime	Double	35	mins
+ap.flightNo	String	CZ3265	unit
+#Light
+gl.initLight	Double	5	unit
+gl.light	Double	5	unit
+gl.passengers	Double	0	unit
+#Passenger p1
+p1.traffic	String	true	boolean
+p1.flightNo	String	CZ3265	unit
+p1.fee	Double	0	yuan
+p1.light	Double	10	degree
+p1.hasCheckinLuggage	String	true	boolean
+p1.hasDanger	String	true	boolean
+p1.updateLight	String	false	boolean
+p1.updateBillboard	String	false	boolean
+#Passenger p2
+p2.traffic	String	false	boolean
+p2.flightNo	String	CZ3265	unit
+p2.fee	Double	0	yuan
+p2.light	Double	7	degree
+p2.hasCheckinLuggage	String	true	boolean
+p2.hasDanger	String	true	boolean
+p2.updateLight	String	false	boolean
+p2.updateBillboard	String	false	boolean
+#Passenger p3
+p3.traffic	String	true	boolean
+p3.flightNo	String	CZ3265	unit
+p3.fee	Double	0	yuan
+p3.light	Double	3	degree
+p3.hasCheckinLuggage	String	true	boolean
+p3.hasDanger	String	false	boolean
+p3.updateLight	String	false	boolean
+p3.updateBillboard	String	false	boolean
+#Passenger p4
+p4.traffic	String	true	boolean
+p4.flightNo	String	CZ3265	unit
+p4.fee	Double	0	yuan
+p4.light	Double	2	degree
+p4.hasCheckinLuggage	String	true	boolean
+p4.hasDanger	String	false	boolean
+p4.updateLight	String	false	boolean
+p4.updateBillboard	String	false	boolean
+#Passenger p5
+p5.traffic	String	true	boolean
+p5.flightNo	String	CZ3265	unit
+p5.fee	Double	0	yuan
+p5.light	Double	1	degree
+p5.hasCheckinLuggage	String	true	boolean
+p5.hasDanger	String	false	boolean
+p5.updateLight	String	false	boolean
+p5.updateBillboard	String	false	boolean
+#Passenger p6
+p6.traffic	String	true	boolean
+p6.flightNo	String	CZ3265	unit
+p6.fee	Double	0	yuan
+p6.light	Double	7	degree
+p6.hasCheckinLuggage	String	true	boolean
+p6.hasDanger	String	false	boolean
+p6.updateLight	String	false	boolean
+p6.updateBillboard	String	false	boolean
+#Passenger p7
+p7.traffic	String	true	boolean
+p7.flightNo	String	CZ3265	unit
+p7.fee	Double	0	yuan
+p7.light	Double	5	degree
+p7.hasCheckinLuggage	String	true	boolean
+p7.hasDanger	String	false	boolean
+p7.updateLight	String	false	boolean
+p7.updateBillboard	String	false	boolean
+#Passenger p8
+p8.traffic	String	true	boolean
+p8.flightNo	String	CZ3265	unit
+p8.fee	Double	0	yuan
+p8.light	Double	3	degree
+p8.hasCheckinLuggage	String	true	boolean
+p8.hasDanger	String	false	boolean
+p8.updateLight	String	false	boolean
+p8.updateBillboard	String	false	boolean
+#Passenger p9
+p9.traffic	String	true	boolean
+p9.flightNo	String	CZ3265	unit
+p9.fee	Double	0	yuan
+p9.light	Double	1	degree
+p9.hasCheckinLuggage	String	true	boolean
+p9.hasDanger	String	false	boolean
+p9.updateLight	String	false	boolean
+p9.updateBillboard	String	false	boolean
+#Passenger p10
+p10.traffic	String	true	boolean
+p10.flightNo	String	CZ3265	unit
+p10.fee	Double	0	yuan
+p10.light	Double	4	degree
+p10.hasCheckinLuggage	String	true	boolean
+p10.hasDanger	String	false	boolean
+p10.updateLight	String	false	boolean
+p10.updateBillboard	String	false	boolean

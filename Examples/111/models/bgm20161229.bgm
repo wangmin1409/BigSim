@@ -1,0 +1,36 @@
+# Controls
+%active Landside : 0;
+%active Airside : 0;
+%active Gates : 0;
+%active Zone : 2;
+%active Gate : 1;
+%passive Pax : 1;
+%active DB : 0;
+%active PaxRecord : 2;
+
+# Names
+%outername Boarding;
+%outername CheckIn;
+%outername GateLounge;
+%outername Gian;
+%outername SK100;
+%outername Security;
+%outername m;
+%outername w;
+%outername x;
+%outername y;
+%outername z;
+
+# Rules
+%rule r_0 a:Zone () [x:edge,w:outername].(c:Pax () [y:outername] | $1) || b:Zone () [z:outername,x:edge].$2 -> a:Zone () [x:edge,w:outername].$1 || b:Zone () [z:outername,x:edge].($2 | c:Pax () [y:outername]){};
+
+%rule r_1 a:Zone () [Boarding:outername,m:outername].(b:Pax () [y:outername] | $1) || c:Gate () [x:outername].$2 || d:PaxRecord () [y:outername,x:outername] | $3 -> a:Zone () [Boarding:outername,m:outername].$1 || c:Gate () [x:outername].($2 | b:Pax () [y:outername]) || d:PaxRecord () [y:outername,x:outername] | $3{};
+
+%rule r_2 a:Gate () [x:outername].(b:Pax () [y:outername] | $1) -> a:Gate () [x:outername].$1{};
+
+
+# Model
+%agent a:Landside.(d:Zone () [CheckIn:outername,idle].m:Pax () [Gian:outername] | e:Zone () [Security:outername,CheckIn:outername]) | b:Airside.(f:Zone () [GateLounge:outername,Security:outername] | g:Zone () [Boarding:outername,GateLounge:outername]) | c:Gates.(h:Gate () [SK100:outername] | i:Gate () [idle] | j:Gate () [idle]) | k:DB.l:PaxRecord () [Gian:outername,SK100:outername]{agentInitialState:};
+
+# Go!
+%check;

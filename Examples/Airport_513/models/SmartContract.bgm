@@ -1,0 +1,166 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 2;
+%passive Airport : 0;
+%passive Zone : 0;
+%passive PoliceStation : 0;
+%passive Community : 0;
+%passive China : 0;
+%passive USA : 0;
+%passive CBD : 0;
+%passive School : 0;
+%passive BusinessBuilding : 0;
+%passive CheckinLounge : 0;
+%active Commodity : 0;
+%active BusinessContract : 0;
+%active Ticket : 1;
+%active BoardingPass : 2;
+%active Danger : 0;
+%active ClaimTag : 1;
+%active Taxi : 0;
+%active Airplane : 0;
+%active Computer : 1;
+%active Passenger : 1;
+%active Staff : 2;
+%active Student : 1;
+%active Professor : 1;
+%active BusinessMan : 1;
+%active CheckInStaff : 1;
+%active SecurityStaff : 1;
+%active ShoppingInStaff : 1;
+%active ShoppingOutStaff : 1;
+%active GateLoungeStaff : 1;
+%active PoliceMan : 1;
+# %binding M : 5
+
+# Rules
+
+%rule r_businessman_take_taxi_from_CBD China.(CBD.(Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $3) | $2) | Taxi | $1) | $0 -> China.(CBD.$2 | Taxi.Passenger[isBusinessMan:edge].($3 | BusinessMan[isBusinessMan:edge]) | $1) | $0{SysClk:1	Expr:taxi.businessfee=(cbd.distance-10)*2+10	Probability:0.4};
+
+%rule r_businessman_enter_checkin China.(Taxi.Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $2) | Airport.(CheckIn:Zone.$4 | $3) | $1) | $0 -> China.(Taxi | Airport.(CheckIn:Zone.($4 | Passenger[isBusinessMan:edge].($2 | BusinessMan[isBusinessMan:edge])) | $3) | $1) | $0{SysClk:1	React:Passenger	Cond:Passenger.hasChecked=='false'	Probability:0.6};
+
+%rule r_businessman_checkin_withoutlounge China.(Airport.(CheckIn:Zone.($1 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $2 | Ticket[idle])) | $0) | $3)  | $4-> China.(Airport.(CheckIn:Zone.$1 | Passenger[isBusinessMan:edge].($2 | Ticket[d:edge] | BusinessMan[isBusinessMan:edge] | BoardingPass[d:edge,idle]) | $0) | $3)  | $4{SysClk:1	React:Passenger	Cond:Passenger.hasCheckinLuggage=='false'	Expr:Passenger.hasChecked='true',checkInComputer.passengers=checkInComputer.passengers+1	Probability:0.3};
+
+%rule r_businessman_checkin_withlounge China.(Airport.(CheckIn:Zone.($1 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $2 | Ticket[idle] | CheckinLounge)) | $0)| $3)  | $4 -> China.(Airport.(CheckIn:Zone.$1 | Passenger[isBusinessMan:edge].($2 | Ticket[d:edge] | BusinessMan[isBusinessMan:edge] | ClaimTag[e:edge] | BoardingPass[d:edge,e:edge]) | $0)| $3)  | $4{SysClk:1	React:Passenger	Cond:Passenger.hasCheckinLuggage=='true'	Expr:Passenger.hasChecked='true',checkInComputer.passengers=checkInComputer.passengers+1};
+
+%rule r_businessman_enter_security China.(Airport.(Security:Zone.$2 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $3) | $1)| $4)  | $0 -> China.(Airport.(Security:Zone.($2 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $3)) | $1) | $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasSecurityChecked=='false'&&Passenger.hasChecked=='true'};
+
+%rule r_businessman_security_withdanger China.(Airport.(Security:Zone.($1 | Passenger[isBusinessMan:edge].(Danger | BusinessMan[isBusinessMan:edge] | $2)) | $3)| $4)  | $0 -> China.(Airport.(Security:Zone.$1 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $2) | $3)| $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasDanger=='true'	Expr:Passenger.hasSecurityChecked='true',securityComputer.passengers=securityComputer.passengers+1,Passenger.smoking='true'};
+
+%rule r_businessman_security_withoutdanger China.(Airport.(Security:Zone.($1 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $2)) | $3) | $4)  | $0-> China.(Airport.(Security:Zone.$1 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $2) | $3)| $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasDanger=='false'	Expr:Passenger.hasSecurityChecked='true',securityComputer.passengers=securityComputer.passengers+1,Passenger.smoking='true'};
+
+%rule r_businessman_enter_shoppingin China.(Airport.(ShoppingZoneIn:Zone.$2 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $3) | $1)| $4)  | $0 -> China.(Airport.(ShoppingZoneIn:Zone.($2 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $3)) | $1) | $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasShoppingin=='false'&&Passenger.hasSecurityChecked=='true'};
+
+%rule r_businessman_shoppingin China.(Airport.(ShoppingZoneIn:Zone.($1 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $2 )) | $0)| $3)  | $4 -> China.(Airport.(ShoppingZoneIn:Zone.$1 | Passenger[isBusinessMan:edge].($2 | BusinessMan[isBusinessMan:edge] | Commodity) | $0)| $3)  | $4{SysClk:1	React:Passenger	Expr:Passenger.hasShoppingin='true',shoppingInComputer.passengers=shoppingInComputer.passengers+1};
+
+%rule r_businessman_enter_gatelounge China.(Airport.(GateLounge:Zone.$2 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $3) | $1)| $4)  | $0 -> China.(Airport.(GateLounge:Zone.($2 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $3)) | $1) | $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasSecurityChecked=='true'&&Passenger.hasGatelounge=='false'	Expr:Passenger.hasGatelounge='true',gateLoungeComputer.passengers=gateLoungeComputer.passengers+1};
+
+%rule r_businessman_onboard China.(Airport.($0 | GateLounge:Zone.($1 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $3)) | Airplane)|$2)|$4 -> China.(Airport.($0 | GateLounge:Zone.$1 | Airplane.(Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $3)))|$2)|$4  {SysClk:1	React:Passenger	Cond:airplane.boardingTime>SysClk,Passenger.flightNo==airplane.flightNo,Passenger.hasGatelounge=='true'	Expr:Passenger.hasOnboard='true',GateLounge.number=GateLounge.number+1};
+
+%rule r_businessman_onboard1 China.(Airport.($0 | GateLounge:Zone.($1 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $3)) | Airplane.$5)|$2)|$4 -> China.(Airport.($0 | GateLounge:Zone.$1 | Airplane.($5|Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $3)))|$2)|$4  {SysClk:1	React:Passenger	Cond:airplane.boardingTime>SysClk,Passenger.flightNo==airplane.flightNo,Passenger.hasGatelounge=='true'	Expr:Passenger.hasOnboard='true',GateLounge.number=GateLounge.number+1};
+
+%rule r_policeman_gohome_from_policestation China.(PoliceStation.Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | Ticket[idle] | Danger) | Community | $1) | $0 -> China.(PoliceStation.Danger | Community.Passenger[isPoliceMan:edge].(Ticket[idle] | PoliceMan[isPoliceMan:edge]) | $1) | $0{SysClk:1};
+
+%rule r_policeman_take_taxi_from_home China.(Community.Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $2) | Taxi | $1) | $0 -> China.(Community | Taxi.Passenger[isPoliceMan:edge].($2 | PoliceMan[isPoliceMan:edge]) | $1) | $0{SysClk:1	Expr:taxi.communityfee=(community.distance-10)*2+10};
+
+%rule r_policeman_enter_checkin China.(Taxi.Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $2) | Airport.(CheckIn:Zone.$4 | $3) | $1) | $0 -> China.(Taxi | Airport.(CheckIn:Zone.($4 | Passenger[isPoliceMan:edge].($2 | PoliceMan[isPoliceMan:edge])) | $3) | $1) | $0{SysClk:1	React:Passenger	Cond:Passenger.hasChecked=='false'};
+
+%rule r_policeman_checkin_withoutlounge China.(Airport.(CheckIn:Zone.($1 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $2 | Ticket[idle])) | $0) | $3)  | $4-> China.(Airport.(CheckIn:Zone.$1 | Passenger[isPoliceMan:edge].($2 | Ticket[d:edge] | PoliceMan[isPoliceMan:edge] | BoardingPass[d:edge,idle]) | $0) | $3)  | $4{SysClk:1	React:Passenger	Cond:Passenger.hasCheckinLuggage=='false'	Expr:Passenger.hasChecked='true',checkInComputer.passengers=checkInComputer.passengers+1};
+
+%rule r_policeman_checkin_withlounge China.(Airport.(CheckIn:Zone.($1 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $2 | Ticket[idle] | CheckinLounge)) | $0)| $3)  | $4 -> China.(Airport.(CheckIn:Zone.$1 | Passenger[isPoliceMan:edge].($2 | Ticket[d:edge] | PoliceMan[isPoliceMan:edge] | ClaimTag[e:edge] | BoardingPass[d:edge,e:edge]) | $0)| $3)  | $4{SysClk:1	React:Passenger	Cond:Passenger.hasCheckinLuggage=='true'	Expr:Passenger.hasChecked='true',checkInComputer.passengers=checkInComputer.passengers+1};
+
+%rule r_policeman_enter_security China.(Airport.(Security:Zone.$2 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $3) | $1)| $4)  | $0 -> China.(Airport.(Security:Zone.($2 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $3)) | $1) | $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasSecurityChecked=='false'&&Passenger.hasChecked=='true'};
+
+%rule r_policeman_security_withdanger China.(Airport.(Security:Zone.($1 | Passenger[isPoliceMan:edge].(Danger | PoliceMan[isPoliceMan:edge] | $2)) | $3)| $4)  | $0 -> China.(Airport.(Security:Zone.$1 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $2) | $3)| $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasDanger=='true'	Expr:Passenger.hasSecurityChecked='true',securityComputer.passengers=securityComputer.passengers+1};
+
+%rule r_policeman_security_withoutdanger China.(Airport.(Security:Zone.($1 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $2)) | $3) | $4)  | $0-> China.(Airport.(Security:Zone.$1 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $2) | $3)| $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasDanger=='false'	Expr:Passenger.hasSecurityChecked='true',securityComputer.passengers=securityComputer.passengers+1};
+
+%rule r_policeman_enter_shoppingin China.(Airport.(ShoppingZoneIn:Zone.$2 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $3) | $1)| $4)  | $0 -> China.(Airport.(ShoppingZoneIn:Zone.($2 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $3)) | $1) | $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasShoppingin=='false'&&Passenger.hasSecurityChecked=='true'};
+
+%rule r_policeman_shoppingin China.(Airport.(ShoppingZoneIn:Zone.($1 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $2 )) | $0)| $3)  | $4 -> China.(Airport.(ShoppingZoneIn:Zone.$1 | Passenger[isPoliceMan:edge].($2 | PoliceMan[isPoliceMan:edge] | Commodity) | $0)| $3)  | $4{SysClk:1	React:Passenger	Expr:Passenger.hasShoppingin='true',shoppingInComputer.passengers=shoppingInComputer.passengers+1};
+
+%rule r_policeman_enter_gatelounge China.(Airport.(GateLounge:Zone.$2 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $3) | $1)| $4)  | $0 -> China.(Airport.(GateLounge:Zone.($2 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $3)) | $1) | $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasSecurityChecked=='true'&&Passenger.hasGatelounge=='false'	Expr:Passenger.hasGatelounge='true',gateLoungeComputer.passengers=gateLoungeComputer.passengers+1};
+
+%rule r_policeman_onboard China.(Airport.($0 | GateLounge:Zone.($1 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $3)) | Airplane)|$2)|$4 -> China.(Airport.($0 | GateLounge:Zone.$1 | Airplane.(Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $3)))|$2)|$4  {SysClk:1	React:Passenger	Cond:airplane.boardingTime>SysClk,Passenger.flightNo==airplane.flightNo,Passenger.hasGatelounge=='true'	Expr:Passenger.hasOnboard='true',GateLounge.number=GateLounge.number+1};
+
+%rule r_policeman_onboard1 China.(Airport.($0 | GateLounge:Zone.($1 | Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $3)) | Airplane.$5)|$2)|$4 -> China.(Airport.($0 | GateLounge:Zone.$1 | Airplane.($5|Passenger[isPoliceMan:edge].(PoliceMan[isPoliceMan:edge] | $3)))|$2)|$4  {SysClk:1	React:Passenger	Cond:airplane.boardingTime>SysClk,Passenger.flightNo==airplane.flightNo,Passenger.hasGatelounge=='true'	Expr:Passenger.hasOnboard='true',GateLounge.number=GateLounge.number+1};
+
+%rule r_student_take_taxi_from_school China.(School.(Passenger[isStudent:edge].(Student[isStudent:edge] | $3) | $2) | Taxi | $1) | $0 -> China.(School.$2 | Taxi.Passenger[isStudent:edge].($3 | Student[isStudent:edge]) | $1) | $0{SysClk:1	Expr:taxi.studentfee=(school.distance-10)*2+10};
+
+%rule r_student_enter_checkin China.(Taxi.Passenger[isStudent:edge].(Student[isStudent:edge] | $2) | Airport.(CheckIn:Zone.$4 | $3) | $1) | $0 -> China.(Taxi | Airport.(CheckIn:Zone.($4 | Passenger[isStudent:edge].($2 | Student[isStudent:edge])) | $3) | $1) | $0{SysClk:1	React:Passenger	Cond:Passenger.hasChecked=='false'};
+
+%rule r_student_checkin_withoutlounge China.(Airport.(CheckIn:Zone.($1 | Passenger[isStudent:edge].(Student[isStudent:edge] | $2 | Ticket[idle])) | $0) | $3)  | $4-> China.(Airport.(CheckIn:Zone.$1 | Passenger[isStudent:edge].($2 | Ticket[d:edge] | Student[isStudent:edge] | BoardingPass[d:edge,idle]) | $0) | $3)  | $4{SysClk:1	React:Passenger	Cond:Passenger.hasCheckinLuggage=='false'	Expr:Passenger.hasChecked='true',checkInComputer.passengers=checkInComputer.passengers+1};
+
+%rule r_student_checkin_withlounge China.(Airport.(CheckIn:Zone.($1 | Passenger[isStudent:edge].(Student[isStudent:edge] | $2 | Ticket[idle] | CheckinLounge)) | $0)| $3)  | $4 -> China.(Airport.(CheckIn:Zone.$1 | Passenger[isStudent:edge].($2 | Ticket[d:edge] | Student[isStudent:edge] | ClaimTag[e:edge] | BoardingPass[d:edge,e:edge]) | $0)| $3)  | $4{SysClk:1	React:Passenger	Cond:Passenger.hasCheckinLuggage=='true'	Expr:Passenger.hasChecked='true',checkInComputer.passengers=checkInComputer.passengers+1};
+
+%rule r_student_enter_security China.(Airport.(Security:Zone.$2 | Passenger[isStudent:edge].(Student[isStudent:edge] | $3) | $1)| $4)  | $0 -> China.(Airport.(Security:Zone.($2 | Passenger[isStudent:edge].(Student[isStudent:edge] | $3)) | $1) | $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasSecurityChecked=='false'&&Passenger.hasChecked=='true'};
+
+%rule r_student_security_withdanger China.(Airport.(Security:Zone.($1 | Passenger[isStudent:edge].(Danger | Student[isStudent:edge] | $2)) | $3)| $4)  | $0 -> China.(Airport.(Security:Zone.$1 | Passenger[isStudent:edge].(Student[isStudent:edge] | $2) | $3)| $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasDanger=='true'	Expr:Passenger.hasSecurityChecked='true',securityComputer.passengers=securityComputer.passengers+1};
+
+%rule r_student_security_withoutdanger China.(Airport.(Security:Zone.($1 | Passenger[isStudent:edge].(Student[isStudent:edge] | $2)) | $3) | $4)  | $0-> China.(Airport.(Security:Zone.$1 | Passenger[isStudent:edge].(Student[isStudent:edge] | $2) | $3)| $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasDanger=='false'	Expr:Passenger.hasSecurityChecked='true',securityComputer.passengers=securityComputer.passengers+1};
+
+%rule r_student_enter_shoppingin China.(Airport.(ShoppingZoneIn:Zone.$2 | Passenger[isStudent:edge].(Student[isStudent:edge] | $3) | $1)| $4)  | $0 -> China.(Airport.(ShoppingZoneIn:Zone.($2 | Passenger[isStudent:edge].(Student[isStudent:edge] | $3)) | $1) | $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasShoppingin=='false'&&Passenger.hasSecurityChecked=='true'};
+
+%rule r_student_shoppingin China.(Airport.(ShoppingZoneIn:Zone.($1 | Passenger[isStudent:edge].(Student[isStudent:edge] | $2 )) | $0)| $3)  | $4 -> China.(Airport.(ShoppingZoneIn:Zone.$1 | Passenger[isStudent:edge].($2 | Student[isStudent:edge] | Commodity) | $0)| $3)  | $4{SysClk:1	React:Passenger	Expr:Passenger.hasShoppingin='true',shoppingInComputer.passengers=shoppingInComputer.passengers+1};
+
+%rule r_student_enter_gatelounge China.(Airport.(GateLounge:Zone.$2 | Passenger[isStudent:edge].(Student[isStudent:edge] | $3) | $1)| $4)  | $0 -> China.(Airport.(GateLounge:Zone.($2 | Passenger[isStudent:edge].(Student[isStudent:edge] | $3)) | $1) | $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasSecurityChecked=='true'&&Passenger.hasGatelounge=='false'	Expr:Passenger.hasGatelounge='true',gateLoungeComputer.passengers=gateLoungeComputer.passengers+1};
+
+%rule r_student_onboard China.(Airport.($0 | GateLounge:Zone.($1 | Passenger[isStudent:edge].(Student[isStudent:edge] | $3)) | Airplane)|$2)|$4 -> China.(Airport.($0 | GateLounge:Zone.$1 | Airplane.(Passenger[isStudent:edge].(Student[isStudent:edge] | $3)))|$2)|$4  {SysClk:1	React:Passenger	Cond:airplane.boardingTime>SysClk,Passenger.flightNo==airplane.flightNo,Passenger.hasGatelounge=='true'	Expr:Passenger.hasOnboard='true',GateLounge.number=GateLounge.number+1};
+
+%rule r_student_onboard1 China.(Airport.($0 | GateLounge:Zone.($1 | Passenger[isStudent:edge].(Student[isStudent:edge] | $3)) | Airplane.$5)|$2)|$4 -> China.(Airport.($0 | GateLounge:Zone.$1 | Airplane.($5|Passenger[isStudent:edge].(Student[isStudent:edge] | $3)))|$2)|$4  {SysClk:1	React:Passenger	Cond:airplane.boardingTime>SysClk,Passenger.flightNo==airplane.flightNo,Passenger.hasGatelounge=='true'	Expr:Passenger.hasOnboard='true',GateLounge.number=GateLounge.number+1};
+
+%rule r_professor_take_taxi_from_school China.(School.(Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $3) | $2) | Taxi | $1) | $0 -> China.(School.$2 | Taxi.Passenger[isProfessor:edge].($3 | Professor[isProfessor:edge]) | $1) | $0{SysClk:1	Expr:taxi.professorfee=(school.distance-10)*2+10};
+
+%rule r_professor_enter_checkin China.(Taxi.Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $2) | Airport.(CheckIn:Zone.$4 | $3) | $1) | $0 -> China.(Taxi | Airport.(CheckIn:Zone.($4 | Passenger[isProfessor:edge].($2 | Professor[isProfessor:edge])) | $3) | $1) | $0{SysClk:1	React:Passenger	Cond:Passenger.hasChecked=='false'};
+
+%rule r_professor_checkin_withoutlounge China.(Airport.(CheckIn:Zone.($1 | Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $2 | Ticket[idle])) | $0) | $3)  | $4-> China.(Airport.(CheckIn:Zone.$1 | Passenger[isProfessor:edge].($2 | Ticket[d:edge] | Professor[isProfessor:edge] | BoardingPass[d:edge,idle]) | $0) | $3)  | $4{SysClk:1	React:Passenger	Cond:Passenger.hasCheckinLuggage=='false'	Expr:Passenger.hasChecked='true',checkInComputer.passengers=checkInComputer.passengers+1};
+
+%rule r_professor_checkin_withlounge China.(Airport.(CheckIn:Zone.($1 | Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $2 | Ticket[idle] | CheckinLounge)) | $0)| $3)  | $4 -> China.(Airport.(CheckIn:Zone.$1 | Passenger[isProfessor:edge].($2 | Ticket[d:edge] | Professor[isProfessor:edge] | ClaimTag[e:edge] | BoardingPass[d:edge,e:edge]) | $0)| $3)  | $4{SysClk:1	React:Passenger	Cond:Passenger.hasCheckinLuggage=='true'	Expr:Passenger.hasChecked='true',checkInComputer.passengers=checkInComputer.passengers+1};
+
+%rule r_professor_enter_security China.(Airport.(Security:Zone.$2 | Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $3) | $1)| $4)  | $0 -> China.(Airport.(Security:Zone.($2 | Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $3)) | $1) | $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasSecurityChecked=='false'&&Passenger.hasChecked=='true'};
+
+%rule r_professor_security_withdanger China.(Airport.(Security:Zone.($1 | Passenger[isProfessor:edge].(Danger | Professor[isProfessor:edge] | $2)) | $3)| $4)  | $0 -> China.(Airport.(Security:Zone.$1 | Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $2) | $3)| $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasDanger=='true'	Expr:Passenger.hasSecurityChecked='true',securityComputer.passengers=securityComputer.passengers+1,Passenger.smoking='true'};
+
+%rule r_professor_security_withoutdanger China.(Airport.(Security:Zone.($1 | Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $2)) | $3) | $4)  | $0-> China.(Airport.(Security:Zone.$1 | Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $2) | $3)| $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasDanger=='false'	Expr:Passenger.hasSecurityChecked='true',securityComputer.passengers=securityComputer.passengers+1,Passenger.smoking='true'};
+
+%rule r_professor_enter_shoppingin China.(Airport.(ShoppingZoneIn:Zone.$2 | Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $3) | $1)| $4)  | $0 -> China.(Airport.(ShoppingZoneIn:Zone.($2 | Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $3)) | $1) | $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasShoppingin=='false'&&Passenger.hasSecurityChecked=='true'};
+
+%rule r_professor_shoppingin China.(Airport.(ShoppingZoneIn:Zone.($1 | Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $2 )) | $0)| $3)  | $4 -> China.(Airport.(ShoppingZoneIn:Zone.$1 | Passenger[isProfessor:edge].($2 | Professor[isProfessor:edge] | Commodity) | $0)| $3)  | $4{SysClk:1	React:Passenger	Expr:Passenger.hasShoppingin='true',shoppingInComputer.passengers=shoppingInComputer.passengers+1};
+
+%rule r_professor_enter_gatelounge China.(Airport.(GateLounge:Zone.$2 | Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $3) | $1)| $4)  | $0 -> China.(Airport.(GateLounge:Zone.($2 | Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $3)) | $1) | $4)  | $0 {SysClk:1	React:Passenger	Cond:Passenger.hasSecurityChecked=='true'&&Passenger.hasGatelounge=='false'	Expr:Passenger.hasGatelounge='true',gateLoungeComputer.passengers=gateLoungeComputer.passengers+1};
+
+%rule r_professor_onboard China.(Airport.($0 | GateLounge:Zone.($1 | Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $3)) | Airplane)|$2)|$4 -> China.(Airport.($0 | GateLounge:Zone.$1 | Airplane.(Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $3)))|$2)|$4  {SysClk:1	React:Passenger	Cond:airplane.boardingTime>SysClk,Passenger.flightNo==airplane.flightNo,Passenger.hasGatelounge=='true'	Expr:Passenger.hasOnboard='true',GateLounge.number=GateLounge.number+1};
+
+%rule r_professor_onboard1 China.(Airport.($0 | GateLounge:Zone.($1 | Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $3)) | Airplane.$5)|$2)|$4 -> China.(Airport.($0 | GateLounge:Zone.$1 | Airplane.($5|Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $3)))|$2)|$4  {SysClk:1	React:Passenger	Cond:airplane.boardingTime>SysClk,Passenger.flightNo==airplane.flightNo,Passenger.hasGatelounge=='true'	Expr:Passenger.hasOnboard='true',GateLounge.number=GateLounge.number+1};
+
+#%rule r_professor_takeoff China.(Airport.($0 | Airplane.(Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $4))) |$2)|$3 -> China.(Airport.$0 | $2) | Airplane.(Passenger[isProfessor:edge].(Professor[isProfessor:edge] | $4)) | $3{SysClk:10	React:Passenger,Airplane	Cond:Passenger.hasOnboard=='true'&&GateLounge.number>1	Expr:Passenger.hasTakeoff='true'};
+
+#%rule r_takeoff1 China.(Airport.($0 | Airplane.$4) |$2)|$3 -> China.(Airport.$0 | $2) | Airplane.$4 | $3{SysClk:1	React:Passenger,Airplane	Cond:Passenger.hasOnboard=='true'&&GateLounge.number==airplane.passengerNum	Expr:Passenger.hasTakeoff='true'};
+
+%rule r_takeoff China.(Airport.($0 | Airplane.$4) |$2)|$3 -> China.(Airport.$0 | $2) | Airplane.$4 | $3{SysClk:10	React:Airplane	Cond:GateLounge.number==airplane.passengerNum	Expr:airplane.hasTakeoff='true'};
+
+
+%rule r_businessman_reach_USA China.$0 | Airplane.($2|Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $1)) | USA.BusinessBuilding.BusinessContract -> China.$0 | USA.(BusinessBuilding.BusinessContract | Airplane.$2 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $1)){SysClk:1};
+
+%rule r_businessman_sign_businessContract China.$0 | USA.(BusinessBuilding.BusinessContract | $1 | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $2)) -> China.$0 | USA.(BusinessBuilding.(BusinessContract | Passenger[isBusinessMan:edge].(BusinessMan[isBusinessMan:edge] | $2)) | $1 ){SysClk:1	React:Passenger	Expr:businessContract.tax=businessContract.tax*0.8,Passenger.signcontract='true'};
+
+# Model
+%agent china:China.(school:School.(jerry:Passenger[isStudent:edge].(student:Student[isStudent:edge] | a:Ticket[idle] | h:CheckinLounge) | james:Passenger[isProfessor:edge].(professor:Professor[isProfessor:edge] | b:Ticket[idle] | i:Danger)) | cbd:CBD.David:Passenger[isBusinessMan:edge].(businessMan:BusinessMan[isBusinessMan:edge] | d:Ticket[idle] | e:Danger | f:CheckinLounge) | policeStation:PoliceStation.Tim:Passenger[isPoliceMan:edge].(policeMan:PoliceMan[isPoliceMan:edge] | c:Ticket[idle] | g:Danger) | community:Community | taxi:Taxi | airport:Airport.(CheckIn:Zone.(Lucy:Staff[isCheckin:edge,isCheckInC:edge].checkinStaff:CheckInStaff[isCheckin:edge] | checkInComputer:Computer[isCheckInC:edge]) | Security:Zone.(Tina:Staff[isSecurity:edge,isSecurityC:edge].securityStaff:SecurityStaff[isSecurity:edge] | securityComputer:Computer[isSecurityC:edge]) | ShoppingZoneOut:Zone.(Henry:Staff[isShoppingOut:edge,isShoppingOutC:edge].shoppingOutStaff:ShoppingOutStaff[isShoppingOut:edge] | shoppingOutComputer:Computer[isShoppingOutC:edge]) | ShoppingZoneIn:Zone.(Ada:Staff[isShoppingIn:edge,isShoppingInC:edge].shoppingInStaff:ShoppingInStaff[isShoppingIn:edge] | shoppingInComputer:Computer[isShoppingInC:edge]) | GateLounge:Zone.(Tom:Staff[isGateLounge:edge,isGateLoungeC:edge].gateLoungeStaff:GateLoungeStaff[isGateLounge:edge] | gateLoungeComputer:Computer[isGateLoungeC:edge]) | airplane:Airplane)) | usa:USA.businessBuilding:BusinessBuilding.businessContract:BusinessContract;
+
+# Binding
+#%binding connectWIFI in Airport;
+#%binding useBlanket in BusinessBuilding
+
+# Tracking
+%tracking ExceptionAssert: Passenger.smoking=='false';
+%tracking ExceptionAssert: Gun in Airport;
+%tracking RecordAssert: Passenger link MobilePower;
+%tracking RecordAssert: Danger link Security:Zone;
+
+
+# Go!
+%check;

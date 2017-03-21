@@ -1,0 +1,8 @@
+0{
+Airport.(Checkin.nil|GateLounge.nil|Security.nil|ShoppingZone.nil);
+Airport.(Checkin.nil|GateLounge.nil|Passenger[idle,idle,isNormal,idle,idle,idle,idle,idle,idle,idle,isEconomy].(economy[isEconomy].nil|nomal[isNormal].nil)|Security.nil|ShoppingZone.nil);
+Airport.(Checkin.Passenger[idle,idle,isNormal,idle,idle,idle,idle,idle,idle,idle,isEconomy].(economy[isEconomy].nil|nomal[isNormal].nil)|GateLounge.nil|Security.nil|ShoppingZone.nil);
+Airport.(Checkin.nil|GateLounge.nil|Security.Passenger[idle,idle,isNormal,idle,idle,idle,idle,idle,idle,idle,isEconomy].(economy[isEconomy].nil|nomal[isNormal].nil)|ShoppingZone.nil);
+Airport.(Checkin.nil|GateLounge.nil|Security.nil|ShoppingZone.Passenger[idle,idle,isNormal,idle,idle,idle,idle,idle,idle,idle,isEconomy].(economy[isEconomy].nil|nomal[isNormal].nil));
+Airport.(Checkin.nil|GateLounge.Passenger[idle,idle,isNormal,idle,idle,idle,idle,idle,idle,idle,isEconomy].(economy[isEconomy].nil|nomal[isNormal].nil)|Security.nil|ShoppingZone.nil);
+}83.0%

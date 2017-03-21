@@ -1,0 +1,5 @@
+disable.max	Double	1	people
+disable.traffic	String	true	boolean
+disable.cur	Double	0	people
+flightTime	Double	360	time
+fee	Double	0	yuan

@@ -1,0 +1,46 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N_1911778573[color = aliceblue label = ""];
+ N_1911778573
+ [shape=circle, color=lightblue2, style=filled];
+N_1954405222[ label="N_1954405222"];
+ N_1954405222 -> N__1796428804[ label = "r_update_szlight
+System Clock: 0"];
+N_926229573[ label="N_926229573"];
+ N_926229573 -> N__227877616[ label = "r_enter_security
+System Clock: 0"];
+N__411371762[ label="N__411371762"];
+ N__411371762 -> N_1511933138[ label = "r_update_gllight
+System Clock: 0"];
+N_476637777[ label="N_476637777"];
+ N_476637777 -> N_1558957633[ label = "r_sz_to_gl
+System Clock: 0"];
+N__227877616[ label="N__227877616"];
+ N__227877616 -> N__411371762[ label = "r_s_to_gl
+System Clock: 0"];
+ N__227877616 -> N_1954405222[ label = "r_go_shopping
+System Clock: 0"];
+N__1796428804[ label="N__1796428804"];
+ N__1796428804 -> N_476637777[ label = "r_updatesz_success
+System Clock: 0"];
+ N__1796428804 -> N_522325612[ label = "r_error_szlight_old
+System Clock: 0"];
+N_1407492578[ shape = doublecircle, color=lightblue2, style=filled, label="N_1407492578"];
+N_1558957633[ shape = doublecircle, color=lightblue2, style=filled, label="N_1558957633"];
+N_1511933138[ label="N_1511933138"];
+ N_1511933138 -> N_1407492578[ label = "r_error_gllight_old
+System Clock: 0"];
+ N_1511933138 -> N_833771741[ label = "r_updategl_success
+System Clock: 0"];
+N_1911778573[ shape = doublecircle, color=lightblue2, style=filled, label="N_1911778573"];
+ N_1911778573 -> N_843993034[ label = "r_enter_airport
+System Clock: 0"];
+N_843993034[ label="N_843993034"];
+ N_843993034 -> N_926229573[ label = "r_enter_checkin
+System Clock: 0"];
+N_833771741[ shape = doublecircle, color=lightblue2, style=filled, label="N_833771741"];
+N_522325612[ shape = doublecircle, color=lightblue2, style=filled, label="N_522325612"];
+}

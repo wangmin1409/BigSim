@@ -1,0 +1,37 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N_1715480154[color = aliceblue label = ""];
+ N_1715480154
+ [shape=circle, color=lightblue2, style=filled];
+N_208835542[ label="N_208835542"];
+ N_208835542 -> N_2137569467[ color = purple label = "System Clock: 3.0
+r_ble_call_bus"];
+N_1715480154[ label="N_1715480154"];
+ N_1715480154 -> N__65870086[ color = purple label = "System Clock: 1.0
+r_breaken_bluetooth"];
+N_913798987[ label="N_913798987"];
+ N_913798987 -> N_460969801[ color = purple label = "System Clock: 6.0
+r_operator_choose_and_commit"];
+N_2137569467[ label="N_2137569467"];
+ N_2137569467 -> N_288690441[ color = purple label = "System Clock: 4.0
+r_coapserver_call_ble"];
+N__435117628[ label="N__435117628"];
+ N__435117628 -> N__1082419356[ color = purple label = "System Clock: 8.0
+r_aggregator_connectdb_suc"];
+N_460969801[ label="N_460969801"];
+ N_460969801 -> N__435117628[ color = purple label = "System Clock: 7.0
+r_aggregator_connectdb_right_result"];
+N_288690441[ label="N_288690441"];
+ N_288690441 -> N_913798987[ color = purple label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N__65870086[ label="N__65870086"];
+ N__65870086 -> N_208835542[ color = purple label = "System Clock: 2.0
+r_bus_light_led"];
+N__753110351[ shape = doublecircle, color=lightblue2, style=filled, label="N__753110351"];
+N__1082419356[ label="N__1082419356"];
+ N__1082419356 -> N__753110351[ color = purple label = "System Clock: 9.0
+r_operator_input_right_search_condition"];
+}

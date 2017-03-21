@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<sorting:sorting xmlns:sorting="http://www.itu.dk/research/pls/xmlns/2013/sorting">
+  <sorting:placesort name="Building">
+    <sorting:controls>
+      <sorting:control name="Hospital"/>
+    </sorting:controls>
+  </sorting:placesort>
+  <sorting:placesort name="Device">
+    <sorting:controls>
+      <sorting:control name="Computer"/>
+    </sorting:controls>
+  </sorting:placesort>
+  <sorting:placesort name="Room">
+    <sorting:controls>
+      <sorting:control name="ConsultingRoom"/>
+      <sorting:control name="ChargingRoom"/>
+      <sorting:control name="Pharmacy"/>
+    </sorting:controls>
+  </sorting:placesort>
+  <sorting:placesort name="Record">
+    <sorting:controls>
+      <sorting:control name="Prescription"/>
+      <sorting:control name="Bill"/>
+    </sorting:controls>
+  </sorting:placesort>
+  <sorting:placesort name="Medicine">
+    <sorting:controls>
+      <sorting:control name="Material"/>
+      <sorting:control name="Decoction"/>
+    </sorting:controls>
+  </sorting:placesort>
+  <sorting:placesort name="Subject">
+    <sorting:controls>
+      <sorting:control name="Patient"/>
+    </sorting:controls>
+  </sorting:placesort>
+  <sorting:linksort name="Object">
+    <sorting:ports>
+      <sorting:port control="Prescription" index="1"/>
+      <sorting:port control="Patient" index="1"/>
+      <sorting:port control="Decoction" index="1"/>
+    </sorting:ports>
+  </sorting:linksort>
+  <sorting:linksort name="Payment">
+    <sorting:ports>
+      <sorting:port control="Patient" index="3"/>
+      <sorting:port control="Bill" index="1"/>
+    </sorting:ports>
+  </sorting:linksort>
+  <sorting:linksort name="Connection">
+    <sorting:ports>
+      <sorting:port control="Computer" index="1"/>
+    </sorting:ports>
+  </sorting:linksort>
+  <sorting:constraints>
+    <sorting:placeconstraint child="Room" name="in" parent="Building"/>
+    <sorting:placeconstraint child="Subject" name="in" parent="Building"/>
+    <sorting:placeconstraint child="Medicine" name="in" parent="Building"/>
+    <sorting:placeconstraint child="Device" name="in" parent="Room"/>
+  </sorting:constraints>
+</sorting:sorting>

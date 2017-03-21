@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry exported="true" kind="lib" path="jars/colt.jar"/>
+	<classpathentry exported="true" kind="lib" path="jars/concurrent.jar"/>
+	<classpathentry kind="lib" path="jars/scala-parser-combinators-2.11.0-M4.jar"/>
+	<classpathentry kind="lib" path="jars/scala-xml-2.11.0-M4.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

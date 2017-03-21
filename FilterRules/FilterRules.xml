@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FilterRules name="Filter Rules For BigMC">
+	<ReactionRuleRelationship>
+		<ReactionRule name="r_0">
+			<NextRule name="r_10"/>
+		</ReactionRule>
+		<ReactionRule name="r_1">
+			<NextRule name="r_12"/>
+		</ReactionRule>
+		<ReactionRule name="r_2"/>
+		<ReactionRule name="r_3"/>
+		<ReactionRule name="r_4"/>
+		<ReactionRule name="r_5"/>
+		<ReactionRule name="r_6"/>
+		<ReactionRule name="r_7"/>
+		<ReactionRule name="r_8"/>
+		<ReactionRule name="r_9"/>
+		<ReactionRule name="r_10">
+			<NextRule name="r_15"/>
+		</ReactionRule>
+		<ReactionRule name="r_11"/>
+		<ReactionRule name="r_12">
+			<NextRule name="r_14"/>
+		</ReactionRule>
+		<ReactionRule name="r_13"/>
+		<ReactionRule name="r_14"/>
+		<ReactionRule name="r_15"/>
+	</ReactionRuleRelationship>
+	<FocusRules>
+		<FocusRule name="r_0"/>
+		<FocusRule name="r_1"/>
+		<FocusRule name="r_3"/>
+	</FocusRules>
+</FilterRules>

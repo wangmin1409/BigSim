@@ -1,0 +1,5 @@
+1{
+a:Aiport.(c:LightZone.(e:Light.nil|p1:Passenger.nil)|d:ShoppingZone.f:Billboard.nil)
+a:Aiport.(c:LightZone.e:Light.nil|d:ShoppingZone.(f:Billboard.nil|p1:Passenger.nil))
+(a:Aiport.(c:LightZone.e:Light.nil|d:ShoppingZone.nil)|p1:Passenger.nil)
+}

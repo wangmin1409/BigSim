@@ -1,0 +1,7 @@
+A	Double	20	Unit
+B	Double	0	Unit
+AB	Double	0	Unit
+CB	Double	10	Unit
+C	Double	0	Unit
+AD	Double	0	Unit
+CD	Double	5	Unit

@@ -1,0 +1,20 @@
+# Controls
+%active A : 0;
+%active B : 0;
+%active C : 0;
+%active AB : 0;
+%active CB : 0;
+%active CD : 0;
+%active AD : 0;
+
+# Rules
+%rule combination A | B | $0 -> AB | $0 {Expr:A=A-1,B=B-1,AB=AB+1	Rate:0.02};
+%rule decomposition CB | $0 -> B | C | $0 {Expr:C=C+1,B=B+1,CB=CB-1	Rate:0.05};
+%rule displacement A | CB | $0 -> AB | C | $0 {Expr:A=A-1,AB=AB+1,CB=CB-1,C=C+1	Rate:0.05};
+%rule double_decomposition AB | CD | $0 -> AD | CB | $0 {Expr:AB=AB-1,CD=CD-1,CB=CB+1,AD=AD+1	Rate:0.02};
+
+# Model
+%agent A | A | A | A | A | A | A | A | A | A | A | A | A | A | A | A | A | A | A | A | CB | CB | CB | CB | CB | CB | CB | CB | CB | CB | CD | CD | CD | CD | CD;
+
+# Go!
+%check;

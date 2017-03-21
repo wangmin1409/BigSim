@@ -1,0 +1,14 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+ N__1608603744
+ N__1608603744 -> N_1904376141[ label = "r_0
+System Clock: 5
+Cond:"];
+ N__516457200 -> N__942719444[ label = "r_8
+System Clock: 22
+Cond:speed<=2||networkType>2"];
+ N_1904376141 -> N__516457200[ label = "r_1
+System Clock: 7
+Cond:"];
+}

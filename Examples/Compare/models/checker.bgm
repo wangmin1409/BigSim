@@ -1,0 +1,18 @@
+%passive F : 1; # Fork-id
+%passive P : 3; # Left-fork, Phil-id, Right-fork
+%passive Q : 1; # Fork-id - placeholder
+%passive M : 0; #Lock1
+%passive L : 0; # state 
+
+%rule Acquire_the_lock  P[lf,p,rf] || M  -> P[lf,p,rf].M || nil;
+%rule Acquire_a_left_fork  P[lf,p,rf].M || F[lf] -> P[lf,p,rf].(M | F[lf]) || Q[lf];
+%rule Acquire_a_right_fork  P[lf,p,rf].(M | F[lf]) || F[rf] -> P[lf,p,rf].(M | F[lf] | F[rf]) || Q[rf];
+%rule Drop_left_fork  P[lf,p,rf].(M | F[lf] | F[rf]) || Q[lf] -> P[lf,p,rf].(F[rf] | M | L) || F[lf];
+%rule Drop_right_fork  P[lf,p,rf].(F[rf] | M | L) || Q[rf] -> P[lf,p,rf].M || F[rf];
+%rule Drop_the_lock  P[lf,p,rf].M || nil -> P[lf,p,rf] || M;
+
+# The philosopher's table!
+%agent M | F[F1] | P[F1,P1,F2] | F[F2] | P[F2,P2,F3] | F[F3] | P[F3,P3,F4] | F[F4] | P[F4,P4,F5] | F[F5] | P[F5,P5,F1];
+
+%property deadlock_free !terminal();
+%check;

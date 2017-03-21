@@ -1,0 +1,109 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 2;
+%active Airport : 0;
+%active CheckIn : 0;
+%active Security : 0;
+%active Passageway : 0;
+%passive ShoppingZone : 0;
+%active ApronZone : 0;
+%active Passenger : 6;
+%active Light : 1;
+%active BillBoard : 1;
+%active Computer : 0;
+%active PreIllum : 4;
+%active PreValue : 1;
+%active CurIllum : 4;
+%active PreUpper : 1;
+%active PreLower : 1;
+%active CurValue : 1;
+%active CurUpper : 1;
+%active CurLower : 1;
+%active AdverCont : 3;
+%active Content : 1;
+%active AgeLimit : 1;
+%active Age : 1;
+%active personinfo : 1;
+%active luggageinfo : 1;
+%active SecurityInfo : 1;
+%active shoppinginfo : 1;
+%active Commodity : 1;
+%active GateLounge : 0;
+
+# Names
+%innername a;
+%innername b;
+
+# Rules
+%rule r_0 Passenger[idle,idle,idle,idle,idle,idle].$0 | Airport.$1 -> Airport.($1 | Passenger[idle,idle,idle,idle,idle,idle].$0){SysClk:0};
+
+%rule r_1 CheckIn.$1 | Passenger[idle,idle,a:edge,idle,idle,idle].$2 | $0 -> CheckIn.($1 | Passenger[idle,idle,a:edge,idle,idle,idle].$2) | $0{SysClk:0};
+
+%rule r_2 CheckIn.(Passenger[idle,idle,idle,idle,idle,idle] | Computer) -> CheckIn.(Passenger[idle,idle,a:edge,idle,idle,idle] | Computer.luggageinfo[a:edge]){SysClk:0};
+
+%rule r_3 CheckIn.$1 | Passenger[idle,idle,idle,idle,idle,idle].$2 | $0 -> CheckIn.($1 | Passenger[idle,idle,idle,idle,idle,idle].$2) | $0{SysClk:0};
+
+%rule r_4 CheckIn.(Passenger[idle,idle,idle,idle,idle,idle].$1 | Computer) | $0 -> CheckIn.(Passenger[idle,idle,idle,idle,idle,idle].$1 | Computer) | $0{SysClk:0};
+
+%rule r_5 Security.$1 | Passenger[idle,idle,idle,idle,idle,a:edge].$2 | $0 -> Security.($1 | Passenger[idle,idle,idle,idle,idle,a:edge].$2) | $0{SysClk:0};
+
+%rule r_6 Security.(Passenger[idle,idle,idle,idle,idle,idle].$1 | Computer | $0) | $2 -> Security.(Passenger[idle,idle,idle,a:edge,idle,idle].$1 | Computer.SecurityInfo[a:edge] | $0) | $2{SysClk:0};
+
+%rule r_7 Passageway.$1 | Passenger[idle,idle,idle,b:edge,idle,a:edge].$2 | $0 -> Passageway.($1 | Passenger[idle,idle,idle,b:edge,idle,a:edge].$2) | $0{SysClk:0};
+
+%rule r_8 Passageway.(Passenger[idle,idle,idle,j:edge,a:edge,i:edge].(PreIllum[a:edge,c:edge,b:edge,d:edge].(PreValue[d:edge] | PreUpper[c:edge] | PreLower[b:edge]) | $2) | Light[e:edge].CurIllum[e:edge,h:edge,f:edge,g:edge].(CurValue[g:edge] | CurUpper[h:edge] | CurLower[f:edge]) | $1) | Greater[d:edge,g:edge] | $0 -> Passageway.(Passenger[idle,idle,idle,j:edge,a:edge,i:edge].(PreIllum[a:edge,c:edge,b:edge,d:edge].(PreValue[d:edge] | PreUpper[c:edge] | PreLower[b:edge]) | $2) | Light[e:edge].CurIllum[e:edge,h:edge,f:edge,g:edge].(CurValue[g:edge] | CurUpper[h:edge] | CurLower[f:edge]) | $1) | $0{SysClk:0};
+
+%rule r_9 Passageway.(Passenger[idle,idle,idle,j:edge,a:edge,i:edge].(PreIllum[a:edge,c:edge,b:edge,d:edge].(PreValue[d:edge] | PreUpper[c:edge] | PreLower[b:edge]) | $2) | Light[e:edge].CurIllum[e:edge,h:edge,f:edge,g:edge].(CurValue[g:edge] | CurUpper[h:edge] | CurLower[f:edge]) | $1) | Less[d:edge,g:edge] | $0 -> Passageway.(Passenger[idle,idle,idle,j:edge,a:edge,i:edge].(PreIllum[a:edge,c:edge,b:edge,d:edge].(PreValue[d:edge] | PreUpper[c:edge] | PreLower[b:edge]) | $2) | Light[e:edge].CurIllum[e:edge,h:edge,f:edge,g:edge].(CurValue[g:edge] | CurUpper[h:edge] | CurLower[f:edge]) | $1) | $0{SysClk:0};
+
+%rule r_10 Passageway.(Passenger[idle,a:edge,idle,c:edge,idle,b:edge].(Age[a:edge] | $2) | BillBoard[f:edge].AdverCont[e:edge,f:edge,d:edge].(Content[e:edge] | AgeLimit[d:edge]) | $1) | Less[a:edge,d:edge] | $0 -> Passageway.(Passenger[idle,a:edge,idle,c:edge,idle,b:edge].(Age[a:edge] | $2) | BillBoard[f:edge].AdverCont[e:edge,f:edge,d:edge].(Content[e:edge] | AgeLimit[d:edge]) | $1) | $0{SysClk:0};
+
+%rule r_11 Passageway.(Passenger[idle,idle,idle,b:edge,idle,a:edge].$2 | $1) | $0 -> Passageway.$1 | Passenger[idle,idle,idle,b:edge,idle,a:edge].$2 | $0{SysClk:0};
+
+%rule r_12 ShoppingZone.$1 | Passenger[idle,idle,idle,b:edge,idle,a:edge].$2 | $0 -> ShoppingZone.($1 | Passenger[idle,idle,idle,b:edge,idle,a:edge].$2) | $0{SysClk:0};
+
+%rule r_13 ShoppingZone.Passenger[idle,idle,idle,b:edge,idle,a:edge].$1 | $0 -> ShoppingZone.(Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$1 | Commodity[c:edge]) | $0{SysClk:0};
+
+%rule r_14 ShoppingZone.(Passenger[idle,idle,idle,b:edge,idle,a:edge].$2 | $1) | $0 -> ShoppingZone.$1 | Passenger[idle,idle,idle,b:edge,idle,a:edge].$2 | $0{SysClk:0};
+
+%rule r_15 GateLounge.$1 | Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$2 | Commodity[c:edge] | $0 -> GateLounge.($1 | Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$2 | Commodity[c:edge]) | $0{SysClk:0};
+
+%rule r_16 GateLounge.$1 | Passenger[idle,idle,idle,b:edge,idle,a:edge].$2 | $0 -> GateLounge.($1 | Passenger[idle,idle,idle,b:edge,idle,a:edge].$2) | $0{SysClk:0};
+
+%rule r_17 GateLounge.(Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$2 | Commodity[c:edge] | $1) | $0 -> GateLounge.$1 | Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$2 | Commodity[c:edge] | $0{SysClk:0};
+
+%rule r_18 GateLounge.(Passenger[idle,idle,idle,b:edge,idle,a:edge].$2 | $1) | $0 -> GateLounge.$1 | Passenger[idle,idle,idle,b:edge,idle,a:edge].$2 | $0{SysClk:0};
+
+%rule r_19 ShoppingZone.$2 | Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$1 | Commodity[c:edge] | $0 -> ShoppingZone.($2 | Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$1 | Commodity[c:edge]) | $0{SysClk:0};
+
+%rule r_20 ShoppingZone.(Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$1 | Commodity[c:edge] | $2) | $0 -> ShoppingZone.(Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$1 | Commodity[c:edge] | $2) | $0{SysClk:0};
+
+%rule r_21 ShoppingZone.(Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$1 | Commodity[c:edge] | $2) | $0 -> ShoppingZone.$2 | Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$1 | Commodity[c:edge] | $0{SysClk:0};
+
+%rule r_22 Passageway.$1 | Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$2 | Commodity[c:edge] | $0 -> Passageway.($1 | Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$2 | Commodity[c:edge]) | $0{SysClk:0};
+
+%rule r_23 Passageway.(Passenger[k:edge,idle,idle,j:edge,a:edge,i:edge].(PreIllum[a:edge,c:edge,b:edge,d:edge].(PreValue[d:edge] | PreUpper[c:edge] | PreLower[b:edge]) | $2) | Light[e:edge].CurIllum[e:edge,h:edge,f:edge,g:edge].(CurValue[g:edge] | CurUpper[h:edge] | CurLower[f:edge]) | Commodity[k:edge] | $1) | Greater[d:edge,g:edge] | $0 -> Passageway.(Passenger[k:edge,idle,idle,j:edge,a:edge,i:edge].(PreIllum[a:edge,c:edge,b:edge,d:edge].(PreValue[d:edge] | PreUpper[c:edge] | PreLower[b:edge]) | $2) | Light[e:edge].CurIllum[e:edge,h:edge,f:edge,g:edge].(CurValue[g:edge] | CurUpper[h:edge] | CurLower[f:edge]) | Commodity[k:edge] | $1) | $0{SysClk:0};
+
+%rule r_24 Passageway.(Passenger[k:edge,idle,idle,j:edge,a:edge,i:edge].(PreIllum[a:edge,c:edge,b:edge,d:edge].(PreValue[d:edge] | PreUpper[c:edge] | PreLower[b:edge]) | $2) | Light[e:edge].CurIllum[e:edge,h:edge,f:edge,g:edge].(CurValue[g:edge] | CurUpper[h:edge] | CurLower[f:edge]) | Commodity[k:edge] | $1) | Less[d:edge,g:edge] | $0 -> Passageway.(Passenger[k:edge,idle,idle,j:edge,a:edge,i:edge].(PreIllum[a:edge,c:edge,b:edge,d:edge].(PreValue[d:edge] | PreUpper[c:edge] | PreLower[b:edge]) | $2) | Light[e:edge].CurIllum[e:edge,h:edge,f:edge,g:edge].(CurValue[g:edge] | CurUpper[h:edge] | CurLower[f:edge]) | Commodity[k:edge] | $1) | $0{SysClk:0};
+
+%rule r_25 Passageway.(Passenger[g:edge,a:edge,idle,c:edge,idle,b:edge].(Age[a:edge] | $2) | BillBoard[f:edge].AdverCont[e:edge,f:edge,d:edge].(Content[e:edge] | AgeLimit[d:edge]) | Commodity[g:edge] | $1) | Less[a:edge,d:edge] | $0 -> Passageway.(Passenger[g:edge,a:edge,idle,c:edge,idle,b:edge].(Age[a:edge] | $2) | BillBoard[f:edge].AdverCont[e:edge,f:edge,d:edge].(Content[e:edge] | AgeLimit[d:edge]) | Commodity[g:edge] | $1) | $0{SysClk:0};
+
+%rule r_26 Passageway.(Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$2 | Commodity[c:edge] | $1) | $0 -> Passageway.$1 | Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$2 | Commodity[c:edge] | $0{SysClk:0};
+
+%rule r_27 Airport.(Passenger[idle,idle,idle,idle,idle,a:edge].$1 | $0) -> Airport.$0 | Passenger[idle,idle,idle,idle,idle,a:edge].$1{SysClk:0};
+
+%rule r_28 Airport.(Passenger[idle,idle,idle,b:edge,idle,a:edge].$1 | $0) -> Airport.$0 | Passenger[idle,idle,idle,b:edge,idle,a:edge].$1{SysClk:0};
+
+%rule r_29 Airport.(Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$1 | Commodity[c:edge] | $0) -> Airport.$0 | Passenger[c:edge,idle,idle,b:edge,idle,a:edge].$1 | Commodity[c:edge]{SysClk:0};
+
+%rule r_30 Airport.(Passenger[idle,idle,idle,idle,idle,idle].$1 | $0) -> Airport.$0 | Passenger[idle,idle,idle,idle,idle,idle].$1{SysClk:0};
+
+
+# Model
+%agent a:Airport.(b:CheckIn.m:Computer | c:Security.n:Computer | d:Passageway.(h:Light[idle] | k:BillBoard[idle]) | e:ShoppingZone | f:Passageway.(i:Light[idle] | l:BillBoard[idle]) | g:GateLounge.j:Computer);
+
+# Go!
+%check;

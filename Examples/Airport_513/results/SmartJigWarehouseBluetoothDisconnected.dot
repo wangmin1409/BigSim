@@ -1,0 +1,199 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N__615849785[color = aliceblue label = ""];
+ N__615849785
+ [shape=circle, color=lightblue2, style=filled];
+N__1430237639[ label="N__1430237639"];
+ N__1430237639 -> N_662061659[ color = purple label = "System Clock: 4.0
+r_operator_choose_and_commit"];
+N_662061659[ label="N_662061659"];
+ N_662061659 -> N_799893529[ color = purple label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N__1774977836[ label="N__1774977836"];
+ N__1774977836 -> N__1430237639[ color = purple label = "System Clock: 3.0
+r_aggregator_connectdb_right_result"];
+N_799893529[ label="N_799893529"];
+ N_799893529 -> N_1266658009[ color = purple label = "System Clock: 6.0
+r_coapserver_call_ble"];
+N__581496204[ label="N__581496204"];
+ N__581496204 -> N__1774977836[ color = purple label = "System Clock: 2.0
+r_aggregator_connectdb_suc"];
+N_1266658009[ shape = doublecircle, color=lightblue2, style=filled, label="N_1266658009"];
+N__615849785[ label="N__615849785"];
+ N__615849785 -> N__581496204[ color = purple label = "System Clock: 1.0
+r_breaken_wired_ble_bus,r_operator_input_right_search_condition"];
+N__1430237639[ label="N__1430237639"];
+ N__1430237639 -> N_662061659[ color = darkgoldenrod1 label = "System Clock: 4.0
+r_operator_choose_and_commit"];
+N_662061659[ label="N_662061659"];
+ N_662061659 -> N_799893529[ color = darkgoldenrod1 label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N__1774977836[ label="N__1774977836"];
+ N__1774977836 -> N__1430237639[ color = darkgoldenrod1 label = "System Clock: 3.0
+r_aggregator_connectdb_right_result"];
+N_799893529[ label="N_799893529"];
+ N_799893529 -> N_1266658009[ color = darkgoldenrod1 label = "System Clock: 6.0
+r_coapserver_call_ble"];
+N__581496204[ label="N__581496204"];
+ N__581496204 -> N__1774977836[ color = darkgoldenrod1 label = "System Clock: 2.0
+r_aggregator_connectdb_suc"];
+N_1266658009[ shape = doublecircle, color=lightblue2, style=filled, label="N_1266658009"];
+N__615849785[ label="N__615849785"];
+ N__615849785 -> N__581496204[ color = darkgoldenrod1 label = "System Clock: 1.0
+r_breaken_wired_ble_bus,r_operator_input_right_search_condition"];
+N__1430237639[ label="N__1430237639"];
+ N__1430237639 -> N_662061659[ color = chartreuse1 label = "System Clock: 4.0
+r_operator_choose_and_commit"];
+N_662061659[ label="N_662061659"];
+ N_662061659 -> N_799893529[ color = chartreuse1 label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N__1774977836[ label="N__1774977836"];
+ N__1774977836 -> N__1430237639[ color = chartreuse1 label = "System Clock: 3.0
+r_aggregator_connectdb_right_result"];
+N_799893529[ label="N_799893529"];
+ N_799893529 -> N_1266658009[ color = chartreuse1 label = "System Clock: 6.0
+r_coapserver_call_ble"];
+N__581496204[ label="N__581496204"];
+ N__581496204 -> N__1774977836[ color = chartreuse1 label = "System Clock: 2.0
+r_aggregator_connectdb_suc"];
+N_1266658009[ shape = doublecircle, color=lightblue2, style=filled, label="N_1266658009"];
+N__615849785[ label="N__615849785"];
+ N__615849785 -> N__581496204[ color = chartreuse1 label = "System Clock: 1.0
+r_breaken_wired_ble_bus,r_operator_input_right_search_condition"];
+N__1430237639[ label="N__1430237639"];
+ N__1430237639 -> N_662061659[ color = darkorange1 label = "System Clock: 4.0
+r_operator_choose_and_commit"];
+N_662061659[ label="N_662061659"];
+ N_662061659 -> N_799893529[ color = darkorange1 label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N__1774977836[ label="N__1774977836"];
+ N__1774977836 -> N__1430237639[ color = darkorange1 label = "System Clock: 3.0
+r_aggregator_connectdb_right_result"];
+N_799893529[ label="N_799893529"];
+ N_799893529 -> N_1266658009[ color = darkorange1 label = "System Clock: 6.0
+r_coapserver_call_ble"];
+N__581496204[ label="N__581496204"];
+ N__581496204 -> N__1774977836[ color = darkorange1 label = "System Clock: 2.0
+r_aggregator_connectdb_suc"];
+N_1266658009[ shape = doublecircle, color=lightblue2, style=filled, label="N_1266658009"];
+N__615849785[ label="N__615849785"];
+ N__615849785 -> N__581496204[ color = darkorange1 label = "System Clock: 1.0
+r_breaken_wired_ble_bus,r_operator_input_right_search_condition"];
+N__1430237639[ label="N__1430237639"];
+ N__1430237639 -> N_662061659[ color = aquamarine1 label = "System Clock: 4.0
+r_operator_choose_and_commit"];
+N_662061659[ label="N_662061659"];
+ N_662061659 -> N_799893529[ color = aquamarine1 label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N__1774977836[ label="N__1774977836"];
+ N__1774977836 -> N__1430237639[ color = aquamarine1 label = "System Clock: 3.0
+r_aggregator_connectdb_right_result"];
+N_799893529[ label="N_799893529"];
+ N_799893529 -> N_1266658009[ color = aquamarine1 label = "System Clock: 6.0
+r_coapserver_call_ble"];
+N__581496204[ label="N__581496204"];
+ N__581496204 -> N__1774977836[ color = aquamarine1 label = "System Clock: 2.0
+r_aggregator_connectdb_suc"];
+N_1266658009[ shape = doublecircle, color=lightblue2, style=filled, label="N_1266658009"];
+N__615849785[ label="N__615849785"];
+ N__615849785 -> N__581496204[ color = aquamarine1 label = "System Clock: 1.0
+r_operator_input_right_search_condition,r_breaken_wired_ble_bus"];
+N__1430237639[ label="N__1430237639"];
+ N__1430237639 -> N_662061659[ color = aliceblue label = "System Clock: 4.0
+r_operator_choose_and_commit"];
+N_662061659[ label="N_662061659"];
+ N_662061659 -> N_799893529[ color = aliceblue label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N__1774977836[ label="N__1774977836"];
+ N__1774977836 -> N__1430237639[ color = aliceblue label = "System Clock: 3.0
+r_aggregator_connectdb_right_result"];
+N_799893529[ label="N_799893529"];
+ N_799893529 -> N_1266658009[ color = aliceblue label = "System Clock: 6.0
+r_coapserver_call_ble"];
+N__581496204[ label="N__581496204"];
+ N__581496204 -> N__1774977836[ color = aliceblue label = "System Clock: 2.0
+r_aggregator_connectdb_suc"];
+N_1266658009[ shape = doublecircle, color=lightblue2, style=filled, label="N_1266658009"];
+N__615849785[ label="N__615849785"];
+ N__615849785 -> N__581496204[ color = aliceblue label = "System Clock: 1.0
+r_breaken_wired_ble_bus,r_operator_input_right_search_condition"];
+N__1430237639[ label="N__1430237639"];
+ N__1430237639 -> N_662061659[ color = blueviolet label = "System Clock: 4.0
+r_operator_choose_and_commit"];
+N_662061659[ label="N_662061659"];
+ N_662061659 -> N_799893529[ color = blueviolet label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N__1774977836[ label="N__1774977836"];
+ N__1774977836 -> N__1430237639[ color = blueviolet label = "System Clock: 3.0
+r_aggregator_connectdb_right_result"];
+N_799893529[ label="N_799893529"];
+ N_799893529 -> N_1266658009[ color = blueviolet label = "System Clock: 6.0
+r_coapserver_call_ble"];
+N__581496204[ label="N__581496204"];
+ N__581496204 -> N__1774977836[ color = blueviolet label = "System Clock: 2.0
+r_aggregator_connectdb_suc"];
+N_1266658009[ shape = doublecircle, color=lightblue2, style=filled, label="N_1266658009"];
+N__615849785[ label="N__615849785"];
+ N__615849785 -> N__581496204[ color = blueviolet label = "System Clock: 1.0
+r_operator_input_right_search_condition,r_breaken_wired_ble_bus"];
+N__1430237639[ label="N__1430237639"];
+ N__1430237639 -> N_662061659[ color = darkslategray1 label = "System Clock: 4.0
+r_operator_choose_and_commit"];
+N_662061659[ label="N_662061659"];
+ N_662061659 -> N_799893529[ color = darkslategray1 label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N__1774977836[ label="N__1774977836"];
+ N__1774977836 -> N__1430237639[ color = darkslategray1 label = "System Clock: 3.0
+r_aggregator_connectdb_right_result"];
+N_799893529[ label="N_799893529"];
+ N_799893529 -> N_1266658009[ color = darkslategray1 label = "System Clock: 6.0
+r_coapserver_call_ble"];
+N__581496204[ label="N__581496204"];
+ N__581496204 -> N__1774977836[ color = darkslategray1 label = "System Clock: 2.0
+r_aggregator_connectdb_suc"];
+N_1266658009[ shape = doublecircle, color=lightblue2, style=filled, label="N_1266658009"];
+N__615849785[ label="N__615849785"];
+ N__615849785 -> N__581496204[ color = darkslategray1 label = "System Clock: 1.0
+r_operator_input_right_search_condition,r_breaken_wired_ble_bus"];
+N__1430237639[ label="N__1430237639"];
+ N__1430237639 -> N_662061659[ color = crimson label = "System Clock: 4.0
+r_operator_choose_and_commit"];
+N_662061659[ label="N_662061659"];
+ N_662061659 -> N_799893529[ color = crimson label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N__1774977836[ label="N__1774977836"];
+ N__1774977836 -> N__1430237639[ color = crimson label = "System Clock: 3.0
+r_aggregator_connectdb_right_result"];
+N_799893529[ label="N_799893529"];
+ N_799893529 -> N_1266658009[ color = crimson label = "System Clock: 6.0
+r_coapserver_call_ble"];
+N__581496204[ label="N__581496204"];
+ N__581496204 -> N__1774977836[ color = crimson label = "System Clock: 2.0
+r_aggregator_connectdb_suc"];
+N_1266658009[ shape = doublecircle, color=lightblue2, style=filled, label="N_1266658009"];
+N__615849785[ label="N__615849785"];
+ N__615849785 -> N__581496204[ color = crimson label = "System Clock: 1.0
+r_operator_input_right_search_condition,r_breaken_wired_ble_bus"];
+N__1430237639[ label="N__1430237639"];
+ N__1430237639 -> N_662061659[ color = brown1 label = "System Clock: 4.0
+r_operator_choose_and_commit"];
+N_662061659[ label="N_662061659"];
+ N_662061659 -> N_799893529[ color = brown1 label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N__1774977836[ label="N__1774977836"];
+ N__1774977836 -> N__1430237639[ color = brown1 label = "System Clock: 3.0
+r_aggregator_connectdb_right_result"];
+N_799893529[ label="N_799893529"];
+ N_799893529 -> N_1266658009[ color = brown1 label = "System Clock: 6.0
+r_coapserver_call_ble"];
+N__581496204[ label="N__581496204"];
+ N__581496204 -> N__1774977836[ color = brown1 label = "System Clock: 2.0
+r_aggregator_connectdb_suc"];
+N_1266658009[ shape = doublecircle, color=lightblue2, style=filled, label="N_1266658009"];
+N__615849785[ label="N__615849785"];
+ N__615849785 -> N__581496204[ color = brown1 label = "System Clock: 1.0
+r_breaken_wired_ble_bus,r_operator_input_right_search_condition"];
+}

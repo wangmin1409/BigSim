@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Sortings-Constraints>
+	<PlaceSort name="Building">
+		<Controls>
+			<Control name="Hospital" />
+		</Controls>
+	</PlaceSort>
+	<PlaceSort name="Room">
+		<Controls>
+			<Control name="ConsultingRoom" />
+			<Control name="ChargingRoom" />
+			<Control name="Pharmacy" />
+		</Controls>
+	</PlaceSort>
+	<PlaceSort name="Device">
+		<Controls>
+			<Control name="Computer" />
+		</Controls>
+	</PlaceSort>
+	<PlaceSort name="Record">
+		<Controls>
+			<Control name="Prescription" />
+			<Control name="Bill" />
+		</Controls>
+	</PlaceSort>
+	<PlaceSort name="Medicine">
+		<Controls>
+			<Control name="Materials" />
+			<Control name="Decoction" />
+		</Controls>
+	</PlaceSort>
+	<PlaceSort name="Subject">
+		<Controls>
+			<Control name="Patient" />
+		</Controls>
+	</PlaceSort>
+	<LinkSort name="Object">
+		<Ports>
+			<Port control="Patient" index="1" sortrole="start"/>
+			<Port control="Prescription" index="1" sortrole="end"/>
+			<Port control="Decoction" index="1" sortrole="end"/>
+		</Ports>
+	</LinkSort>
+	<LinkSort name="Payment">
+		<Ports>
+			<Port control="Patient" index="2" sortrole="start"/>
+			<Port control="Bill" index="1" sortrole="end"/>
+		</Ports>
+	</LinkSort>
+	<LinkSort name="Connection">
+		<Ports>
+			<Port control="Computer" index="1" sortrole="none"/>
+		</Ports>
+	</LinkSort>
+	<Constraints>
+		<PlaceConstraint name="in" parent="Building" child="Room"/>
+		<PlaceConstraint name="in" parent="Building" child="Subject"/>
+		<PlaceConstraint name="in" parent="Building" child="Medicine"/>
+		<PlaceConstraint name="in" parent="Room" child="Device"/>
+		<PlaceConstraint name="in" parent="Room" child="Subject"/>
+		<PlaceConstraint name="in" parent="Room" child="Medicine"/>
+		<PlaceConstraint name="in" parent="Device" child="Record"/>
+		<LinkConstraint name="link" one="Object" another="Object"/>
+		<LinkConstraint name="link" one="Payment" another="Payment"/>
+		<LinkConstraint name="link" one="Connection" another="Connection"/>
+	</Constraints>
+</Sortings-Constraints>

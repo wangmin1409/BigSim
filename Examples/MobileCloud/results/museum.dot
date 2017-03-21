@@ -1,0 +1,10 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N__1644665403[color = aliceblue label = "SysClk=0.0,energy=100,bandwidth=20,networkType=2"];
+ N__1644665403
+ [shape=circle, color=lightblue2, style=filled];
+N__1644665403[ shape = doublecircle, color=lightblue2, style=filled, label="N__1644665403"];
+}

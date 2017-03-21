@@ -1,0 +1,25 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 2;
+%active person : 0;
+%active lightzone : 0;
+%active light : 0;
+%active illum : 0;
+
+# Rules
+%rule r_0 person | lightzone.light.illum -> lightzone.(light.illum | person){};
+
+%rule r_1 lightzone.(light.illum | person) -> lightzone.(light.illum | person){};
+
+%rule r_2 lightzone.(person | light.illum) -> lightzone.light.illum | person{};
+
+
+# Model
+%agent a:person | b:lightzone.s1:light.normal:illum;
+
+# Go!
+%check;

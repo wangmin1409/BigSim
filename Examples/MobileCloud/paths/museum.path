@@ -1,0 +1,3 @@
+0{
+network[idle,idle,bandwidthIs,networkTypeIs].(bandwidth[bandwidthIs].nil|mobile[idle,idle,idle,hasJH,hasCAH,idle].(application[idle,idle,idle,idle].nil|contextAware[hasCAH,idle,idle,idle,idle,idle].nil|jobHandle[hasJH,idle].nil)|networkType[networkTypeIs].nil|server[idle,idle].(clone[idle,idle].nil|service[idle,idle,idle,idle].nil)|zone[idle,idle].nil);
+}0.0%

@@ -1,0 +1,62 @@
+# Controls
+%active Airport : 0;
+%active Checkin : 0;
+%active Security : 0;
+%active PassagewayToShop : 0;
+%passive ShoppingZone : 0;
+%active GateLounge : 0;
+%active Passenger : 2;
+%active Ticket : 1;
+%active Danger : 0;
+%active Airplane : 0;
+%active BoardingPass : 1;
+%active ClaimTag : 0;
+%active CheckinLuggage : 0;
+%active Billboard : 0;
+%active UpdateBillboard : 0;
+%active UpdateLight : 0;
+
+# Rules
+# 4 ---------------- For Passenger: Adult & Business -----------------------
+
+%rule r_ab_enter_airport Airport.$0 | Passenger[isAdult:edge,isBusiness:edge].$1 | $2 -> Airport.($0 | Passenger[isAdult:edge,isBusiness:edge].$1) | $2{SysClk:2	React:Passenger	Rand:true};
+
+%rule r_ab_enter_checkin Airport.($0 | Passenger[isAdult:edge,isBusiness:edge].$1 | Checkin.$2) -> Airport.($0 | Checkin.($2 | Passenger[isAdult:edge,isBusiness:edge].$1)) {SysClk:2	React:Passenger	Rand:true};
+
+#should arrive ahead of 30mins before the boardingTime
+%rule r_ab_check_ticket_without_Luggage Checkin.($0 | Passenger[isAdult:edge,isBusiness:edge].($1 | Ticket[idle])) -> Checkin.($0 | Passenger[isAdult:edge,isBusiness:edge].($1| Ticket[bp:edge] | BoardingPass[bp:edge])) {SysClk:2	React:Passenger	Cond:ap.boardingTime-SysClk>3,Passenger.hasCheckinLuggage=='false'	Rand:true};
+
+#if passenger has checkin luggage
+%rule r_ab_check_ticket_with_Luggage Checkin.($0 | Passenger[isAdult:edge,isBusiness:edge].($1| CheckinLuggage | Ticket[idle])) -> Checkin.($0 | Passenger[isAdult:edge,isBusiness:edge].($1| Ticket[bp:edge] | BoardingPass[bp:edge] | ClaimTag)) {SysClk:2	React:Passenger	Cond:ap.boardingTime-SysClk>3,Passenger.hasCheckinLuggage=='true'	Expr:Passenger.fee=Passenger.fee+10	Rand:true};
+
+%rule r_ab_enter_security Airport.($0 | Checkin.($1 | Passenger[isAdult:edge,isBusiness:edge].($2 | Ticket[bp:edge] | BoardingPass[bp:edge])) | Security.$3) -> Airport.($0 | Checkin.$1 | Security.($3 | Passenger[isAdult:edge,isBusiness:edge].($2| Ticket[bp:edge] | BoardingPass[bp:edge]))) {SysClk:2	React:Passenger	Rand:true};
+
+%rule r_ab_check_danger Security.($0 | Passenger[isAdult:edge,isBusiness:edge].($1 | Danger)) -> Security.($0 | Passenger[isAdult:edge,isBusiness:edge].$1) {SysClk:3	React:Passenger	Cond:Passenger.hasDanger=='true'	Expr:Passenger.hasDanger='false'	Rand:true};
+
+%rule r_ab_enter_shoppingzone Airport.($0 | Security.($1 | Passenger[isAdult:edge,isBusiness:edge].$2) | ShoppingZone.$3) -> Airport.($0 | Security.$1 | ShoppingZone.($3 | Passenger[isAdult:edge,isBusiness:edge].$2)) {SysClk:2	React:Passenger	Cond:Passenger.hasDanger=='false',Passenger.traffic=='false'	Rand:true};
+
+# update billboard
+%rule r_ab_update_billboard Airport.($0 | Security.$1 | ShoppingZone.(Billboard | $3 | Passenger[isAdult:edge,isBusiness:edge].$2)) -> Airport.($0 | Security.$1 | ShoppingZone.(Billboard | $3 | Passenger[isAdult:edge,isBusiness:edge].($2|UpdateBillBoard))) {SysClk:1	React:Passenger	Cond:Passenger.updateBillboard=='false'	Expr:Passenger.updateBillboard='true'};
+
+%rule r_ab_traffic_gatelounge Airport.($0 | Security.($1 | Passenger[isAdult:edge,isBusiness:edge].$2) | GateLounge.$3) -> Airport.($0 | Security.$1 | GateLounge.($3 | Passenger[isAdult:edge,isBusiness:edge].$2)) {SysClk:2	React:Passenger	Cond:Passenger.hasDanger=='false',Passenger.traffic=='true'	Expr:gl.passengers=gl.passengers+1	Rand:true};
+
+%rule r_ab_enter_gatelounge Airport.($0 | ShoppingZone.($1 | Passenger[isAdult:edge,isBusiness:edge].($2|UpdateBillBoard)) | GateLounge.$3) -> Airport.($0 | ShoppingZone.$1 | GateLounge.($3 | Passenger[isAdult:edge,isBusiness:edge].$2)) {SysClk:2	React:Passenger	Cond:Passenger.updateBillboard=='true'	Expr:Passenger.updateBillboard='false',gl.passengers=gl.passengers+1	Rand:true};
+
+%rule r_ab_update_light Airport.($0 | ShoppingZone.$1 | GateLounge.(Light | $3 | Passenger[isAdult:edge,isBusiness:edge].$2))  ->  Airport.($0 | ShoppingZone.$1 | GateLounge.(Light | $3 | Passenger[isAdult:edge,isBusiness:edge].($2|UpdateLight))) {SysClk:2	React:Passenger	Cond:Passenger.updateLight=='false'	Expr:Passenger.updateLight='true',gl.light=(gl.light*gl.passengers+Passenger.light)/(gl.passengers+1)};
+ 
+%rule r_ab_onboard Airport.($0 | GateLounge.($1 | Passenger[isAdult:edge,isBusiness:edge].($2|UpdateLight)) | Airplane.$3) -> Airport.($0 | GateLounge.$1 | Airplane.($3 | Passenger[isAdult:edge,isBusiness:edge].$2)) {SysClk:0	React:Passenger	Cond:ap.boardingTime-SysClk<10&&ap.boardingTime-SysClk>5,Passenger.flightNo==ap.flightNo,Passenger.updateLight=='true'	Expr:Passenger.updateLight=='false',gl.light=(gl.light*(gl.passengers+1)-Passenger.light)/gl.passengers,gl.passengers=gl.passengers-1};
+
+# plane take off
+#%rule r_take_off Airport.($0 | Airplane.$1) -> Airport.$0 | Airplane.$1 {SysClk:35	React:Airplane};
+
+#1 passenger
+%agent p1:Passenger[isAdult:edge,isBusiness:edge].(t1:Ticket[idle] | c1:CheckinLuggage | d1:Danger)  | a:Airport.(c:Checkin | s:Security | sz:ShoppingZone.bb:Billboard | gl:GateLounge.l:Light | ap:Airplane);
+
+# 2
+#%agent p1:Passenger[isAdult:edge,isBusiness:edge].(t1:Ticket[idle] | c1:CheckinLuggage | d1:Danger)  | p2:Passenger[isAdult:edge,isBusiness:edge].(t2:Ticket[idle] | c2:CheckinLuggage | d2:Danger)  | a:Airport.(c:Checkin | s:Security | sz:ShoppingZone.bb:Billboard | gl:GateLounge.l:Light | ap:Airplane);
+
+# 3
+#%agent p1:Passenger[isAdult:edge,isBusiness:edge].(t1:Ticket[idle] | c1:CheckinLuggage | d1:Danger)  | p2:Passenger[isAdult:edge,isBusiness:edge].(t2:Ticket[idle] | c2:CheckinLuggage | d2:Danger)  | p3:Passenger[isAdult:edge,isBusiness:edge].(t3:Ticket[idle] | c3:CheckinLuggage | d3:Danger) | a:Airport.(c:Checkin | s:Security | sz:ShoppingZone.bb:Billboard | gl:GateLounge.l:Light | ap:Airplane);
+
+# Go!
+%check;

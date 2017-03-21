@@ -1,0 +1,56 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 2;
+%active Operator : 3;
+%active Fixture : 1;
+%passive PC : 2;
+%passive Slot : 1;
+%active Aggregator : 1;
+%active CoAP_Server : 0;
+%passive RaspberryPi : 2;
+%passive BLE : 1;
+%passive Bus : 0;
+%active LED : 0;
+%active SlotInfo : 0;
+%active Lighten : 0;
+%active Token : 0;
+%active webUI.searchCondition : 1;
+%active SearchResult : 1;
+%active WebUI : 0;
+%active DB : 1;
+
+# Rules
+%rule r_borrow_operator_input_search_condition Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].(WebUI | Aggregator[search:edge] | DB[search:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge].$1 | BLE[Bluetooth:edge].$2 -> Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].(WebUI.SearchCondition[idle] | Aggregator[search:edge] | DB[search:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge].$1 | BLE[Bluetooth:edge].$2 {SysClk:1	React:Aggregator	Cond:Aggregator.flag==0,webUI.searchCondition=='false'	Expr:webUI.searchCondition='true'};
+
+%rule r_borrow_aggregator_search_db Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].(WebUI.$3 | Aggregator[search:edge] | DB[search:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge].$1 | BLE[Bluetooth:edge].$2-> Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].(WebUI.$3 | Aggregator[search:edge].SearchResult[idle] | DB[search:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge].$1 | BLE[Bluetooth:edge].$2 {SysClk:1	Cond:webUI.searchCondition=='true',aggregator.searchDB=='false'	Expr:aggregator.searchDB='true'};
+
+%rule r_borrow_searchcondition_match_searchresult Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].(WebUI.SearchCondition[idle] | Aggregator[search:edge].SearchResult[idle] | DB[search:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge].$1 | BLE[Bluetooth:edge].$2 -> Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].(WebUI.SearchCondition[match:edge] | Aggregator[search:edge].SearchResult[match:edge] | DB[search:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge].$1 | BLE[Bluetooth:edge].$2 {SysClk:1	Cond:aggregator.searchDB=='true',aggregator.searchMatched=='false'	Expr:aggregator.searchMatched='true'};
+
+%rule r_borrow_operator_choose_and_commit Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].(WebUI.SearchCondition[match:edge] | Aggregator[search:edge].SearchResult[match:edge] | DB[search:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge].$1 | BLE[Bluetooth:edge].$2 -> Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].(WebUI.SearchCondition[match:edge] | Aggregator[search:edge].(SearchResult[match:edge] | SlotInfo) | DB[search:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge].$1 | BLE[Bluetooth:edge].$2 {SysClk:1	Cond:aggregator.searchMatched=='true',operator.committed=='false'	Expr:operator.committed='true',aggregator.flag=1,aggregator.aggregatorReceived='true',aggregator.slotInfo='A11-006'};
+
+%rule r_borrow_aggregator_call_coapserver Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].(Aggregator[search:edge].(SlotInfo | $4) | DB[search:edge] | $3) | RaspberryPi[WIFI:edge,Bluetooth:edge].CoAP_Server | BLE[Bluetooth:edge].$2 -> Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].(Aggregator[search:edge].$4 | DB[search:edge] | $3) | RaspberryPi[WIFI:edge,Bluetooth:edge].CoAP_Server.SlotInfo | BLE[Bluetooth:edge].$2 {SysClk:1	Cond:aggregator.flag==1,aggregator.aggregatorReceived=='true',coap.CoAPReceived=='false'	Expr:coap.CoAPReceived='true'};
+
+%rule r_borrow_coapserver_call_ble Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].$1 | RaspberryPi[WIFI:edge,Bluetooth:edge].CoAP_Server.SlotInfo | BLE[Bluetooth:edge].Bus.$2 -> Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].$1 | RaspberryPi[WIFI:edge,Bluetooth:edge].CoAP_Server | BLE[Bluetooth:edge].(Bus.$2 | SlotInfo) {SysClk:1	Cond:aggregator.flag==1,coap.CoAPReceived=='true',ble.BLEReceived=='false'	Expr:ble.BLEReceived='true'};
+
+%rule r_borrow_ble_call_bus Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].$1 | RaspberryPi[WIFI:edge,Bluetooth:edge].$3 | BLE[Bluetooth:edge].(Bus.$2 | SlotInfo) -> Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].$1 | RaspberryPi[WIFI:edge,Bluetooth:edge].$3 | BLE[Bluetooth:edge].Bus.($2 | SlotInfo) {SysClk:1	Cond:aggregator.flag==1,ble.BLEReceived=='true',bus.busReceived=='false'	Expr:bus.busReceived='true'};
+
+%rule r_borrow_bus_light_led Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].$1 | RaspberryPi[WIFI:edge,Bluetooth:edge].$3 | BLE[Bluetooth:edge].Bus.(SlotInfo | n06:LED | $2) -> Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].$1 | RaspberryPi[WIFI:edge,Bluetooth:edge].$3 | BLE[Bluetooth:edge].Bus.(n06:LED.Lighten | $2) {SysClk:1	Cond:aggregator.flag==1,bus.busReceived=='true',aggregator.LEDLighten=='false'	Expr:aggregator.LEDLighten='true'};
+
+%rule r_borrow_operator_find_slot Operator[idle,operate:edge,idle] | PC[operate:edge,WIFI:edge].$1 | RaspberryPi[WIFI:edge,Bluetooth:edge].$3 | BLE[Bluetooth:edge].Bus.(n06:LED.Lighten | Slot[idle].Fixture[idle] | $2)  -> PC[idle,WIFI:edge].$1 | RaspberryPi[WIFI:edge,Bluetooth:edge].$3 | BLE[Bluetooth:edge].Bus.(n06:LED.Lighten | Slot[takeFixture:edge].Fixture[idle] | $2 | Operator[idle,idle,takeFixture:edge]) {SysClk:1	Cond:aggregator.flag==1,aggregator.LEDLighten=='true',operator.findSlot=='false'	Expr:operator.findSlot='true'};
+
+%rule r_borrow_operator_getfixture_and_lightoff PC[idle,WIFI:edge].$1 | RaspberryPi[WIFI:edge,Bluetooth:edge].$3 | BLE[Bluetooth:edge].Bus.(n06:LED.Lighten | Slot[takeFixture:edge].Fixture[idle] | Operator[idle,idle,takeFixture:edge] | $2) -> PC[idle,WIFI:edge].$1 | RaspberryPi[WIFI:edge,Bluetooth:edge].$3 | BLE[Bluetooth:edge].Bus.(n06:LED | Slot[takeFixture:edge] | Operator[take:edge,idle,takeFixture:edge].Fixture[take:edge] | $2) {SysClk:1	Cond:aggregator.flag==1,operator.findSlot=='true',aggregator.LEDLighten=='true'	Expr:operator.getFixture='true',aggregator.LEDLighten='false'};
+
+%rule r_borrow_operator_leave_slot PC[idle,WIFI:edge].$1 | RaspberryPi[WIFI:edge,Bluetooth:edge].$3 | BLE[Bluetooth:edge].Bus.(n06:LED | Slot[takeFixture:edge] | Operator[take:edge,idle,takeFixture:edge].Fixture[take:edge] | $2) -> PC[operate:edge,WIFI:edge].$1 | RaspberryPi[WIFI:edge,Bluetooth:edge].$3 | BLE[Bluetooth:edge].Bus.(n06:LED | Slot[idle] | $2) | Operator[take:edge,operate:edge,idle].Fixture[take:edge] {SysClk:1	Cond:aggregator.flag==1,operator.getFixture=='true',operator.leaveSlot=='false'	Expr:operator.leaveSlot='true'};
+
+%rule r_borrow_operator_finish_operation PC[operate:edge,WIFI:edge].(WebUI.$4 | Aggregator[search:edge].$5 | DB[search:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge].$3 | BLE[Bluetooth:edge].Bus.(n06:LED | Slot[idle] | $2) | Operator[take:edge,operate:edge,idle].Fixture[take:edge] -> PC[operate:edge,WIFI:edge].(WebUI.($4|Token) | Aggregator[search:edge].$5 | DB[search:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge].$3 | BLE[Bluetooth:edge].Bus.(n06:LED | Slot[idle] | $2) | Operator[take:edge,operate:edge,idle].Fixture[take:edge] {SysClk:1	Cond:aggregator.flag==1,operator.getFixture=='true',aggregator.LEDLighten=='false'	Expr:aggregator.flag=0,aggregator.finished='true',aggregator.slotInfo='null'};
+
+
+# Model
+%agent operator:Operator[idle,operate:edge,idle] | pc:PC[operate:edge,WIFI:edge].(webUI:WebUI | aggregator:Aggregator[search:edge] | db:DB[search:edge]) | ras:RaspberryPi[WIFI:edge,Bluetooth:edge].coap:CoAP_Server | ble:BLE[Bluetooth:edge].bus:Bus.(n01:LED | n02:LED | n03:LED | n04:LED | n05:LED | n06:LED | n07:LED | n08:LED | n09:LED | n10:LED | s01:Slot[idle].f1:Fixture[idle] | s02:Slot[idle].f2:Fixture[idle] | s03:Slot[idle].f3:Fixture[idle] | s04:Slot[idle].f4:Fixture[idle] | s05:Slot[idle].f5:Fixture[idle] | s06:Slot[idle].f6:Fixture[idle] | s07:Slot[idle].f7:Fixture[idle] | s08:Slot[idle].f8:Fixture[idle] | s09:Slot[idle].f9:Fixture[idle] | s10:Slot[idle].f10:Fixture[idle]);
+
+# Go!
+%check;

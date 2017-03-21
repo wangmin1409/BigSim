@@ -1,0 +1,5 @@
+1{
+p2.updateLight=false,p1.updateBillboard=false,p1.light=2,p3.updateLight=false,f.content=Adult,p2.age=30,p2.updateBillboard=false,p3.updateBillboard=false,p1.updateLight=false,p2.light=5,e.illum=5,p1.age=12,p3.age=60,p3.light=10,SysClk=1.0
+p2.updateLight=false,p1.updateBillboard=false,p1.light=2,p3.updateLight=false,f.content=Adult,p2.age=30,p2.updateBillboard=false,p3.updateBillboard=false,p1.updateLight=false,p2.light=5,e.illum=5,p1.age=12,p3.age=60,p3.light=10,SysClk=2.0
+p2.updateLight=false,p1.updateBillboard=false,p1.light=2,p3.updateLight=false,f.content=Adult,p2.age=30,p2.updateBillboard=false,p3.updateBillboard=false,p1.updateLight=false,p2.light=5,e.illum=5,p1.age=12,p3.age=60,p3.light=10,SysClk=3.0
+}

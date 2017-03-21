@@ -1,0 +1,102 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 2;
+%active Airport : 0;
+%active Checkin : 0;
+%active Security : 0;
+%active PassagewayToShop : 0;
+%passive ShoppingZone : 0;
+%active GateLounge : 0;
+%active ApronZone : 0;
+%active Passenger : 11;
+%active Light : 1;
+%active BillBoard : 1;
+%active Computer : 2;
+%active PreIllum : 4;
+%active PreValue : 1;
+%active CurIllum : 4;
+%active PreUpper : 1;
+%active PreLower : 1;
+%active CurValue : 1;
+%active CurUpper : 1;
+%active CurLower : 1;
+%active AdverCont : 3;
+%active Content : 1;
+%active AgeLimit : 1;
+%active Age : 1;
+%active personinfo : 1;
+%active luggageinfo : 1;
+%active SecurityInfo : 1;
+%active shoppinginfo : 1;
+%active Commodity : 1;
+%active wayready : 0;
+%active PassagewayToGate : 0;
+%active gateready : 0;
+%active PassagewayToSecurity : 0;
+%active Store : 0;
+%active Ticket : 1;
+%active database : 1;
+%active dataPassenger : 10;
+%active dataTicket : 5;
+%active dataHangLuggage : 3;
+%active datacheckinLuggage : 4;
+%active dataAD : 2;
+%active dataShopPrefer : 2;
+%active dataProduct : 3;
+%active hangLuggage : 2;
+%active checkinLuggage : 1;
+%active dataDangerousList : 1;
+%active true : 1;
+%active false : 1;
+%active value : 1;
+%active hasdangerous : 2;
+%active broading : 0;
+%active small : 1;
+%active old : 1;
+%active nomal : 1;
+%active disable : 1;
+%active business : 1;
+%active economy : 1;
+%active directPassageWay : 0;
+%active parentandchild : 1;
+%active Success : 0;
+%active Error : 0;
+
+# Rules
+%rule r_enter_airport Airport.$0 | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(disable[isDisable:edge] | economy[isEconomy:edge]) -> Airport.($0 | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(disable[isDisable:edge] | economy[isEconomy:edge])){SysClk:80	Rand:true};
+
+%rule r_enter_checkin Airport.(Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(disable[isDisable:edge] | economy[isEconomy:edge]) | Checkin.$1 | $0) -> Airport.(Checkin.($1 | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0){SysClk:20	Rand:true};
+
+%rule r_enter_security Airport.(Checkin.(Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge]) | $1) | Security.$2 | $0) -> Airport.(Checkin.$1 | Security.($2 | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(disable[isDisable:edge] | economy[isEconomy:edge])) | $0){SysClk:30	Rand:true};
+
+%rule r_go_shopping Airport.(Security.(Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(disable[isDisable:edge] | economy[isEconomy:edge]) | $1) | ShoppingZone.$2 | $0) -> Airport.(Security.$1 | ShoppingZone.($2 | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0){SysClk:90	Cond:de.traffic=='false'	Expr:sz.passengers=sz.passengers+1,sz.lubTime=SysClk	Rand:true};
+
+%rule r_update_szlight Airport.(Security.$1 | ShoppingZone.(Light[idle] | $2 | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0) -> Airport.(Security.$1 | ShoppingZone.($2 | Light[update:edge] | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0){SysClk:2	Expr:sz.light=(sz.weight*sz.light+de.weight*de.light)/(sz.weight+de.weight),de.weight=(sz.light-de.light)/sz.light,sz.luaTime=SysClk	Rand:true};
+
+%rule r_updatesz_success Airport.(Security.$1 | ShoppingZone.($2 | Light[update:edge] | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0) -> Airport.(Security.$1 | ShoppingZone.($2 | Light[updated:edge].Success | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0){SysClk:0	Cond:sz.luaTime-sz.lubTime<2.95,sz.light<10||sz.light>15};
+
+%rule r_error_szlight_timeout Airport.(Security.$1 | ShoppingZone.($2 | Light[update:edge] | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0) -> Airport.(Security.$1 | ShoppingZone.($2 | Light[updated:edge].Error | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0){SysClk:0	Cond:sz.luaTime-sz.lubTime>=2.95};
+
+%rule r_error_szlight_old Airport.(Security.$1 | ShoppingZone.($2 | Light[update:edge] | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0) -> Airport.(Security.$1 | ShoppingZone.($2 | Light[updated:edge].Error | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0){SysClk:0	Cond:sz.luaTime-sz.lubTime<2.95,sz.light>=10&&sz.light<=15};
+
+%rule r_sz_to_gl Airport.(ShoppingZone.(Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge]) | $1 | Light[updated:edge].$3) | GateLounge.$2 | $0) -> Airport.(ShoppingZone.($1 | Light[idle].$3) | GateLounge.($2 | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(disable[isDisable:edge] | economy[isEconomy:edge])) | $0){SysClk:35	Expr:sz.passengers=sz.passengers-1,gl.passengers=gl.passengers+1,gl.lubTime=SysClk	Rand:true};
+
+%rule r_s_to_gl Airport.(Security.(Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(disable[isDisable:edge] | economy[isEconomy:edge]) | $1) | GateLounge.$2 | $0) -> Airport.(Security.$1 | GateLounge.($2 | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0){SysClk:10	Cond:de.traffic=='true'	Expr:de.fee=de.fee+25,gl.passengers=gl.passengers+1,gl.lubTime=SysClk	Rand:true};
+
+%rule r_update_gllight Airport.(Security.$1 | GateLounge.($2 | Light[idle] | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0)  -> Airport.(Security.$1 | GateLounge.($2 | Light[update:edge] | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0){SysClk:2	Expr:gl.light=(gl.weight*gl.light+de.weight*de.light)/(gl.weight+de.weight),de.weight=(gl.light-de.light)/gl.light,gl.luaTime=SysClk	Rand:true};
+
+%rule r_updategl_success Airport.(Security.$1 | GateLounge.($2 | Light[update:edge] | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0) -> Airport.(Security.$1 | GateLounge.($2 | Light[updated:edge].Success | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0){SysClk:0	Cond:gl.luaTime-gl.lubTime<2.95,gl.light<10||gl.light>15};
+
+%rule r_error_gllight_timeout Airport.(Security.$1 | GateLounge.($2 | Light[update:edge] | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0) -> Airport.(Security.$1 | GateLounge.($2 | Light[updated:edge].Error | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0){SysClk:0	Cond:gl.luaTime-gl.lubTime>=2.95};
+
+%rule r_error_gllight_old Airport.(Security.$1 | GateLounge.($2 | Light[update:edge] | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0) -> Airport.(Security.$1 | GateLounge.($2 | Light[updated:edge].Error | Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(economy[isEconomy:edge] | disable[isDisable:edge])) | $0) {SysClk:0	Cond:gl.luaTime-gl.lubTime<2.95,gl.light>=10&&gl.light<=15};
+
+# Model
+%agent de:Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(disable[isDisable:edge] | economy[isEconomy:edge]) | a:Airport.( c:Checkin.(db:Passenger[idle,idle,isDisable:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(disable[isDisable:edge] | business[isBusiness:edge])) | s:Security.(ne:Passenger[idle,idle,isNormal:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(nomal[isNormal:edge] | economy[isEconomy:edge]) | nb:Passenger[idle,idle,isNormal:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(nomal[isNormal:edge] | business[isBusiness:edge])) | sz:ShoppingZone.(szl:Light[idle] | oe:Passenger[idle,idle,isOld:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(old[isOld:edge] | economy[isEconomy:edge]) | ob:Passenger[idle,idle,isOld:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(old[isOld:edge] | business[isBusiness:edge]) | ye:Passenger[idle,idle,isYoung:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(small[isYoung:edge] | economy[isEconomy:edge])) | gl:GateLounge.(gll:Light[idle] | yb:Passenger[idle,idle,isYoung:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(small[isYoung:edge] | business[isBusiness:edge]) | pce:Passenger[idle,idle,isParentandchild:edge,idle,idle,idle,idle,idle,idle,idle,isEconomy:edge].(parentandchild[isParentandchild:edge] | economy[isEconomy:edge]) | Passenger[idle,idle,isParentandchild:edge,idle,idle,idle,idle,idle,idle,idle,isBusiness:edge].(parentandchild[isParentandchild:edge] | business[isBusiness:edge])));
+
+# Go!
+%check;

@@ -1,0 +1,19 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 2;
+%active Airport : 0;
+%active CheckIn : 0;
+%active Passenger : 0;
+
+# Rules
+%rule enter_airport Airport.$0 | Passenger -> Airport.($0 | Passenger) {SysClk:10};
+
+# Model
+%agent Airport:Airport.CheckIn:CheckIn | Tom:Passenger;
+
+# Go!
+%check;

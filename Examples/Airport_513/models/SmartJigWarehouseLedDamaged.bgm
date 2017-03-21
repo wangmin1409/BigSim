@@ -1,0 +1,115 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 2;
+%active Operator : 2;
+%active Fixture : 1;
+%passive DSoftSys : 2;
+%passive Slot : 0;
+%active Aggregator : 2;
+%active CoAP_Server : 0;
+%passive RaspberryPi : 3;
+%passive BLE : 2;
+%passive Bus : 1;
+%active LED : 1;
+%active SlotInfo : 0;
+%active Lighten : 0;
+%active Token : 0;
+%active rightR : 1;
+%active SearchCondition : 2;
+%active SearchResult : 2;
+%active WebUI : 0;
+%active DB : 1;
+%active Jig : 1;
+%active right : 1;
+%active wrong : 1;
+%active damaged : 1;
+
+
+# Rules
+%rule r_operator_input_right_search_condition Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(WebUI | Aggregator[idle,idle] | DB[idle]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(WebUI.SearchCondition[idle,rc:edge].right[rc:edge] | Aggregator[idle,idle] | DB[idle]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1{SysClk:1	Cond:aggregator.flag==0	Expr:webUI.searchCondition='right'};
+
+#%rule r_operator_input_wrong_search_condition Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(WebUI | Aggregator[idle,idle] | DB[idle]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(WebUI.SearchCondition[idle,rc:edge].wrong[rc:edge] | Aggregator[idle,idle] | DB[idle]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1{SysClk:1	Cond:aggregator.flag==0	Expr:webUI.searchCondition='wrong'};
+
+%rule r_aggregator_connectdb_suc Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(WebUI.SearchCondition[idle,rc:edge].right[rc:edge] | Aggregator[idle,idle] | DB[idle]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(WebUI.SearchCondition[idle,rc:edge].right[rc:edge] | Aggregator[connect:edge,idle] | DB[connect:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1{SysClk:1	Expr:aggregator.connectdb='true'};
+
+#%rule r_aggregator_connectdb_fail Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(WebUI.SearchCondition[idle,idle].$2 | Aggregator[idle,idle] | DB[idle]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(WebUI.SearchCondition[idle,idle].$2 | Aggregator[idle,idle] | DB[idle]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1{SysClk:1	Expr:aggregator.connectdb='false',aggregator.searchResult='false'};
+
+%rule r_aggregator_connectdb_right_result Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(WebUI.SearchCondition[idle,rc:edge].right[rc:edge] | Aggregator[connect:edge,idle] | DB[connect:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(WebUI.SearchCondition[match:edge,rc:edge].right[rc:edge] | Aggregator[connect:edge,idle].SearchResult[match:edge,isR:edge].rightR[isR:edge] | DB[connect:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1{SysClk:1	Cond:webUI.searchCondition=='right',aggregator.connectdb=='true'	Expr:aggregator.searchMatched='true',aggregator.searchResult='true'};
+
+#%rule r_aggregator_connectdb_wrong_result Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(WebUI.SearchCondition[idle,rc:edge].right[rc:edge] | Aggregator[connect:edge,idle] | DB[connect:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(WebUI.SearchCondition[unmatch:edge,rc:edge].right[rc:edge] | Aggregator[connect:edge,idle].SearchResult[unmatch:edge,isW:edge].wrong[isW:edge] | DB[connect:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1{SysClk:1	Cond:aggregator.connectdb=='true'	Expr:aggregator.searchMatched='false',aggregator.searchResult='true'};
+
+%rule r_operator_choose_and_commit Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(WebUI.SearchCondition[match:edge,rc:edge].right[rc:edge] | Aggregator[connect:edge,idle].SearchResult[match:edge,isR:edge].rightR[isR:edge] | DB[connect:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(WebUI.SearchCondition[match:edge,rc:edge].right[rc:edge] | Aggregator[connect:edge,idle].(SearchResult[match:edge,isR:edge].rightR[isR:edge] | SlotInfo) | DB[connect:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1{SysClk:1	Cond:aggregator.searchMatched=='true',aggregator.searchResult=='true',aggregator.aggregatorReceived=='false'	Expr:operator.committed='true',aggregator.flag=1,aggregator.aggregatorReceived='true',aggregator.slotInfo='A11-006'};
+
+%rule r_aggregator_call_coapserver Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(Aggregator[connect:edge,idle].(SlotInfo | $0) | DB[connect:edge] | $2) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].CoAP_Server | BLE[Bluetooth:edge,idle].$1 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(Aggregator[connect:edge,idle].$0 | DB[connect:edge] | $2) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].CoAP_Server.SlotInfo | BLE[Bluetooth:edge,idle].$1{SysClk:1	Cond:aggregator.flag==1,aggregator.aggregatorReceived=='true',coap.CoAPReceived=='false'	Expr:coap.CoAPReceived='true'};
+
+%rule r_coapserver_call_ble Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].CoAP_Server.SlotInfo | BLE[Bluetooth:edge,idle].$1 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].CoAP_Server | BLE[Bluetooth:edge,idle].($1 | SlotInfo){SysClk:1	Cond:aggregator.flag==1,coap.CoAPReceived=='true',ble.BLEReceived=='false'	Expr:ble.BLEReceived='true'};
+
+%rule r_ble_call_bus Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].(SlotInfo | Bus[idle].$2) -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].($2 | SlotInfo){SysClk:1	Cond:aggregator.flag==1,ble.BLEReceived=='true',bus.busReceived=='false'	Expr:bus.busReceived='true'};
+
+%rule r_bus_light_led Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].(SlotInfo | LED[idle] | $2) -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].(LED[idle].Lighten | $2){SysClk:1	Cond:aggregator.flag==1,bus.busReceived=='true',aggregator.LEDLighten=='false'	Expr:aggregator.LEDLighten='true'};
+
+%rule r_operator_find_slot Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].(LED[idle].Lighten | Slot.Jig[idle] | $2) -> DSoftSys[idle,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].(LED[idle].Lighten | Slot.Jig[idle] | $2 | Operator[idle,idle]){SysClk:1	Cond:aggregator.flag==1,aggregator.LEDLighten=='true',operator.findSlot=='false'	Expr:operator.findSlot='true'};
+
+#%rule r_operator_getJig_led_damaged DSoftSys[idle,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].(LED[isDam:edge].(damaged[isDam:edge] | Lighten) | Slot.Jig[idle] | Operator[idle,idle] | $2) -> DSoftSys[idle,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].(LED[isDam:edge].(damaged[isDam:edge] | Lighten) | Slot | Operator[idle,take:edge].Jig[take:edge] | $2){SysClk:1	Cond:aggregator.flag==1,operator.findSlot=='true',led.damaged=='true',aggregator.LEDLighten=='true'	Expr:operator.getJig='true'};
+
+%rule r_operator_getJig_and_lightoff DSoftSys[idle,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].(LED[idle].Lighten | Slot.Jig[idle] | Operator[idle,idle] | $2) -> DSoftSys[idle,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].(LED[idle] | Slot | Operator[idle,take:edge].Jig[take:edge] | $2){SysClk:1	Cond:aggregator.flag==1,operator.findSlot=='true',aggregator.LEDLighten=='true',led.damaged=='false'	Expr:operator.getJig='true',aggregator.LEDLighten='false'};
+
+%rule r_operator_leave_slot DSoftSys[idle,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].(LED[idle] | Slot | Operator[idle,take:edge].Jig[take:edge] | $2) -> DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].(LED[idle] | Slot | $2) | Operator[operate:edge,take:edge].Jig[take:edge]{SysClk:1	Cond:aggregator.flag==1,operator.getJig=='true',aggregator.LEDLighten=='false',operator.leaveSlot=='false'	Expr:operator.leaveSlot='true'};
+
+%rule r_operator_finish_operation DSoftSys[operate:edge,WIFI:edge].(WebUI.$2 | Aggregator[connect:edge,idle].$3 | DB[connect:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1 | Operator[operate:edge,take:edge].Jig[take:edge] -> DSoftSys[operate:edge,WIFI:edge].(WebUI.($2 | Token) | Aggregator[connect:edge,idle].$3 | DB[connect:edge]) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$0 | BLE[Bluetooth:edge,idle].$1 | Operator[operate:edge,take:edge].Jig[take:edge]{SysClk:1	Cond:aggregator.flag==1,operator.getJig=='true',aggregator.LEDLighten=='false'	Expr:aggregator.flag=0,aggregator.finished='true',aggregator.slotInfo='null'};
+
+#%rule r_breaken_wifi Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$2 | BLE[Bluetooth:edge,idle].$1 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,idle].$0 | RaspberryPi[idle,Bluetooth:edge,idle].$2 | BLE[Bluetooth:edge,idle].$1{SysClk:1	Expr:wifi.connected='false'};
+
+#%rule r_breaken_bluetooth Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$2 | BLE[Bluetooth:edge,idle].$1 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,idle,idle].$2 | BLE[idle,idle].$1{SysClk:1	Expr:bluetooth.connected='false'};
+
+#%rule r_breaken_wired_ble_bus Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].$2 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle]{SysClk:1	Cond:blebuswired.connected=='true'	Expr:blebuswired.connected='false'};
+
+#%rule r_breaken_wired_bus_led Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].(LED[idle] | $2) -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].$2{SysClk:1	Cond:busledwired.connected=='true'	Expr:busledwired.connected='false'};
+
+#%rule r_damaged_aggregator Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(Aggregator[connect:edge,idle].$0 | DB[connect:edge] | $1) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$2 | BLE[Bluetooth:edge,idle].$3 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(Aggregator[connect:edge,isDam:edge].($0 | damaged[isDam:edge]) | DB[connect:edge] | $1) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$2 | BLE[Bluetooth:edge,idle].$3{SysClk:1	Expr:aggregator.damaged='true'};
+
+#%rule r_damaged_ble Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(Aggregator[connect:edge,idle].$0 | DB[connect:edge] | $1) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$2 | BLE[Bluetooth:edge,idle].$3 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(Aggregator[connect:edge,idle].$0 | DB[connect:edge] | $1) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$2 | BLE[Bluetooth:edge,isDam:edge].($3 | damaged[isDam:edge]){SysClk:1	Cond:ble.damaged=='false'	Expr:ble.damaged='true'};
+
+#%rule r_damaged_bus Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].$2 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[isDam:edge].($2 | damaged[isDam:edge]){SysClk:1	Cond:bus.damaged=='false'	Expr:bus.damaged='true'};
+
+%rule r_damaged_led Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].(LED[idle] | $2) -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].$0 | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$1 | BLE[Bluetooth:edge,idle].Bus[idle].(LED[isDam:edge].damaged[isDam:edge] | $2){SysClk:1	Cond:led.damaged=='false'	Expr:led.damaged='true'};
+
+#%rule r_damaged_raspberrypi Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(Aggregator[connect:edge,idle].$0 | DB[connect:edge] | $1) | RaspberryPi[WIFI:edge,Bluetooth:edge,idle].$2 | BLE[Bluetooth:edge,idle].$3 -> Operator[operate:edge,idle] | DSoftSys[operate:edge,WIFI:edge].(Aggregator[connect:edge,idle].$0 | DB[connect:edge] | $1) | RaspberryPi[WIFI:edge,Bluetooth:edge,isDam:edge].($2 | damaged[isDam:edge]) | BLE[Bluetooth:edge,idle].$3{SysClk:1	Expr:raspberrypi.damaged='true'};
+
+
+# Normal Model
+%agent dsoftsys:DSoftSys[operate:edge,WIFI:edge].(webUI:WebUI | db:DB[idle] | aggregator:Aggregator[idle,idle]) | ras:RaspberryPi[WIFI:edge,Bluetooth:edge,idle].coap:CoAP_Server | ble:BLE[Bluetooth:edge,idle].bus:Bus[idle].(s01:Slot.g1:Jig[idle] | s02:Slot.g2:Jig[idle] | s03:Slot.g3:Jig[idle] | s04:Slot.g4:Jig[idle] | s05:Slot.g5:Jig[idle] | s06:Slot.g6:Jig[idle] | s07:Slot.g7:Jig[idle] | s08:Slot.g8:Jig[idle] | s09:Slot.g9:Jig[idle] | s10:Slot.g10:Jig[idle] | n01:LED[idle] | n02:LED[idle] | n03:LED[idle] | n04:LED[idle] | n05:LED[idle] | n06:LED[idle] | n07:LED[idle] | n08:LED[idle] | n09:LED[idle] | n10:LED[idle]) | operator:Operator[operate:edge,idle];
+
+# Init Aggregator Damaged
+#%agent dsoftsys:DSoftSys[operate:edge,WIFI:edge].(webUI:WebUI | db:DB[idle] | aggregator:Aggregator[idle,isDam:edge].dam:damaged[isDam:edge]) | ras:RaspberryPi[WIFI:edge,Bluetooth:edge,idle].coap:CoAP_Server | ble:BLE[Bluetooth:edge,idle].bus:Bus[idle].(s01:Slot.g1:Jig[idle] | s02:Slot.g2:Jig[idle] | s03:Slot.g3:Jig[idle] | s04:Slot.g4:Jig[idle] | s05:Slot.g5:Jig[idle] | s06:Slot.g6:Jig[idle] | s07:Slot.g7:Jig[idle] | s08:Slot.g8:Jig[idle] | s09:Slot.g9:Jig[idle] | s10:Slot.g10:Jig[idle] | n01:LED[idle] | n02:LED[idle] | n03:LED[idle] | n04:LED[idle] | n05:LED[idle] | n06:LED[idle] | n07:LED[idle] | n08:LED[idle] | n09:LED[idle] | n10:LED[idle]) | operator:Operator[operate:edge,idle];
+
+# Init RaspberryPi Damaged
+#%agent dsoftsys:DSoftSys[operate:edge,WIFI:edge].(webUI:WebUI | db:DB[idle] | aggregator:Aggregator[idle,idle]) | ras:RaspberryPi[WIFI:edge,Bluetooth:edge,isDam:edge].(coap:CoAP_Server | dam:damaged[isDam:edge]) | ble:BLE[Bluetooth:edge,idle].bus:Bus[idle].(s01:Slot.g1:Jig[idle] | s02:Slot.g2:Jig[idle] | s03:Slot.g3:Jig[idle] | s04:Slot.g4:Jig[idle] | s05:Slot.g5:Jig[idle] | s06:Slot.g6:Jig[idle] | s07:Slot.g7:Jig[idle] | s08:Slot.g8:Jig[idle] | s09:Slot.g9:Jig[idle] | s10:Slot.g10:Jig[idle] | n01:LED[idle] | n02:LED[idle] | n03:LED[idle] | n04:LED[idle] | n05:LED[idle] | n06:LED[idle] | n07:LED[idle] | n08:LED[idle] | n09:LED[idle] | n10:LED[idle]) | operator:Operator[operate:edge,idle];
+
+# Init BLE Damaged
+#%agent dsoftsys:DSoftSys[operate:edge,WIFI:edge].(webUI:WebUI | db:DB[idle] | aggregator:Aggregator[idle,idle]) | ras:RaspberryPi[WIFI:edge,Bluetooth:edge,idle].coap:CoAP_Server | ble:BLE[Bluetooth:edge,isDam:edge].(bus:Bus[idle].(s01:Slot.g1:Jig[idle] | s02:Slot.g2:Jig[idle] | s03:Slot.g3:Jig[idle] | s04:Slot.g4:Jig[idle] | s05:Slot.g5:Jig[idle] | s06:Slot.g6:Jig[idle] | s07:Slot.g7:Jig[idle] | s08:Slot.g8:Jig[idle] | s09:Slot.g9:Jig[idle] | s10:Slot.g10:Jig[idle] | n01:LED[idle] | n02:LED[idle] | n03:LED[idle] | n04:LED[idle] | n05:LED[idle] | n06:LED[idle] | n07:LED[idle] | n08:LED[idle] | n09:LED[idle] | n10:LED[idle]) | dam:damaged[isDam:edge]) | operator:Operator[operate:edge,idle];
+
+# Init Bus Damaged
+#%agent dsoftsys:DSoftSys[operate:edge,WIFI:edge].(webUI:WebUI | db:DB[idle] | aggregator:Aggregator[idle,idle]) | ras:RaspberryPi[WIFI:edge,Bluetooth:edge,idle].coap:CoAP_Server | ble:BLE[Bluetooth:edge,idle].bus:Bus[isDam:edge].(s01:Slot.g1:Jig[idle] | s02:Slot.g2:Jig[idle] | s03:Slot.g3:Jig[idle] | s04:Slot.g4:Jig[idle] | s05:Slot.g5:Jig[idle] | s06:Slot.g6:Jig[idle] | s07:Slot.g7:Jig[idle] | s08:Slot.g8:Jig[idle] | s09:Slot.g9:Jig[idle] | s10:Slot.g10:Jig[idle] | n01:LED[idle] | n02:LED[idle] | n03:LED[idle] | n04:LED[idle] | n05:LED[idle] | n06:LED[idle] | n07:LED[idle] | n08:LED[idle] | n09:LED[idle] | n10:LED[idle] | dam:damaged[isDam:edge]) | operator:Operator[operate:edge,idle];
+
+# Init LED Damaged
+#%agent dsoftsys:DSoftSys[operate:edge,WIFI:edge].(webUI:WebUI | db:DB[idle] | aggregator:Aggregator[idle,idle]) | ras:RaspberryPi[WIFI:edge,Bluetooth:edge,idle].coap:CoAP_Server | ble:BLE[Bluetooth:edge,idle].bus:Bus[idle].(s01:Slot.g1:Jig[idle] | s02:Slot.g2:Jig[idle] | s03:Slot.g3:Jig[idle] | s04:Slot.g4:Jig[idle] | s05:Slot.g5:Jig[idle] | s06:Slot.g6:Jig[idle] | s07:Slot.g7:Jig[idle] | s08:Slot.g8:Jig[idle] | s09:Slot.g9:Jig[idle] | s10:Slot.g10:Jig[idle] | n01:LED[idle] | n02:LED[idle] | n03:LED[idle] | n04:LED[idle] | n05:LED[idle] | n06:LED[isDam:edge].dam:damaged[isDam:edge] | n07:LED[idle] | n08:LED[idle] | n09:LED[idle] | n10:LED[idle]) | operator:Operator[operate:edge,idle];
+
+# Init WIFI Disconnected
+#%agent dsoftsys:DSoftSys[operate:edge,idle].(webUI:WebUI | db:DB[idle] | aggregator:Aggregator[idle,idle]) | ras:RaspberryPi[idle,Bluetooth:edge,idle].coap:CoAP_Server | ble:BLE[Bluetooth:edge,idle].bus:Bus[idle].(s01:Slot.g1:Jig[idle] | s02:Slot.g2:Jig[idle] | s03:Slot.g3:Jig[idle] | s04:Slot.g4:Jig[idle] | s05:Slot.g5:Jig[idle] | s06:Slot.g6:Jig[idle] | s07:Slot.g7:Jig[idle] | s08:Slot.g8:Jig[idle] | s09:Slot.g9:Jig[idle] | s10:Slot.g10:Jig[idle] | n01:LED[idle] | n02:LED[idle] | n03:LED[idle] | n04:LED[idle] | n05:LED[idle] | n06:LED[idle] | n07:LED[idle] | n08:LED[idle] | n09:LED[idle] | n10:LED[idle]) | operator:Operator[operate:edge,idle];
+
+# Init Bluetooth Disconnected
+#%agent dsoftsys:DSoftSys[operate:edge,WIFI:edge].(webUI:WebUI | db:DB[idle] | aggregator:Aggregator[idle,idle]) | ras:RaspberryPi[WIFI:edge,idle,idle].coap:CoAP_Server | ble:BLE[idle,idle].bus:Bus[idle].(s01:Slot.g1:Jig[idle] | s02:Slot.g2:Jig[idle] | s03:Slot.g3:Jig[idle] | s04:Slot.g4:Jig[idle] | s05:Slot.g5:Jig[idle] | s06:Slot.g6:Jig[idle] | s07:Slot.g7:Jig[idle] | s08:Slot.g8:Jig[idle] | s09:Slot.g9:Jig[idle] | s10:Slot.g10:Jig[idle] | n01:LED[idle] | n02:LED[idle] | n03:LED[idle] | n04:LED[idle] | n05:LED[idle] | n06:LED[idle] | n07:LED[idle] | n08:LED[idle] | n09:LED[idle] | n10:LED[idle]) | operator:Operator[operate:edge,idle];
+
+# Init BLE Wire Disconnected
+#%agent dsoftsys:DSoftSys[operate:edge,WIFI:edge].(webUI:WebUI | db:DB[idle] | aggregator:Aggregator[idle,idle]) | ras:RaspberryPi[WIFI:edge,Bluetooth:edge,idle].coap:CoAP_Server | ble:BLE[Bluetooth:edge,idle] | operator:Operator[operate:edge,idle];
+
+# Init Bus Wire Disconnected
+#%agent dsoftsys:DSoftSys[operate:edge,WIFI:edge].(webUI:WebUI | db:DB[idle] | aggregator:Aggregator[idle,idle]) | ras:RaspberryPi[WIFI:edge,Bluetooth:edge,idle].coap:CoAP_Server | ble:BLE[Bluetooth:edge,idle].bus:Bus[idle].(s01:Slot.g1:Jig[idle] | s02:Slot.g2:Jig[idle] | s03:Slot.g3:Jig[idle] | s04:Slot.g4:Jig[idle] | s05:Slot.g5:Jig[idle] | s06:Slot.g6:Jig[idle] | s07:Slot.g7:Jig[idle] | s08:Slot.g8:Jig[idle] | s09:Slot.g9:Jig[idle] | s10:Slot.g10:Jig[idle] | n01:LED[idle] | n02:LED[idle] | n03:LED[idle] | n04:LED[idle] | n05:LED[idle] | n07:LED[idle] | n08:LED[idle] | n09:LED[idle] | n10:LED[idle]) | operator:Operator[operate:edge,idle];
+
+# Go!
+%check;

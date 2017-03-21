@@ -1,0 +1,19 @@
+#Light
+e.illum	Double	5	degree
+#Billboard
+f.content	String	Adult	unit
+#Passenger p1
+p1.age	Double	12	year
+p1.light	Double	2	degree
+p1.updateLight	String	false	boolean
+p1.updateBillboard	String	false	boolean
+#Passenger p2
+p2.age	Double	30	year
+p2.light	Double	5	degree
+p2.updateLight	String	false	boolean
+p2.updateBillboard	String	false	boolean
+#Passenger p3
+p3.age	Double	60	year
+p3.light	Double	10	degree
+p3.updateLight	String	false	boolean
+p3.updateBillboard	String	false	boolean

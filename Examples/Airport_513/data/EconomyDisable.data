@@ -1,0 +1,703 @@
+#Airplane
+ap.boardingTime	Double	35	mins
+ap.flightNo	String	CZ3265	unit
+#Passenger p1
+p1.traffic	String	false	boolean
+p1.flightNo	String	CZ3265	unit
+p1.fee	Double	0	yuan
+p1.light	Double	2	degree
+p1.hasCheckinLuggage	String	true	boolean
+p1.hasDanger	String	true	boolean
+#Passenger p2
+p2.traffic	String	false	boolean
+p2.flightNo	String	CZ3265	unit
+p2.fee	Double	0	yuan
+p2.light	Double	2	degree
+p2.hasCheckinLuggage	String	true	boolean
+p2.hasDanger	String	true	boolean
+#Passenger p3
+p3.traffic	String	false	boolean
+p3.flightNo	String	CZ3265	unit
+p3.fee	Double	0	yuan
+p3.light	Double	2	degree
+p3.hasCheckinLuggage	String	true	boolean
+p3.hasDanger	String	true	boolean
+#Passenger p4
+p4.traffic	String	false	boolean
+p4.flightNo	String	CZ3265	unit
+p4.fee	Double	0	yuan
+p4.light	Double	2	degree
+p4.hasCheckinLuggage	String	true	boolean
+p4.hasDanger	String	true	boolean
+#Passenger p5
+p5.traffic	String	false	boolean
+p5.flightNo	String	CZ3265	unit
+p5.fee	Double	0	yuan
+p5.light	Double	2	degree
+p5.hasCheckinLuggage	String	true	boolean
+p5.hasDanger	String	true	boolean
+#Passenger p6
+p6.traffic	String	false	boolean
+p6.flightNo	String	CZ3265	unit
+p6.fee	Double	0	yuan
+p6.light	Double	2	degree
+p6.hasCheckinLuggage	String	true	boolean
+p6.hasDanger	String	true	boolean
+#Passenger p7
+p7.traffic	String	false	boolean
+p7.flightNo	String	CZ3265	unit
+p7.fee	Double	0	yuan
+p7.light	Double	2	degree
+p7.hasCheckinLuggage	String	true	boolean
+p7.hasDanger	String	true	boolean
+#Passenger p8
+p8.traffic	String	false	boolean
+p8.flightNo	String	CZ3265	unit
+p8.fee	Double	0	yuan
+p8.light	Double	2	degree
+p8.hasCheckinLuggage	String	true	boolean
+p8.hasDanger	String	true	boolean
+#Passenger p9
+p9.traffic	String	false	boolean
+p9.flightNo	String	CZ3265	unit
+p9.fee	Double	0	yuan
+p9.light	Double	2	degree
+p9.hasCheckinLuggage	String	true	boolean
+p9.hasDanger	String	true	boolean
+#Passenger p10
+p10.traffic	String	false	boolean
+p10.flightNo	String	CZ3265	unit
+p10.fee	Double	0	yuan
+p10.light	Double	2	degree
+p10.hasCheckinLuggage	String	true	boolean
+p10.hasDanger	String	true	boolean
+#Passenger p11
+p11.traffic	String	false	boolean
+p11.flightNo	String	CZ3265	unit
+p11.fee	Double	0	yuan
+p11.light	Double	2	degree
+p11.hasCheckinLuggage	String	true	boolean
+p11.hasDanger	String	true	boolean
+#Passenger p12
+p12.traffic	String	false	boolean
+p12.flightNo	String	CZ3265	unit
+p12.fee	Double	0	yuan
+p12.light	Double	2	degree
+p12.hasCheckinLuggage	String	true	boolean
+p12.hasDanger	String	true	boolean
+#Passenger p13
+p13.traffic	String	false	boolean
+p13.flightNo	String	CZ3265	unit
+p13.fee	Double	0	yuan
+p13.light	Double	2	degree
+p13.hasCheckinLuggage	String	true	boolean
+p13.hasDanger	String	true	boolean
+#Passenger p14
+p14.traffic	String	false	boolean
+p14.flightNo	String	CZ3265	unit
+p14.fee	Double	0	yuan
+p14.light	Double	2	degree
+p14.hasCheckinLuggage	String	true	boolean
+p14.hasDanger	String	true	boolean
+#Passenger p15
+p15.traffic	String	false	boolean
+p15.flightNo	String	CZ3265	unit
+p15.fee	Double	0	yuan
+p15.light	Double	2	degree
+p15.hasCheckinLuggage	String	true	boolean
+p15.hasDanger	String	true	boolean
+#Passenger p16
+p16.traffic	String	false	boolean
+p16.flightNo	String	CZ3265	unit
+p16.fee	Double	0	yuan
+p16.light	Double	2	degree
+p16.hasCheckinLuggage	String	true	boolean
+p16.hasDanger	String	true	boolean
+#Passenger p17
+p17.traffic	String	false	boolean
+p17.flightNo	String	CZ3265	unit
+p17.fee	Double	0	yuan
+p17.light	Double	2	degree
+p17.hasCheckinLuggage	String	true	boolean
+p17.hasDanger	String	true	boolean
+#Passenger p18
+p18.traffic	String	false	boolean
+p18.flightNo	String	CZ3265	unit
+p18.fee	Double	0	yuan
+p18.light	Double	2	degree
+p18.hasCheckinLuggage	String	true	boolean
+p18.hasDanger	String	true	boolean
+#Passenger p19
+p19.traffic	String	false	boolean
+p19.flightNo	String	CZ3265	unit
+p19.fee	Double	0	yuan
+p19.light	Double	2	degree
+p19.hasCheckinLuggage	String	true	boolean
+p19.hasDanger	String	true	boolean
+#Passenger p20
+p20.traffic	String	false	boolean
+p20.flightNo	String	CZ3265	unit
+p20.fee	Double	0	yuan
+p20.light	Double	2	degree
+p20.hasCheckinLuggage	String	true	boolean
+p20.hasDanger	String	true	boolean
+#Passenger p21
+p21.traffic	String	false	boolean
+p21.flightNo	String	CZ3265	unit
+p21.fee	Double	0	yuan
+p21.light	Double	2	degree
+p21.hasCheckinLuggage	String	true	boolean
+p21.hasDanger	String	true	boolean
+#Passenger p22
+p22.traffic	String	false	boolean
+p22.flightNo	String	CZ3265	unit
+p22.fee	Double	0	yuan
+p22.light	Double	2	degree
+p22.hasCheckinLuggage	String	true	boolean
+p22.hasDanger	String	true	boolean
+#Passenger p23
+p23.traffic	String	false	boolean
+p23.flightNo	String	CZ3265	unit
+p23.fee	Double	0	yuan
+p23.light	Double	2	degree
+p23.hasCheckinLuggage	String	true	boolean
+p23.hasDanger	String	true	boolean
+#Passenger p24
+p24.traffic	String	false	boolean
+p24.flightNo	String	CZ3265	unit
+p24.fee	Double	0	yuan
+p24.light	Double	2	degree
+p24.hasCheckinLuggage	String	true	boolean
+p24.hasDanger	String	true	boolean
+#Passenger p25
+p25.traffic	String	false	boolean
+p25.flightNo	String	CZ3265	unit
+p25.fee	Double	0	yuan
+p25.light	Double	2	degree
+p25.hasCheckinLuggage	String	true	boolean
+p25.hasDanger	String	true	boolean
+#Passenger p26
+p26.traffic	String	false	boolean
+p26.flightNo	String	CZ3265	unit
+p26.fee	Double	0	yuan
+p26.light	Double	2	degree
+p26.hasCheckinLuggage	String	true	boolean
+p26.hasDanger	String	true	boolean
+#Passenger p27
+p27.traffic	String	false	boolean
+p27.flightNo	String	CZ3265	unit
+p27.fee	Double	0	yuan
+p27.light	Double	2	degree
+p27.hasCheckinLuggage	String	true	boolean
+p27.hasDanger	String	true	boolean
+#Passenger p28
+p28.traffic	String	false	boolean
+p28.flightNo	String	CZ3265	unit
+p28.fee	Double	0	yuan
+p28.light	Double	2	degree
+p28.hasCheckinLuggage	String	true	boolean
+p28.hasDanger	String	true	boolean
+#Passenger p29
+p29.traffic	String	false	boolean
+p29.flightNo	String	CZ3265	unit
+p29.fee	Double	0	yuan
+p29.light	Double	2	degree
+p29.hasCheckinLuggage	String	true	boolean
+p29.hasDanger	String	true	boolean
+#Passenger p30
+p30.traffic	String	false	boolean
+p30.flightNo	String	CZ3265	unit
+p30.fee	Double	0	yuan
+p30.light	Double	2	degree
+p30.hasCheckinLuggage	String	true	boolean
+p30.hasDanger	String	true	boolean
+#Passenger p31
+p31.traffic	String	false	boolean
+p31.flightNo	String	CZ3265	unit
+p31.fee	Double	0	yuan
+p31.light	Double	2	degree
+p31.hasCheckinLuggage	String	true	boolean
+p31.hasDanger	String	true	boolean
+#Passenger p32
+p32.traffic	String	false	boolean
+p32.flightNo	String	CZ3265	unit
+p32.fee	Double	0	yuan
+p32.light	Double	2	degree
+p32.hasCheckinLuggage	String	true	boolean
+p32.hasDanger	String	true	boolean
+#Passenger p33
+p33.traffic	String	false	boolean
+p33.flightNo	String	CZ3265	unit
+p33.fee	Double	0	yuan
+p33.light	Double	2	degree
+p33.hasCheckinLuggage	String	true	boolean
+p33.hasDanger	String	true	boolean
+#Passenger p34
+p34.traffic	String	false	boolean
+p34.flightNo	String	CZ3265	unit
+p34.fee	Double	0	yuan
+p34.light	Double	2	degree
+p34.hasCheckinLuggage	String	true	boolean
+p34.hasDanger	String	true	boolean
+#Passenger p35
+p35.traffic	String	false	boolean
+p35.flightNo	String	CZ3265	unit
+p35.fee	Double	0	yuan
+p35.light	Double	2	degree
+p35.hasCheckinLuggage	String	true	boolean
+p35.hasDanger	String	true	boolean
+#Passenger p36
+p36.traffic	String	false	boolean
+p36.flightNo	String	CZ3265	unit
+p36.fee	Double	0	yuan
+p36.light	Double	2	degree
+p36.hasCheckinLuggage	String	true	boolean
+p36.hasDanger	String	true	boolean
+#Passenger p37
+p37.traffic	String	false	boolean
+p37.flightNo	String	CZ3265	unit
+p37.fee	Double	0	yuan
+p37.light	Double	2	degree
+p37.hasCheckinLuggage	String	true	boolean
+p37.hasDanger	String	true	boolean
+#Passenger p38
+p38.traffic	String	false	boolean
+p38.flightNo	String	CZ3265	unit
+p38.fee	Double	0	yuan
+p38.light	Double	2	degree
+p38.hasCheckinLuggage	String	true	boolean
+p38.hasDanger	String	true	boolean
+#Passenger p39
+p39.traffic	String	false	boolean
+p39.flightNo	String	CZ3265	unit
+p39.fee	Double	0	yuan
+p39.light	Double	2	degree
+p39.hasCheckinLuggage	String	true	boolean
+p39.hasDanger	String	true	boolean
+#Passenger p40
+p40.traffic	String	false	boolean
+p40.flightNo	String	CZ3265	unit
+p40.fee	Double	0	yuan
+p40.light	Double	2	degree
+p40.hasCheckinLuggage	String	true	boolean
+p40.hasDanger	String	true	boolean
+#Passenger p41
+p41.traffic	String	false	boolean
+p41.flightNo	String	CZ3265	unit
+p41.fee	Double	0	yuan
+p41.light	Double	2	degree
+p41.hasCheckinLuggage	String	true	boolean
+p41.hasDanger	String	true	boolean
+#Passenger p42
+p42.traffic	String	false	boolean
+p42.flightNo	String	CZ3265	unit
+p42.fee	Double	0	yuan
+p42.light	Double	2	degree
+p42.hasCheckinLuggage	String	true	boolean
+p42.hasDanger	String	true	boolean
+#Passenger p43
+p43.traffic	String	false	boolean
+p43.flightNo	String	CZ3265	unit
+p43.fee	Double	0	yuan
+p43.light	Double	2	degree
+p43.hasCheckinLuggage	String	true	boolean
+p43.hasDanger	String	true	boolean
+#Passenger p44
+p44.traffic	String	false	boolean
+p44.flightNo	String	CZ3265	unit
+p44.fee	Double	0	yuan
+p44.light	Double	2	degree
+p44.hasCheckinLuggage	String	true	boolean
+p44.hasDanger	String	true	boolean
+#Passenger p45
+p45.traffic	String	false	boolean
+p45.flightNo	String	CZ3265	unit
+p45.fee	Double	0	yuan
+p45.light	Double	2	degree
+p45.hasCheckinLuggage	String	true	boolean
+p45.hasDanger	String	true	boolean
+#Passenger p46
+p46.traffic	String	false	boolean
+p46.flightNo	String	CZ3265	unit
+p46.fee	Double	0	yuan
+p46.light	Double	2	degree
+p46.hasCheckinLuggage	String	true	boolean
+p46.hasDanger	String	true	boolean
+#Passenger p47
+p47.traffic	String	false	boolean
+p47.flightNo	String	CZ3265	unit
+p47.fee	Double	0	yuan
+p47.light	Double	2	degree
+p47.hasCheckinLuggage	String	true	boolean
+p47.hasDanger	String	true	boolean
+#Passenger p48
+p48.traffic	String	false	boolean
+p48.flightNo	String	CZ3265	unit
+p48.fee	Double	0	yuan
+p48.light	Double	2	degree
+p48.hasCheckinLuggage	String	true	boolean
+p48.hasDanger	String	true	boolean
+#Passenger p49
+p49.traffic	String	false	boolean
+p49.flightNo	String	CZ3265	unit
+p49.fee	Double	0	yuan
+p49.light	Double	2	degree
+p49.hasCheckinLuggage	String	true	boolean
+p49.hasDanger	String	true	boolean
+#Passenger p50
+p50.traffic	String	false	boolean
+p50.flightNo	String	CZ3265	unit
+p50.fee	Double	0	yuan
+p50.light	Double	2	degree
+p50.hasCheckinLuggage	String	true	boolean
+p50.hasDanger	String	true	boolean
+#Passenger p51
+p51.traffic	String	false	boolean
+p51.flightNo	String	CZ3265	unit
+p51.fee	Double	0	yuan
+p51.light	Double	2	degree
+p51.hasCheckinLuggage	String	true	boolean
+p51.hasDanger	String	true	boolean
+#Passenger p52
+p52.traffic	String	false	boolean
+p52.flightNo	String	CZ3265	unit
+p52.fee	Double	0	yuan
+p52.light	Double	2	degree
+p52.hasCheckinLuggage	String	true	boolean
+p52.hasDanger	String	true	boolean
+#Passenger p53
+p53.traffic	String	false	boolean
+p53.flightNo	String	CZ3265	unit
+p53.fee	Double	0	yuan
+p53.light	Double	2	degree
+p53.hasCheckinLuggage	String	true	boolean
+p53.hasDanger	String	true	boolean
+#Passenger p54
+p54.traffic	String	false	boolean
+p54.flightNo	String	CZ3265	unit
+p54.fee	Double	0	yuan
+p54.light	Double	2	degree
+p54.hasCheckinLuggage	String	true	boolean
+p54.hasDanger	String	true	boolean
+#Passenger p55
+p55.traffic	String	false	boolean
+p55.flightNo	String	CZ3265	unit
+p55.fee	Double	0	yuan
+p55.light	Double	2	degree
+p55.hasCheckinLuggage	String	true	boolean
+p55.hasDanger	String	true	boolean
+#Passenger p56
+p56.traffic	String	false	boolean
+p56.flightNo	String	CZ3265	unit
+p56.fee	Double	0	yuan
+p56.light	Double	2	degree
+p56.hasCheckinLuggage	String	true	boolean
+p56.hasDanger	String	true	boolean
+#Passenger p57
+p57.traffic	String	false	boolean
+p57.flightNo	String	CZ3265	unit
+p57.fee	Double	0	yuan
+p57.light	Double	2	degree
+p57.hasCheckinLuggage	String	true	boolean
+p57.hasDanger	String	true	boolean
+#Passenger p58
+p58.traffic	String	false	boolean
+p58.flightNo	String	CZ3265	unit
+p58.fee	Double	0	yuan
+p58.light	Double	2	degree
+p58.hasCheckinLuggage	String	true	boolean
+p58.hasDanger	String	true	boolean
+#Passenger p59
+p59.traffic	String	false	boolean
+p59.flightNo	String	CZ3265	unit
+p59.fee	Double	0	yuan
+p59.light	Double	2	degree
+p59.hasCheckinLuggage	String	true	boolean
+p59.hasDanger	String	true	boolean
+#Passenger p60
+p60.traffic	String	false	boolean
+p60.flightNo	String	CZ3265	unit
+p60.fee	Double	0	yuan
+p60.light	Double	2	degree
+p60.hasCheckinLuggage	String	true	boolean
+p60.hasDanger	String	true	boolean
+#Passenger p61
+p61.traffic	String	false	boolean
+p61.flightNo	String	CZ3265	unit
+p61.fee	Double	0	yuan
+p61.light	Double	2	degree
+p61.hasCheckinLuggage	String	true	boolean
+p61.hasDanger	String	true	boolean
+#Passenger p62
+p62.traffic	String	false	boolean
+p62.flightNo	String	CZ3265	unit
+p62.fee	Double	0	yuan
+p62.light	Double	2	degree
+p62.hasCheckinLuggage	String	true	boolean
+p62.hasDanger	String	true	boolean
+#Passenger p63
+p63.traffic	String	false	boolean
+p63.flightNo	String	CZ3265	unit
+p63.fee	Double	0	yuan
+p63.light	Double	2	degree
+p63.hasCheckinLuggage	String	true	boolean
+p63.hasDanger	String	true	boolean
+#Passenger p64
+p64.traffic	String	false	boolean
+p64.flightNo	String	CZ3265	unit
+p64.fee	Double	0	yuan
+p64.light	Double	2	degree
+p64.hasCheckinLuggage	String	true	boolean
+p64.hasDanger	String	true	boolean
+#Passenger p65
+p65.traffic	String	false	boolean
+p65.flightNo	String	CZ3265	unit
+p65.fee	Double	0	yuan
+p65.light	Double	2	degree
+p65.hasCheckinLuggage	String	true	boolean
+p65.hasDanger	String	true	boolean
+#Passenger p66
+p66.traffic	String	false	boolean
+p66.flightNo	String	CZ3265	unit
+p66.fee	Double	0	yuan
+p66.light	Double	2	degree
+p66.hasCheckinLuggage	String	true	boolean
+p66.hasDanger	String	true	boolean
+#Passenger p67
+p67.traffic	String	false	boolean
+p67.flightNo	String	CZ3265	unit
+p67.fee	Double	0	yuan
+p67.light	Double	2	degree
+p67.hasCheckinLuggage	String	true	boolean
+p67.hasDanger	String	true	boolean
+#Passenger p68
+p68.traffic	String	false	boolean
+p68.flightNo	String	CZ3265	unit
+p68.fee	Double	0	yuan
+p68.light	Double	2	degree
+p68.hasCheckinLuggage	String	true	boolean
+p68.hasDanger	String	true	boolean
+#Passenger p69
+p69.traffic	String	false	boolean
+p69.flightNo	String	CZ3265	unit
+p69.fee	Double	0	yuan
+p69.light	Double	2	degree
+p69.hasCheckinLuggage	String	true	boolean
+p69.hasDanger	String	true	boolean
+#Passenger p70
+p70.traffic	String	false	boolean
+p70.flightNo	String	CZ3265	unit
+p70.fee	Double	0	yuan
+p70.light	Double	2	degree
+p70.hasCheckinLuggage	String	true	boolean
+p70.hasDanger	String	true	boolean
+#Passenger p71
+p71.traffic	String	false	boolean
+p71.flightNo	String	CZ3265	unit
+p71.fee	Double	0	yuan
+p71.light	Double	2	degree
+p71.hasCheckinLuggage	String	true	boolean
+p71.hasDanger	String	true	boolean
+#Passenger p72
+p72.traffic	String	false	boolean
+p72.flightNo	String	CZ3265	unit
+p72.fee	Double	0	yuan
+p72.light	Double	2	degree
+p72.hasCheckinLuggage	String	true	boolean
+p72.hasDanger	String	true	boolean
+#Passenger p73
+p73.traffic	String	false	boolean
+p73.flightNo	String	CZ3265	unit
+p73.fee	Double	0	yuan
+p73.light	Double	2	degree
+p73.hasCheckinLuggage	String	true	boolean
+p73.hasDanger	String	true	boolean
+#Passenger p74
+p74.traffic	String	false	boolean
+p74.flightNo	String	CZ3265	unit
+p74.fee	Double	0	yuan
+p74.light	Double	2	degree
+p74.hasCheckinLuggage	String	true	boolean
+p74.hasDanger	String	true	boolean
+#Passenger p75
+p75.traffic	String	false	boolean
+p75.flightNo	String	CZ3265	unit
+p75.fee	Double	0	yuan
+p75.light	Double	2	degree
+p75.hasCheckinLuggage	String	true	boolean
+p75.hasDanger	String	true	boolean
+#Passenger p76
+p76.traffic	String	false	boolean
+p76.flightNo	String	CZ3265	unit
+p76.fee	Double	0	yuan
+p76.light	Double	2	degree
+p76.hasCheckinLuggage	String	true	boolean
+p76.hasDanger	String	true	boolean
+#Passenger p77
+p77.traffic	String	false	boolean
+p77.flightNo	String	CZ3265	unit
+p77.fee	Double	0	yuan
+p77.light	Double	2	degree
+p77.hasCheckinLuggage	String	true	boolean
+p77.hasDanger	String	true	boolean
+#Passenger p78
+p78.traffic	String	false	boolean
+p78.flightNo	String	CZ3265	unit
+p78.fee	Double	0	yuan
+p78.light	Double	2	degree
+p78.hasCheckinLuggage	String	true	boolean
+p78.hasDanger	String	true	boolean
+#Passenger p79
+p79.traffic	String	false	boolean
+p79.flightNo	String	CZ3265	unit
+p79.fee	Double	0	yuan
+p79.light	Double	2	degree
+p79.hasCheckinLuggage	String	true	boolean
+p79.hasDanger	String	true	boolean
+#Passenger p80
+p80.traffic	String	false	boolean
+p80.flightNo	String	CZ3265	unit
+p80.fee	Double	0	yuan
+p80.light	Double	2	degree
+p80.hasCheckinLuggage	String	true	boolean
+p80.hasDanger	String	true	boolean
+#Passenger p81
+p81.traffic	String	false	boolean
+p81.flightNo	String	CZ3265	unit
+p81.fee	Double	0	yuan
+p81.light	Double	2	degree
+p81.hasCheckinLuggage	String	true	boolean
+p81.hasDanger	String	true	boolean
+#Passenger p82
+p82.traffic	String	false	boolean
+p82.flightNo	String	CZ3265	unit
+p82.fee	Double	0	yuan
+p82.light	Double	2	degree
+p82.hasCheckinLuggage	String	true	boolean
+p82.hasDanger	String	true	boolean
+#Passenger p83
+p83.traffic	String	false	boolean
+p83.flightNo	String	CZ3265	unit
+p83.fee	Double	0	yuan
+p83.light	Double	2	degree
+p83.hasCheckinLuggage	String	true	boolean
+p83.hasDanger	String	true	boolean
+#Passenger p84
+p84.traffic	String	false	boolean
+p84.flightNo	String	CZ3265	unit
+p84.fee	Double	0	yuan
+p84.light	Double	2	degree
+p84.hasCheckinLuggage	String	true	boolean
+p84.hasDanger	String	true	boolean
+#Passenger p85
+p85.traffic	String	false	boolean
+p85.flightNo	String	CZ3265	unit
+p85.fee	Double	0	yuan
+p85.light	Double	2	degree
+p85.hasCheckinLuggage	String	true	boolean
+p85.hasDanger	String	true	boolean
+#Passenger p86
+p86.traffic	String	false	boolean
+p86.flightNo	String	CZ3265	unit
+p86.fee	Double	0	yuan
+p86.light	Double	2	degree
+p86.hasCheckinLuggage	String	true	boolean
+p86.hasDanger	String	true	boolean
+#Passenger p87
+p87.traffic	String	false	boolean
+p87.flightNo	String	CZ3265	unit
+p87.fee	Double	0	yuan
+p87.light	Double	2	degree
+p87.hasCheckinLuggage	String	true	boolean
+p87.hasDanger	String	true	boolean
+#Passenger p88
+p88.traffic	String	false	boolean
+p88.flightNo	String	CZ3265	unit
+p88.fee	Double	0	yuan
+p88.light	Double	2	degree
+p88.hasCheckinLuggage	String	true	boolean
+p88.hasDanger	String	true	boolean
+#Passenger p89
+p89.traffic	String	false	boolean
+p89.flightNo	String	CZ3265	unit
+p89.fee	Double	0	yuan
+p89.light	Double	2	degree
+p89.hasCheckinLuggage	String	true	boolean
+p89.hasDanger	String	true	boolean
+#Passenger p90
+p90.traffic	String	false	boolean
+p90.flightNo	String	CZ3265	unit
+p90.fee	Double	0	yuan
+p90.light	Double	2	degree
+p90.hasCheckinLuggage	String	true	boolean
+p90.hasDanger	String	true	boolean
+#Passenger p91
+p91.traffic	String	false	boolean
+p91.flightNo	String	CZ3265	unit
+p91.fee	Double	0	yuan
+p91.light	Double	2	degree
+p91.hasCheckinLuggage	String	true	boolean
+p91.hasDanger	String	true	boolean
+#Passenger p92
+p92.traffic	String	false	boolean
+p92.flightNo	String	CZ3265	unit
+p92.fee	Double	0	yuan
+p92.light	Double	2	degree
+p92.hasCheckinLuggage	String	true	boolean
+p92.hasDanger	String	true	boolean
+#Passenger p93
+p93.traffic	String	false	boolean
+p93.flightNo	String	CZ3265	unit
+p93.fee	Double	0	yuan
+p93.light	Double	2	degree
+p93.hasCheckinLuggage	String	true	boolean
+p93.hasDanger	String	true	boolean
+#Passenger p94
+p94.traffic	String	false	boolean
+p94.flightNo	String	CZ3265	unit
+p94.fee	Double	0	yuan
+p94.light	Double	2	degree
+p94.hasCheckinLuggage	String	true	boolean
+p94.hasDanger	String	true	boolean
+#Passenger p95
+p95.traffic	String	false	boolean
+p95.flightNo	String	CZ3265	unit
+p95.fee	Double	0	yuan
+p95.light	Double	2	degree
+p95.hasCheckinLuggage	String	true	boolean
+p95.hasDanger	String	true	boolean
+#Passenger p96
+p96.traffic	String	false	boolean
+p96.flightNo	String	CZ3265	unit
+p96.fee	Double	0	yuan
+p96.light	Double	2	degree
+p96.hasCheckinLuggage	String	true	boolean
+p96.hasDanger	String	true	boolean
+#Passenger p97
+p97.traffic	String	false	boolean
+p97.flightNo	String	CZ3265	unit
+p97.fee	Double	0	yuan
+p97.light	Double	2	degree
+p97.hasCheckinLuggage	String	true	boolean
+p97.hasDanger	String	true	boolean
+#Passenger p98
+p98.traffic	String	false	boolean
+p98.flightNo	String	CZ3265	unit
+p98.fee	Double	0	yuan
+p98.light	Double	2	degree
+p98.hasCheckinLuggage	String	true	boolean
+p98.hasDanger	String	true	boolean
+#Passenger p99
+p99.traffic	String	false	boolean
+p99.flightNo	String	CZ3265	unit
+p99.fee	Double	0	yuan
+p99.light	Double	2	degree
+p99.hasCheckinLuggage	String	true	boolean
+p99.hasDanger	String	true	boolean
+#Passenger p100
+p100.traffic	String	false	boolean
+p100.flightNo	String	CZ3265	unit
+p100.fee	Double	0	yuan
+p100.light	Double	2	degree
+p100.hasCheckinLuggage	String	true	boolean
+p100.hasDanger	String	true	boolean

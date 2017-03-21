@@ -1,0 +1,46 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 0;
+%passive LightZone : 0;
+%active Light : 0;
+%active Airport : 0;
+%active UpdateBillboard : 0;
+%active UpdateLight : 0;
+%active Passenger : 0;
+%passive ShoppingZone : 0;
+%active Billboard : 0;
+
+# Rules
+%rule r_enter_lightzone Airport.(LightZone.$2 | Passenger.$1  | ShoppingZone.$0) -> Airport.(LightZone.(Passenger.$1 | $2) | ShoppingZone.$0) {SysClk:1};
+
+%rule r_enter_shoppingzone Airport.(LightZone.(Passenger.($1 | UpdateLight) | $2) | ShoppingZone.$3) -> Airport.(LightZone.$2 | ShoppingZone.($3 | Passenger.$1)){SysClk:1};
+
+%rule r_leave_shoppingzone Airport.(ShoppingZone.(Billboard | Passenger.($2 | UpdateBillboard)) | LightZone.$0) -> Airport.(ShoppingZone.$1 | LightZone.$0)  | Passenger.$2 {SysClk:1};
+
+%rule r_update_light_kid Airport.(LightZone.(Light | Passenger.$1) | ShoppingZone.$0) -> Airport.(LightZone.(Light | Passenger.($1 | UpdateLight)) | ShoppingZone.$0){SysClk:2	React:Passenger	Cond:Passenger.age<18&&Passenger.updateLight=='false'	Expr:e.illum=Passenger.light,Passenger.updateLight='true'};
+
+%rule r_update_billboard_kid Airport.(ShoppingZone.(Billboard | Passenger.$2 ) | LightZone.$0) -> Airport.(ShoppingZone.(Billboard | Passenger.($2 | UpdateBillboard) ) | LightZone.$0){SysClk:2	React:Passenger	Cond:Passenger.age<18&&Passenger.updateBillboard=='false'	Expr:f.content='Kid',Passenger.updateBillboard='true'};
+
+%rule r_update_light_adult Airport.(LightZone.(Light | Passenger.$1) | ShoppingZone.$0) -> Airport.(LightZone.(Light | Passenger.($1 | UpdateLight)) | ShoppingZone.$0){SysClk:2	React:Passenger	Cond:Passenger.age>18&&Passenger.age<50,Passenger.updateLight=='false'	Expr:e.illum=Passenger.light,Passenger.updateLight='true'};
+
+%rule r_update_billboard_adult Airport.(ShoppingZone.(Billboard | Passenger.$2 ) | LightZone.$0) -> Airport.(ShoppingZone.(Billboard | Passenger.($2 | UpdateBillboard) ) | LightZone.$0){SysClk:2	React:Passenger	Cond:Passenger.age>18&&Passenger.age<50,Passenger.updateBillboard=='false'	Expr:f.content='Adult',Passenger.updateBillboard='true'};
+
+%rule r_update_light_old Airport.(LightZone.(Light | Passenger.$1) | ShoppingZone.$0) -> Airport.(LightZone.(Light | Passenger.($1 | UpdateLight)) | ShoppingZone.$0){SysClk:2	React:Passenger	Cond:Passenger.age>50&&Passenger.updateLight=='false'	Expr:e.illum=Passenger.light,Passenger.updateLight='true'};
+
+%rule r_update_billboard_old Airport.(ShoppingZone.(Billboard | Passenger.$2 ) | LightZone.$0) -> Airport.(ShoppingZone.(Billboard | Passenger.($2 | UpdateBillboard) ) | LightZone.$0){SysClk:2	React:Passenger	Cond:Passenger.age>50&&Passenger.updateBillboard=='false'	Expr:f.content='Old',Passenger.updateBillboard='true'};
+
+#kid passenger
+%agent a:Airport.(c:LightZone.e:Light | p1:Passenger | d:ShoppingZone.f:Billboard);
+
+#adult passenger
+#%agent a:Airport.(c:LightZone.e:Light | p2:Passenger | d:ShoppingZone.f:Billboard);
+
+#old passenger
+#%agent a:Airport.(c:LightZone.e:Light | p3:Passenger | d:ShoppingZone.f:Billboard);
+
+# Go!
+%check;

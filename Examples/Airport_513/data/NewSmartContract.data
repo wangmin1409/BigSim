@@ -1,0 +1,75 @@
+#Airplane
+airplane.boardingTime	Double	64	mins
+airplane.flightNo	String	CZ3265	unit
+airplane.passengerNum	Int	4	unit
+airplane.hasTakeoff	String	false	boolean
+#CBD
+cbd.distance	Double	20	kilometers
+#School
+school.distance	Double	8	kilometers
+#Community
+community.distance	Double	10	kilometers
+#Gatelounge
+GateLounge.number	Int	0	unit
+#Taxi
+taxi.studentfee	Double	0	yuan
+taxi.professorfee	Double	0	yuan
+taxi.businessfee	Double	0	yuan
+taxi.policemanfee	Double	0	yuan
+#Contract
+businessContract.tax	Int	4	percentage
+#Passenger Student jerry
+jerry.flightNo	String	CZ3265	unit
+jerry.hasChecked	String	false	boolean
+jerry.hasSecurityChecked	String	false	boolean
+jerry.hasCheckinLuggage	String	true	boolean
+jerry.hasDanger	String	false	boolean
+jerry.hasShoppingin	String	false	boolean
+jerry.hasGatelounge	String	false	boolean
+jerry.hasOnboard	String	false	boolean
+jerry.smoking	String	false	boolean
+#Passenger Business David
+David.flightNo	String	CZ3265	unit
+David.hasChecked	String	false	boolean
+David.hasSecurityChecked	String	false	boolean
+David.hasCheckinLuggage	String	true	boolean
+David.hasDanger	String	true	boolean
+David.hasShoppingin	String	false	boolean
+David.hasGatelounge	String	false	boolean
+David.hasOnboard	String	false	boolean
+David.signcontract	String	false	boolean
+David.smoking	String	false	boolean
+#Passenger Professor james
+james.flightNo	String	CZ3265	unit
+james.hasChecked	String	false	boolean
+james.hasSecurityChecked	String	false	boolean
+james.hasCheckinLuggage	String	false	boolean
+james.hasDanger	String	true	boolean
+james.hasShoppingin	String	false	boolean
+james.hasGatelounge	String	false	boolean
+james.hasOnboard	String	false	boolean
+james.smoking	String	false	boolean
+#Passenger PoliceMan Tim
+Tim.flightNo	String	CZ3265	unit
+Tim.hasChecked	String	false	boolean
+Tim.hasSecurityChecked	String	false	boolean
+Tim.hasCheckinLuggage	String	false	boolean
+Tim.hasDanger	String	false	boolean
+Tim.hasShoppingin	String	false	boolean
+Tim.hasGatelounge	String	false	boolean
+Tim.hasOnboard	String	false	boolean
+Tim.smoking	String	false	boolean
+#shoppingOutComputer
+shoppingOutComputer.passengers	Int	0	unit
+#securityComputer
+securityComputer.passengers	Int	0	unit
+#checkInComputer
+checkInComputer.passengers	Int	0	unit
+#shoppingInComputer
+shoppingInComputer.passengers	Int	0	unit
+#gateLoungeComputer
+gateLoungeComputer.passengers	Int	0	unit
+
+S4.test	String	true	boolean
+S6.test	String	true	boolean
+#S5.test	String	true	boolean

@@ -1,0 +1,35 @@
+digraph reaction_graph { 
+   rankdir=LR; 
+   Node [shape = circle]; 
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim 
+Report"]; 
+BigSim_Report -> N__2078697906[color = aliceblue label = ""]; 
+ N__2078697906 
+ [shape=circle, color=lightblue2, style=filled]; 
+N__1627701091[ label="N__1627701091"]; 
+ N__1627701091 -> N_544923178[ color = purple label = "System Clock: 6.0 
+r_8,r_4"]; 
+N__180263495[ label="N__180263495"]; 
+ N__180263495 -> N__205434259[ color = purple label = "System Clock: 8.0 
+r_9"]; 
+N__205434259[ label="N__205434259"]; 
+ N__205434259 -> N__1545552013[ color = purple label = "System Clock: 11.0 
+r_10"]; 
+N__258942918[ label="N__258942918"]; 
+ N__258942918 -> N__1336072637[ color = purple label = "System Clock: 4.0 
+r_3,r_7"]; 
+N__2078697906[ label="N__2078697906"]; 
+ N__2078697906 -> N__962120465[ color = purple label = "System Clock: 1.0 
+r_1,r_6"]; 
+N__1545552013[ shape = doublecircle, color=lightblue2, style=filled, label="N__1545552013"]; 
+N__1336072637[ label="N__1336072637"]; 
+ N__1336072637 -> N__1627701091[ color = purple label = "System Clock: 5.0 
+r_7,r_4"]; 
+N_544923178[ label="N_544923178"]; 
+ N_544923178 -> N__180263495[ color = purple label = "System Clock: 7.0 
+r_5,r_9"]; 
+N__962120465[ label="N__962120465"]; 
+ N__962120465 -> N__258942918[ color = purple label = "System Clock: 3.0 
+r_2"]; 
+} 
+  

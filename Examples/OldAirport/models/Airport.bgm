@@ -1,0 +1,154 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 2;
+%active Airport : 0;
+%active Checkin : 0;
+%active Security : 0;
+%active PassagewayToShop : 0;
+%passive ShoppingZone : 0;
+%active GateLounge : 0;
+%active ApronZone : 0;
+%active Passenger : 10;
+%active Light : 1;
+%active BillBoard : 1;
+%active Computer : 2;
+%active PreIllum : 4;
+%active PreValue : 1;
+%active CurIllum : 4;
+%active PreUpper : 1;
+%active PreLower : 1;
+%active CurValue : 1;
+%active CurUpper : 1;
+%active CurLower : 1;
+%active AdverCont : 3;
+%active Content : 1;
+%active AgeLimit : 1;
+%active Age : 1;
+%active personinfo : 1;
+%active luggageinfo : 1;
+%active SecurityInfo : 1;
+%active shoppinginfo : 1;
+%active Commodity : 1;
+%active wayready : 0;
+%active PassagewayToGate : 0;
+%active gateready : 0;
+%active PassagewayToSecurity : 0;
+%active Store : 0;
+%active Ticket : 1;
+%active database : 1;
+%active dataPassenger : 10;
+%active dataTicket : 5;
+%active dataHangLuggage : 3;
+%active datacheckinLuggage : 4;
+%active dataAD : 2;
+%active dataShopPrefer : 2;
+%active dataProduct : 3;
+%active hangLuggage : 2;
+%active checkinLuggage : 1;
+%active dataDangerousList : 1;
+%active true : 1;
+%active false : 1;
+%active value : 1;
+%active hasdangerous : 2;
+%active broading : 0;
+
+# Rules
+%rule r_0 Airport.$1 | $2 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(hangLuggage[hasHangLuggage:edge,idle] | checkinLuggage[hasCheckinLuggage:edge] | outAirport) -> Airport.($1 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(hangLuggage[hasHangLuggage:edge,idle] | checkinLuggage[hasCheckinLuggage:edge] | inAirport)) | $2;
+
+%rule r_1 Airport.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(hangLuggage[hasHangLuggage:edge,idle] | checkinLuggage[hasCheckinLuggage:edge] | inAirport) | $1) -> Airport.$1 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(hangLuggage[hasHangLuggage:edge,idle] | checkinLuggage[hasCheckinLuggage:edge] | outAirport);
+
+%rule r_2 Checkin.$3 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(hangLuggage[hasHangLuggage:edge,idle] | checkinLuggage[hasCheckinLuggage:edge] | inAirport) | $2   -> Checkin.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(hangLuggage[hasHangLuggage:edge,idle] | checkinLuggage[hasCheckinLuggage:edge] | inCheckin) | $3) | $2;
+
+%rule r_3 Checkin.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(inCheckin | hangLuggage[hasHangLuggage:edge,idle] | checkinLuggage[hasCheckinLuggage:edge]) | $2) | $0 -> Checkin.$2 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(inAirport | checkinLuggage[hasCheckinLuggage:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $0;
+
+%rule r_4 Checkin.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(inCheckin | hangLuggage[hasHangLuggage:edge,idle] | checkinLuggage[hasCheckinLuggage:edge]) | Computer[connect:edge,idle].$4 | $5)  | $2 -> Checkin.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,manipulateCheckin:edge,idle,hasCheckinLuggage:edge,idle].(inCheckin | hangLuggage[hasHangLuggage:edge,idle] | checkinLuggage[hasCheckinLuggage:edge]) | Computer[connect:edge,manipulateCheckin:edge].$4 | $5) | $2;
+
+%rule r_5 Checkin.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,manipulateCheckin:edge,idle,hasCheckinLuggage:edge,idle].(inCheckin | hangLuggage[hasHangLuggage:edge,idle] | checkinLuggage[hasCheckinLuggage:edge]) | Computer[connect:edge,manipulateCheckin:edge].$3 | $1) | $0 -> Checkin.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inCheckin | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Computer[connect:edge,idle].personinfo[idle] | $1 ) | $0;
+
+%rule r_6 Airport.(Checkin.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inCheckin | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Computer[connect:edge,idle].personinfo[idle] | $6) | $3)  -> Airport.(Checkin.($6 | Computer[connect:edge,idle].$0) | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(toPSec | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $3);
+
+%rule r_7 Airport.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(toPSec | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $1)  -> Airport.$1 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(outAirport | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]);
+
+%rule r_8 PassagewayToSecurity.$1 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(toPSec | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $2 -> PassagewayToSecurity.($1 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inPSec | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle])) | $2;
+
+%rule r_9 PassagewayToSecurity.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inPSec | hangLuggage[hasHangLuggage:edge,idle] | Ticket[hasTicket:edge]) | Light[idle].$2 | $4) | $3 -> PassagewayToSecurity.(Passenger[adjustLight:edge,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inPSec | hangLuggage[hasHangLuggage:edge,idle] | Ticket[hasTicket:edge]) | Light[adjustLight:edge].$2 | $4) | $3;
+
+%rule r_10 PassagewayToSecurity.(Passenger[adjustLight:edge,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inPSec | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Light[adjustLight:edge] | $6) | $2 -> PassagewayToSecurity.(Light[idle] | $6) | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(toSec | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $2;
+
+%rule r_77 Airport.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(toSec | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $1)  -> Airport.$1 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(outAirport | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]);
+
+%rule r_11 Security.$1 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(toSec | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $3 -> Security.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inSec | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $1) | $3;
+
+%rule r_12 Security.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inSec | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Computer[connect:edge,idle].$4 | $5) | $2 -> Security.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,manipulateSecurity:edge,hasTicket:edge,idle,idle].(inSec | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Computer[connect:edge,manipulateSecurity:edge].$4 | $5) | $2;
+
+%rule r_13 Security.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,manipulateSecurity:edge,hasTicket:edge,idle,idle].(inSec | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Computer[connect:edge,manipulateSecurity:edge].$4 | $5) | $2 -> Security.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inSecInfo | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Computer[connect:edge,idle].SecurityInfo[idle] | $5) | $2;
+
+%rule r_14 Security.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle, idle, hasTicket:edge,idle,idle].(inSecInfo | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $2) | $0 -> Security.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inSecInfo | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,f:edge] | false[f:edge]) | $2) |  $0;
+
+%rule r_15 Security.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inSecInfo | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $2) | $0 -> Security.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inSecInfo | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,t:edge] | true[t:edge]) | $2) | $0;
+
+%rule r_16 Security.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inSecInfo | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,t:edge] | true[t:edge]) | Computer[connect:edge,idle].SecurityInfo[idle] | $2) | $0 -> Security.(Computer[connect:edge,idle].$1 | $2) | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(outSecInfo | hangLuggage[hasHangLuggage:edge,idle] | Ticket[hasTicket:edge]) | $0;
+
+%rule r_777 Airport.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(outSecInfo | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $1)  -> Airport.$1 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(outAirport | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]);
+
+%rule r_17 Security.(Passenger[idle,idle,idle, hasHangLuggage:edge,idle,idle,idle, hasTicket:edge,idle,idle].(inSecInfo | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,t:edge] | true[t:edge]) | $2) | $1 -> Security.(Passenger[idle,idle,idle, hasHangLuggage:edge,idle,idle,idle, hasTicket:edge,idle,idle].(inSecInfo | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,f:edge] | false[f:edge]) | $2) | $1;
+
+%rule r_18 Security.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inSecInfo | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,f:edge] | false[f:edge])  | $2 | Computer[connect:edge,idle].SecurityInfo[idle]) | $0 -> Security.(Computer[connect:edge,idle].$1 | $2) | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(toPShop | hangLuggage[hasHangLuggage:edge,idle] | Ticket[hasTicket:edge]) | $0;
+
+%rule r_7777 Airport.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(toPShop | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $1)  -> Airport.$1 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(outAirport | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]);
+
+%rule r_19 PassagewayToShop.$2 | Passenger[idle,idle,idle, hasHangLuggage:edge,idle,idle,idle, hasTicket:edge,idle,idle].(toPShop | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $0 -> PassagewayToShop.($2 | Passenger[idle,idle,idle, hasHangLuggage:edge,idle,idle,idle, hasTicket:edge,idle,idle].(inPShop | hangLuggage[hasHangLuggage:edge,idle] | Ticket[hasTicket:edge])) | $0;
+
+%rule r_20 PassagewayToShop.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inPShop | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Light[idle] | $1) | $0 -> PassagewayToShop.(Passenger[adjustLight:edge,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inPShop | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Light[adjustLight:edge] | $1) | $0;
+
+%rule r_21 PassagewayToShop.(Passenger[adjustLight:edge,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inPShop | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Light[adjustLight:edge] | $1) | $0 -> PassagewayToShop.(Light[idle] | $1) | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(outPShop | hangLuggage[hasHangLuggage:edge,idle] | Ticket[hasTicket:edge]) | $0;
+
+%rule r_22 ShoppingZone.$1 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(outPShop | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $2 -> ShoppingZone.($1 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inShop | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle])) | $2;
+
+%rule r_23 ShoppingZone.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inShop | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | BillBoard[idle] | $1) | $0 -> ShoppingZone.(Passenger[idle,agelimit:edge,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inShop | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | BillBoard[agelimit:edge] | $1) | $0;
+
+%rule r_24 ShoppingZone.(Store.$1 | Passenger[idle, agelimit:edge,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inShop | hangLuggage[hasHangLuggage:edge,idle] | Ticket[hasTicket:edge]) | BillBoard[agelimit:edge] | $3) | $0 -> ShoppingZone.(BillBoard[idle] | Store.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inStore | hangLuggage[hasHangLuggage:edge,idle] | Ticket[hasTicket:edge]) | $1) | $3) | $0;
+
+%rule r_25 ShoppingZone.(Store.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inStore | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Computer[connect:edge,idle].$2) | $1) | $0 -> ShoppingZone.(Store.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,manipulateStoreComputer:edge,hasTicket:edge,idle,idle].(inStore | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Computer[connect:edge,manipulateStoreComputer:edge].$2) | $1) | $0;
+
+%rule r_26 ShoppingZone.(Store.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,manipulateStoreComputer:edge,hasTicket:edge,idle,idle].(inStore | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Computer[connect:edge,manipulateStoreComputer:edge].$1) | $3) |  $0 -> ShoppingZone.(Store.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,preferPro:edge].(inStore| Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Computer[connect:edge,idle].shoppinginfo[preferPro:edge] ) | $3) | $0;
+
+%rule r_27 ShoppingZone.(Store.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle, preferPro:edge].(inStore | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Computer[connect:edge,idle].shoppinginfo[preferPro:edge] | $5) | $4) | $0 -> ShoppingZone.(Store.(Computer[connect:edge,idle].$2 | $5) | $4 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inShop | hangLuggage[hasHangLuggage:edge,idle] | Ticket[hasTicket:edge])) | $0;
+
+%rule r_28 ShoppingZone.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inShop | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Store.$3 | $1) | $0 -> ShoppingZone.($1 | Store.$3) | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(outShop | hangLuggage[hasHangLuggage:edge,idle] | Ticket[hasTicket:edge]) | $0;
+
+%rule r_29 PassagewayToGate.$2 | Passenger[idle,idle,idle, hasHangLuggage:edge,idle,idle,idle, hasTicket:edge,idle,idle].(outShop | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $0 -> PassagewayToGate.($2 | Passenger[idle,idle,idle, hasHangLuggage:edge,idle,idle,idle, hasTicket:edge,idle,idle].(inPGate | Ticket[hasTicket:edge]  | hangLuggage[hasHangLuggage:edge,idle])) |  $0;
+
+%rule r_30 PassagewayToGate.($2 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inPGate | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Light[idle]) | $0 -> PassagewayToGate.($2 | Passenger[adjustLight:edge,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inPGate | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Light[adjustLight:edge]) | $0;
+
+%rule r_31 PassagewayToGate.(Passenger[adjustLight:edge,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inPGate |  Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Light[adjustLight:edge] | $1) | $2 -> PassagewayToGate.($1 | Light[idle]) | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(outPGate | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $2;
+
+%rule r_32 GateLounge.$3 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(outPGate | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | $0 -> GateLounge.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inGateLo | hangLuggage[hasHangLuggage:edge,idle] | Ticket[hasTicket:edge]) | $3) | $0;
+
+%rule r_33 GateLounge.($3 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(inGateLo | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Computer[connect:edge,idle].$2) | $4 -> GateLounge.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,manipulateGateLounge:edge,hasTicket:edge,idle,idle].(inGateLo | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Computer[connect:edge,manipulateGateLounge:edge].$2 | $3) | $4;
+
+%rule r_34 GateLounge.($3 | Passenger[idle,idle,idle, hasHangLuggage:edge,idle,idle, manipulateGateLounge:edge, hasTicket:edge,idle,idle].(inGateLo | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | Computer[connect:edge, manipulateGateLounge:edge].$2) | $0 -> GateLounge.($3 | Computer[connect:edge, idle].$2) | Passenger[idle,idle,idle, hasHangLuggage:edge,idle,idle,idle, hasTicket:edge,idle,idle].(outGateLo | hangLuggage[hasHangLuggage:edge,idle] | Ticket[hasTicket:edge]) | $0;
+
+%rule r_35 Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(outGateLo | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,idle]) | boarding.$1 | $0 -> boarding.($1 | Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(onBoard | hangLuggage[hasHangLuggage:edge,idle] | Ticket[hasTicket:edge])) | $0;
+
+# Model
+# for only one passenger
+%agent a:Airport.(b:Checkin.j:Computer[connect:edge,idle]|bro:boarding|c:PassagewayToSecurity.m:Light[idle]|d:Security.k:Computer[connect:edge,idle]|e:PassagewayToShop.n:Light[idle]|f:ShoppingZone.(p:BillBoard[idle]|q:Store.v:Computer[connect:edge,idle])|g:PassagewayToGate.o:Light[idle]|h:GateLounge.l:Computer[connect:edge,idle]|i:database[connect:edge].(r:dataPassenger[idle,idle,idle,idle,idle,idle,hasTicket:edge,idle,hasHangLuggage:edge,hasCheckinLuggage:edge]|s:dataHangLuggage[hasHangLuggage:edge,idle,idle]|t:dataTicket[idle,idle,idle,idle,hasTicket:edge]|u:datacheckinLuggage[idle,hasCheckinLuggage:edge,idle,idle]|x:dataAD[idle,idle]|y:dataShopPrefer[idle,type:edge]|z:dataProduct[idle,type:edge,idle]))|lw:Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(outAirport | lba:checkinLuggage[hasCheckinLuggage:edge] | lbb:hangLuggage[hasHangLuggage:edge,idle]);
+
+
+# for two passengers
+#%agent a:Airport.(b:Checkin.j:Computer[connect:edge,idle]|bro:boarding|c:PassagewayToSecurity.m:Light[idle]|d:Security.k:Computer[connect:edge,idle]|e:PassagewayToShop.(lw:Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(Ticket[hasTicket:edge]|inPShop|lbb:hangLuggage[hasHangLuggage:edge,idle])|n:Light[idle])|f:ShoppingZone.(p:BillBoard[idle]|q:Store.v:Computer[connect:edge,idle])|g:PassagewayToGate.o:Light[idle]|h:GateLounge.l:Computer[connect:edge,idle]|i:database[connect:edge].(r:dataPassenger[idle,idle,idle,idle,idle,idle,hasTicket:edge,idle,hasHangLuggage:edge,hasCheckinLuggage:edge]|s:dataHangLuggage[hasHangLuggage:edge,idle,idle]|t:dataTicket[idle,idle,idle,idle,hasTicket:edge]|u:datacheckinLuggage[idle,hasCheckinLuggage:edge,idle,idle]|x:dataAD[idle,idle]|y:dataShopPrefer[idle,type:edge]|z:dataProduct[idle,type:edge,idle]))|lw:Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(outAirport | lba:checkinLuggage[hasCheckinLuggage:edge] | lbb:hangLuggage[hasHangLuggage:edge,idle]);
+
+#%agent a:Airport.(b:Checkin.j:Computer[connect:edge,idle]|bro:boarding|c:PassagewayToSecurity.m:Light[idle]|d:Security.k:Computer[connect:edge,idle]|e:PassagewayToShop.n:Light[idle]|f:ShoppingZone.(lw:Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(Ticket[hasTicket:edge]|inShop|lbb:hangLuggage[hasHangLuggage:edge,idle])|p:BillBoard[idle]|q:Store.v:Computer[connect:edge,idle])|g:PassagewayToGate.o:Light[idle]|h:GateLounge.l:Computer[connect:edge,idle]|i:database[connect:edge].(r:dataPassenger[idle,idle,idle,idle,idle,idle,hasTicket:edge,idle,hasHangLuggage:edge,hasCheckinLuggage:edge]|s:dataHangLuggage[hasHangLuggage:edge,idle,idle]|t:dataTicket[idle,idle,idle,idle,hasTicket:edge]|u:datacheckinLuggage[idle,hasCheckinLuggage:edge,idle,idle]|x:dataAD[idle,idle]|y:dataShopPrefer[idle,type:edge]|z:dataProduct[idle,type:edge,idle]))| l:Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(outAirport | ba:checkinLuggage[hasCheckinLuggage:edge] | bb:hangLuggage[hasHangLuggage:edge,idle]);
+
+#%agent a:Airport.(b:Checkin.j:Computer[connect:edge,idle]|bro:boarding|c:PassagewayToSecurity.m:Light[idle]|d:Security.k:Computer[connect:edge,idle]|e:PassagewayToShop.n:Light[idle]|f:ShoppingZone.(p:BillBoard[idle]|q:Store.(lw:Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(Ticket[hasTicket:edge]|inStore|lbb:hangLuggage[hasHangLuggage:edge,idle])|v:Computer[connect:edge,idle]))|g:PassagewayToGate.o:Light[idle]|h:GateLounge.l:Computer[connect:edge,idle]|i:database[connect:edge].(r:dataPassenger[idle,idle,idle,idle,idle,idle,hasTicket:edge,idle,hasHangLuggage:edge,hasCheckinLuggage:edge]|s:dataHangLuggage[hasHangLuggage:edge,idle,idle]|t:dataTicket[idle,idle,idle,idle,hasTicket:edge]|u:datacheckinLuggage[idle,hasCheckinLuggage:edge,idle,idle]|x:dataAD[idle,idle]|y:dataShopPrefer[idle,type:edge]|z:dataProduct[idle,type:edge,idle]))|l:Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(outAirport | ba:checkinLuggage[hasCheckinLuggage:edge] | bb:hangLuggage[hasHangLuggage:edge,idle]);
+
+#%agent a:Airport.(b:Checkin.j:Computer[connect:edge,idle]|bro:boarding|c:PassagewayToSecurity.m:Light[idle]|d:Security.k:Computer[connect:edge,idle]|e:PassagewayToShop.(lw:Passenger[adjustLight:edge,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(Ticket[hasTicket:edge]|inPShop|lbb:hangLuggage[hasHangLuggage:edge,idle])|n:Light[adjustLight:edge])|f:ShoppingZone.(p:BillBoard[idle]|q:Store.v:Computer[connect:edge,idle])|g:PassagewayToGate.o:Light[idle]|h:GateLounge.l:Computer[connect:edge,idle]|i:database[connect:edge].(r:dataPassenger[idle,idle,idle,idle,idle,idle,hasTicket:edge,idle,hasHangLuggage:edge,hasCheckinLuggage:edge]|s:dataHangLuggage[hasHangLuggage:edge,idle,idle]|t:dataTicket[idle,idle,idle,idle,hasTicket:edge]|u:datacheckinLuggage[idle,hasCheckinLuggage:edge,idle,idle]|x:dataAD[idle,idle]|y:dataShopPrefer[idle,type:edge]|z:dataProduct[idle,type:edge,idle]))|l:Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(outAirport | ba:checkinLuggage[hasCheckinLuggage:edge] | bb:hangLuggage[hasHangLuggage:edge,idle]);
+
+#%agent a:Airport.(b:Checkin.j:Computer[connect:edge,idle]|bro:boarding|c:PassagewayToSecurity.m:Light[idle]|d:Security.(k:Computer[connect:edge,idle].SecurityInfo[idle]|lw:Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].(Ticket[hasTicket:edge]|inSecInfo|lbb:hangLuggage[hasHangLuggage:edge,t:edge]|true[t:edge]))|e:PassagewayToShop.n:Light[idle]|f:ShoppingZone.(p:BillBoard[idle]|q:Store.v:Computer[connect:edge,idle])|g:PassagewayToGate.o:Light[idle]|h:GateLounge.l:Computer[connect:edge,idle]|i:database[connect:edge].(r:dataPassenger[idle,idle,idle,idle,idle,idle,hasTicket:edge,idle,hasHangLuggage:edge,hasCheckinLuggage:edge]|s:dataHangLuggage[hasHangLuggage:edge,idle,idle]|t:dataTicket[idle,idle,idle,idle,hasTicket:edge]|u:datacheckinLuggage[idle,hasCheckinLuggage:edge,idle,idle]|x:dataAD[idle,idle]|y:dataShopPrefer[idle,type:edge]|z:dataProduct[idle,type:edge,idle]))|l:Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,idle,hasCheckinLuggage:edge,idle].(outAirport | ba:checkinLuggage[hasCheckinLuggage:edge] | bb:hangLuggage[hasHangLuggage:edge,idle]);
+# Go!
+%check;

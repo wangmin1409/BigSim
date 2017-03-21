@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Patterns name="Patterns For BigMC">
+	<PatternRelationship>
+		<Pattern details="Passenger in Checkin">
+			<NextPattern details="Passenger in PasswayToSercurity" />
+		</Pattern>
+		<Pattern details="Passenger in PasswayToSercurity">
+			<NextPattern details="Passenger in Sercurity" />
+		</Pattern>
+		<Pattern details="Passenger in Sercurity">
+			<NextPattern details="Passenger in PassagewayToShop" />
+		</Pattern>
+		<Pattern details="Passenger in PassagewayToShop">
+			<NextPattern details="Passenger in ShopphingZone" />
+		</Pattern>
+	</PatternRelationship>
+	<IntrestedPatterns>
+		<IntrestedPattern details="Passenger in PassagewayToShop" />
+		<IntrestedPattern details="Passenger in ShopphingZone" />
+	</IntrestedPatterns>
+</Patterns>

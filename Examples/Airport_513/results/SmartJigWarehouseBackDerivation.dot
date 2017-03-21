@@ -1,0 +1,9 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N_1715480154[color = aliceblue label = ""];
+ N_1715480154
+ [shape=circle, color=lightblue2, style=filled];
+}

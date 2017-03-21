@@ -1,0 +1,25 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N_1957951002[color = aliceblue label = "wExpr==0.0
+"];
+ N_1957951002
+ [shape=circle, color=lightblue2, style=filled];
+N_646492887[ label="N_646492887"];
+ N_1957951002 -> N_646492887[ color = purple label = "SysClk:1.0
+r_enter_lightzone -> List()"];
+N__1763682184[ label="N__1763682184"];
+ N_646492887 -> N__1763682184[ color = purple label = "SysClk:3.0
+r_update_light_kid -> List(p1)"];
+N_1387512349[ label="N_1387512349"];
+ N__1763682184 -> N_1387512349[ color = purple label = "SysClk:4.0
+r_enter_shoppingzone -> List()"];
+N__1097243003[ label="N__1097243003"];
+ N_1387512349 -> N__1097243003[ color = purple label = "SysClk:6.0
+r_update_billboard_kid -> List(p1)"];
+N__1110738586[ label="N__1110738586"];
+ N__1097243003 -> N__1110738586[ color = purple label = "SysClk:7.0
+r_leave_shoppingzone -> List()"];
+}

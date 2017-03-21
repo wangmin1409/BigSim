@@ -1,0 +1,217 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N__1493154733[color = aliceblue label = ""];
+ N__1493154733
+ [shape=circle, color=lightblue2, style=filled];
+N_368366948[ label="N_368366948"];
+ N_368366948 -> N_225301387[ color = purple label = "System Clock: 8.0
+r_policeman_enter_shoppingin,r_student_enter_security,r_businessman_enter_gatelounge,r_professor_enter_checkin"];
+N_1605175711[ label="N_1605175711"];
+ N_1605175711 -> N__1542358890[ color = purple label = "System Clock: 25.0
+r_businessman_sign_businessContract"];
+N_2027555039[ label="N_2027555039"];
+ N_2027555039 -> N_1289258312[ color = purple label = "System Clock: 5.0
+r_businessman_security_withdanger,r_policeman_checkin_withoutlounge,r_student_take_taxi_from_school"];
+N_1790806946[ label="N_1790806946"];
+ N_1790806946 -> N_2032183966[ color = purple label = "System Clock: 13.0
+r_student_onboard1,r_professor_onboard1"];
+N__1493154733[ label="N__1493154733"];
+ N__1493154733 -> N_915238754[ color = purple label = "System Clock: 1.0
+r_businessman_take_taxi_from_CBD,r_policeman_gohome_from_policestation"];
+N__763038118[ label="N__763038118"];
+ N__763038118 -> N_2027555039[ color = purple label = "System Clock: 4.0
+r_businessman_enter_security,r_policeman_enter_checkin"];
+N_915238754[ label="N_915238754"];
+ N_915238754 -> N__531465153[ color = purple label = "System Clock: 2.0
+r_businessman_enter_checkin"];
+N__531465153[ label="N__531465153"];
+ N__531465153 -> N__763038118[ color = purple label = "System Clock: 3.0
+r_businessman_checkin_withlounge,r_policeman_take_taxi_from_home"];
+N_1905970396[ label="N_1905970396"];
+ N_1905970396 -> N_1790806946[ color = purple label = "System Clock: 12.0
+r_professor_enter_gatelounge,r_student_enter_gatelounge"];
+N_2032183966[ label="N_2032183966"];
+ N_2032183966 -> N__1854333260[ color = purple label = "System Clock: 23.0
+r_takeoff"];
+N__1854333260[ label="N__1854333260"];
+ N__1854333260 -> N_1605175711[ color = purple label = "System Clock: 24.0
+r_businessman_reach_USA"];
+N_225301387[ label="N_225301387"];
+ N_225301387 -> N_1499652308[ color = purple label = "System Clock: 9.0
+r_businessman_onboard1,r_student_security_withoutdanger,r_policeman_shoppingin,r_professor_checkin_withoutlounge"];
+N_409618410[ label="N_409618410"];
+ N_409618410 -> N_1905970396[ color = purple label = "System Clock: 11.0
+r_student_shoppingin,r_professor_security_withdanger,r_policeman_onboard1"];
+N__1542358890[ shape = doublecircle, color=lightblue2, style=filled, label="N__1542358890"];
+N_1499652308[ label="N_1499652308"];
+ N_1499652308 -> N_409618410[ color = purple label = "System Clock: 10.0
+r_policeman_enter_gatelounge,r_student_enter_shoppingin,r_professor_enter_security"];
+N_186882103[ label="N_186882103"];
+ N_186882103 -> N_368366948[ color = purple label = "System Clock: 7.0
+r_student_checkin_withlounge,r_professor_take_taxi_from_school,r_policeman_security_withoutdanger,r_businessman_shoppingin"];
+N_1289258312[ label="N_1289258312"];
+ N_1289258312 -> N_186882103[ color = purple label = "System Clock: 6.0
+r_businessman_enter_shoppingin,r_student_enter_checkin,r_policeman_enter_security"];
+N_75011748[ label="N_75011748"];
+ N_75011748 -> N_806060766[ color = darkgoldenrod1 label = "System Clock: 13.0
+r_policeman_onboard1"];
+N__1645080573[ label="N__1645080573"];
+ N__1645080573 -> N_1003765942[ color = darkgoldenrod1 label = "System Clock: 11.0
+r_professor_onboard1,r_student_onboard1,r_policeman_security_withoutdanger"];
+N__1640612848[ label="N__1640612848"];
+ N__1640612848 -> N__552485287[ color = darkgoldenrod1 label = "System Clock: 6.0
+r_student_enter_checkin,r_professor_enter_security,r_businessman_enter_gatelounge"];
+N_59018522[ label="N_59018522"];
+ N_59018522 -> N__890736037[ color = darkgoldenrod1 label = "System Clock: 8.0
+r_professor_enter_shoppingin,r_student_enter_security,r_policeman_enter_checkin"];
+N__1506597897[ label="N__1506597897"];
+ N__1506597897 -> N__69033962[ color = darkgoldenrod1 label = "System Clock: 25.0
+r_businessman_sign_businessContract"];
+N__1493154733[ label="N__1493154733"];
+ N__1493154733 -> N_915238754[ color = darkgoldenrod1 label = "System Clock: 1.0
+r_policeman_gohome_from_policestation,r_businessman_take_taxi_from_CBD"];
+N_915238754[ label="N_915238754"];
+ N_915238754 -> N__531465153[ color = darkgoldenrod1 label = "System Clock: 2.0
+r_businessman_enter_checkin"];
+N_806060766[ label="N_806060766"];
+ N_806060766 -> N_1997160564[ color = darkgoldenrod1 label = "System Clock: 23.0
+r_takeoff"];
+N__531465153[ label="N__531465153"];
+ N__531465153 -> N_1097985322[ color = darkgoldenrod1 label = "System Clock: 3.0
+r_businessman_checkin_withlounge,r_professor_take_taxi_from_school"];
+N_357202901[ label="N_357202901"];
+ N_357202901 -> N__1645080573[ color = darkgoldenrod1 label = "System Clock: 10.0
+r_professor_enter_gatelounge,r_student_enter_gatelounge,r_policeman_enter_security"];
+N_1997160564[ label="N_1997160564"];
+ N_1997160564 -> N__1506597897[ color = darkgoldenrod1 label = "System Clock: 24.0
+r_businessman_reach_USA"];
+N__890736037[ label="N__890736037"];
+ N__890736037 -> N_357202901[ color = darkgoldenrod1 label = "System Clock: 9.0
+r_student_security_withoutdanger,r_professor_shoppingin,r_policeman_checkin_withoutlounge"];
+N_1097985322[ label="N_1097985322"];
+ N_1097985322 -> N__583684079[ color = darkgoldenrod1 label = "System Clock: 4.0
+r_businessman_enter_security,r_professor_enter_checkin"];
+N__583684079[ label="N__583684079"];
+ N__583684079 -> N__1640612848[ color = darkgoldenrod1 label = "System Clock: 5.0
+r_professor_checkin_withoutlounge,r_businessman_security_withdanger,r_student_take_taxi_from_school"];
+N_1003765942[ label="N_1003765942"];
+ N_1003765942 -> N_75011748[ color = darkgoldenrod1 label = "System Clock: 12.0
+r_policeman_enter_gatelounge"];
+N__69033962[ shape = doublecircle, color=lightblue2, style=filled, label="N__69033962"];
+N__552485287[ label="N__552485287"];
+ N__552485287 -> N_59018522[ color = darkgoldenrod1 label = "System Clock: 7.0
+r_policeman_take_taxi_from_home,r_student_checkin_withlounge,r_businessman_onboard1,r_professor_security_withdanger"];
+N__1579806889[ label="N__1579806889"];
+ N__1579806889 -> N_532958091[ color = chartreuse1 label = "System Clock: 5.0
+r_student_security_withoutdanger,r_policeman_checkin_withoutlounge,r_businessman_take_taxi_from_CBD"];
+N__939056118[ label="N__939056118"];
+ N__939056118 -> N__2080205829[ color = chartreuse1 label = "System Clock: 2.0
+r_student_enter_checkin"];
+N_532958091[ label="N_532958091"];
+ N_532958091 -> N__300935014[ color = chartreuse1 label = "System Clock: 6.0
+r_policeman_enter_security,r_student_enter_shoppingin,r_businessman_enter_checkin"];
+N_1820639624[ label="N_1820639624"];
+ N_1820639624 -> N_753050660[ color = chartreuse1 label = "System Clock: 13.0
+r_professor_onboard1"];
+N_753050660[ shape = doublecircle, color=lightblue2, style=filled, label="N_753050660"];
+N__1493154733[ label="N__1493154733"];
+ N__1493154733 -> N__939056118[ color = chartreuse1 label = "System Clock: 1.0
+r_student_take_taxi_from_school,r_policeman_gohome_from_policestation"];
+N__2080205829[ label="N__2080205829"];
+ N__2080205829 -> N__1780416858[ color = chartreuse1 label = "System Clock: 3.0
+r_policeman_take_taxi_from_home,r_student_checkin_withlounge"];
+N__300935014[ label="N__300935014"];
+ N__300935014 -> N_1416924091[ color = chartreuse1 label = "System Clock: 7.0
+r_student_shoppingin,r_policeman_security_withoutdanger,r_businessman_checkin_withlounge,r_professor_take_taxi_from_school"];
+N__567073250[ label="N__567073250"];
+ N__567073250 -> N__18196830[ color = chartreuse1 label = "System Clock: 11.0
+r_professor_security_withdanger,r_businessman_onboard1"];
+N__1780416858[ label="N__1780416858"];
+ N__1780416858 -> N__1579806889[ color = chartreuse1 label = "System Clock: 4.0
+r_student_enter_security,r_policeman_enter_checkin"];
+N__1829191066[ label="N__1829191066"];
+ N__1829191066 -> N_2132913906[ color = chartreuse1 label = "System Clock: 9.0
+r_businessman_security_withdanger,r_professor_checkin_withoutlounge,r_student_onboard1"];
+N_1416924091[ label="N_1416924091"];
+ N_1416924091 -> N__1829191066[ color = chartreuse1 label = "System Clock: 8.0
+r_professor_enter_checkin,r_policeman_enter_gatelounge,r_student_enter_gatelounge,r_businessman_enter_security"];
+N_2132913906[ label="N_2132913906"];
+ N_2132913906 -> N__567073250[ color = chartreuse1 label = "System Clock: 10.0
+r_professor_enter_security,r_businessman_enter_gatelounge"];
+N__18196830[ label="N__18196830"];
+ N__18196830 -> N_1820639624[ color = chartreuse1 label = "System Clock: 12.0
+r_professor_enter_gatelounge"];
+N__1358933022[ shape = doublecircle, color=lightblue2, style=filled, label="N__1358933022"];
+N__939056118[ label="N__939056118"];
+ N__939056118 -> N__2080205829[ color = darkorange1 label = "System Clock: 2.0
+r_student_enter_checkin"];
+N_284102719[ label="N_284102719"];
+ N_284102719 -> N__976349515[ color = darkorange1 label = "System Clock: 5.0
+r_policeman_take_taxi_from_home,r_professor_checkin_withoutlounge,r_student_security_withoutdanger"];
+N_922452842[ label="N_922452842"];
+ N_922452842 -> N__1563662718[ color = darkorange1 label = "System Clock: 12.0
+r_businessman_enter_gatelounge"];
+N__1493154733[ label="N__1493154733"];
+ N__1493154733 -> N__939056118[ color = darkorange1 label = "System Clock: 1.0
+r_policeman_gohome_from_policestation,r_student_take_taxi_from_school"];
+N_88208664[ label="N_88208664"];
+ N_88208664 -> N_2015951766[ color = darkorange1 label = "System Clock: 10.0
+r_professor_enter_gatelounge,r_businessman_enter_security,r_policeman_enter_gatelounge"];
+N__1702010340[ label="N__1702010340"];
+ N__1702010340 -> N_284102719[ color = darkorange1 label = "System Clock: 4.0
+r_student_enter_security,r_professor_enter_checkin"];
+N_846015594[ label="N_846015594"];
+ N_846015594 -> N__888584600[ color = darkorange1 label = "System Clock: 23.0
+r_takeoff"];
+N__976349515[ label="N__976349515"];
+ N__976349515 -> N__1941965506[ color = darkorange1 label = "System Clock: 6.0
+r_student_enter_shoppingin,r_professor_enter_security,r_policeman_enter_checkin"];
+N__2080205829[ label="N__2080205829"];
+ N__2080205829 -> N__1702010340[ color = darkorange1 label = "System Clock: 3.0
+r_student_checkin_withlounge,r_professor_take_taxi_from_school"];
+N__888584600[ label="N__888584600"];
+ N__888584600 -> N_771462595[ color = darkorange1 label = "System Clock: 24.0
+r_businessman_reach_USA"];
+N__1941965506[ label="N__1941965506"];
+ N__1941965506 -> N__362725293[ color = darkorange1 label = "System Clock: 7.0
+r_student_shoppingin,r_policeman_checkin_withoutlounge,r_businessman_take_taxi_from_CBD,r_professor_security_withdanger"];
+N__362725293[ label="N__362725293"];
+ N__362725293 -> N_695901940[ color = darkorange1 label = "System Clock: 8.0
+r_policeman_enter_security,r_businessman_enter_checkin,r_student_enter_gatelounge,r_professor_enter_shoppingin"];
+N_771462595[ label="N_771462595"];
+ N_771462595 -> N__1358933022[ color = darkorange1 label = "System Clock: 25.0
+r_businessman_sign_businessContract"];
+N__1563662718[ label="N__1563662718"];
+ N__1563662718 -> N_846015594[ color = darkorange1 label = "System Clock: 13.0
+r_businessman_onboard1"];
+N_2015951766[ label="N_2015951766"];
+ N_2015951766 -> N_922452842[ color = darkorange1 label = "System Clock: 11.0
+r_policeman_onboard1,r_professor_onboard1,r_businessman_security_withdanger"];
+N_695901940[ label="N_695901940"];
+ N_695901940 -> N_88208664[ color = darkorange1 label = "System Clock: 9.0
+r_policeman_security_withoutdanger,r_professor_shoppingin,r_businessman_checkin_withlounge,r_student_onboard1"];
+N__1452823506[ label="N__1452823506"];
+ N__1452823506 -> N__1863846308[ color = aquamarine1 label = "System Clock: 5.0
+r_student_security_withoutdanger"];
+N__939056118[ label="N__939056118"];
+ N__939056118 -> N__2080205829[ color = aquamarine1 label = "System Clock: 2.0
+r_student_enter_checkin"];
+N__1493154733[ label="N__1493154733"];
+ N__1493154733 -> N__939056118[ color = aquamarine1 label = "System Clock: 1.0
+r_policeman_gohome_from_policestation,r_student_take_taxi_from_school"];
+N__2080205829[ label="N__2080205829"];
+ N__2080205829 -> N__1863846308[ color = aquamarine1 label = "System Clock: 3.0
+r_student_checkin_withlounge,r_businessman_take_taxi_from_CBD"];
+N__1863846308[ label="N__1863846308"];
+ N__1863846308 -> N__1452823506[ color = aquamarine1 label = "System Clock: 4.0
+r_student_enter_security"];
+ N__1863846308 -> N__1377569682[ color = aquamarine1 label = "System Clock: 6.0
+r_student_enter_gatelounge"];
+N__472627823[ shape = doublecircle, color=lightblue2, style=filled, label="N__472627823"];
+N__1377569682[ label="N__1377569682"];
+ N__1377569682 -> N__472627823[ color = aquamarine1 label = "System Clock: 7.0
+r_student_onboard"];
+}

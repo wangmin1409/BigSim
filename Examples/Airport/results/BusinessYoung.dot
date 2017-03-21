@@ -1,0 +1,64 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N__1073152431[color = aliceblue label = "wExpr==0.0
+young.cur=1.0,young.max=1,flightTime=360,SysClk=270,young.traffic=false,fee=0"];
+ N__1073152431
+ [shape=circle, color=lightblue2, style=filled];
+N__1458813826[ label="N__1458813826
+young.cur=1.0
+young.max=1
+flightTime=360
+SysClk=205
+young.traffic=false
+fee=0"];
+ N__1458813826 -> N_2055907770[ label = "r_3
+System Clock: 255
+Cond:young.traffic=='false'"];
+N_2055907770[ label="N_2055907770
+young.cur=1.0
+young.max=1
+flightTime=360
+SysClk=255
+young.traffic=false
+fee=0"];
+ N_2055907770 -> N_1183009532[ label = "r_4
+System Clock: 270"];
+N__165661919[ label="N__165661919
+young.cur=1.0
+young.max=1
+flightTime=360
+SysClk=180
+young.traffic=false
+fee=0"];
+ N__165661919 -> N__1621539490[ label = "r_1
+System Clock: 190"];
+N__1621539490[ label="N__1621539490
+young.cur=1.0
+young.max=1
+flightTime=360
+SysClk=190
+young.traffic=false
+fee=0"];
+ N__1621539490 -> N__1458813826[ label = "r_2
+System Clock: 205"];
+N__1073152431[ shape = doublecircle, color=lightblue2, style=filled, label="N__1073152431
+young.cur=0
+young.max=1
+flightTime=360
+SysClk=0
+young.traffic=false
+fee=0"];
+ N__1073152431 -> N__165661919[ label = "r_0
+System Clock: 180
+Cond:young.cur<young.max,flightTime-SysClk>40"];
+N_1183009532[ shape = doublecircle, color=lightblue2, style=filled, label="N_1183009532
+young.cur=1.0
+young.max=1
+flightTime=360
+SysClk=270
+young.traffic=false
+fee=0"];
+}

@@ -1,0 +1,61 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 2;
+%active zone : 2;
+%active server : 2;
+%active network : 4;
+%active mobile : 6;
+%active resourceHandle : 2;
+%active costManager : 2;
+%active contextAware : 4;
+%active jobHandle : 2;
+%active application : 4;
+%active service : 4;
+%active securityManager : 2;
+%active speed : 1;
+%active power : 1;
+%active location : 1;
+%active complexity : 1;
+%active input : 1;
+%active bandwidth : 1;
+%active latency : 1;
+%active networkType : 1;
+%active time : 0;
+%active fee : 0;
+%active photo : 0;
+%active transition : 0;
+%active job : 1;
+%active part : 1;
+%active result : 0;
+%active clone : 2;
+%active weblet : 0;
+%active vm : 0;
+
+# Rules
+%rule r_0 network[idle,idle,idle,networkTypeIs:edge].(zone[idle,idle].$2 | mobile[idle,idle,idle,idle,hasCAH:edge,idle].$1 | $0) -> network[idle,idle,idle,networkTypeIs:edge].(zone[idle,idle].($2 | mobile[idle,idle,idle,idle,hasCAH:edge,idle].$1) | $0) {SysClk:5	Expr:time=time+5,energy=energy-1};
+
+%rule r_1 network[idle,idle,idle,networkTypeIs:edge].(zone[idle,idle].(mobile[idle,idle,idle,idle,hasCAH:edge,idle].(contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | $2) | application[idle,idle,idle,idle])) | $0) -> network[idle,idle,idle,networkTypeIs:edge].(zone[idle,idle].(mobile[idle,idle,idle,idle,hasCAH:edge,idle].(contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | $2) | application[idle,idle,idle,idle].job[idle]) ) | $0) {SysClk:2};
+
+%rule r_2 network[idle,idle,idle,networkTypeIs:edge].(zone[idle,idle].(mobile[idle,idle,idle,idle,hasCAH:edge,idle].(application[idle,idle,idle,idle].job[idle] | contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | speed[speedIs:edge]))) | server[idle,idle].(clone[idle,idle] | $1) | networkType[networkTypeIs:edge]) -> network[idle,idle,idle,networkTypeIs:edge].(zone[idle,idle].(mobile[idle,idle,idle,idle,hasCAH:edge,idle].(application[idle,idle,idle,link:edge].job[idle] | contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | speed[speedIs:edge]))) | server[idle,idle].(clone[link:edge,idle] | $1) | networkType[networkTypeIs:edge]) {SysClk:1	Cond:speed>2,networkType<=2};
+
+%rule r_3 network[idle,idle,idle,networkTypeIs:edge].(server[idle,idle].(clone[link:edge,idle] | $2) | zone[idle,idle].mobile[idle,idle,idle,idle,hasCAH:edge,idle].(contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | $1) | application[idle,idle,idle,link:edge].job[idle]) | $0) -> network[idle,idle,idle,networkTypeIs:edge].(server[idle,idle].(clone[link:edge,idle].job[idle] | $2) | zone[idle,idle].mobile[idle,idle,idle,idle,hasCAH:edge,idle].(contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | $1) | application[idle,idle,idle,link:edge].job[idle]) | $0) {SysClk:2};
+
+%rule r_4 network[idle,idle,idle,networkTypeIs:edge].(server[idle,idle].(clone[link:edge,idle].job[idle] | service[idle,idle,idle,idle]) | zone[idle,idle].mobile[idle,idle,idle,idle,hasCAH:edge,idle].(contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | $1) | application[idle,idle,idle,link:edge].job[idle]) | $0) -> network[idle,idle,idle,networkTypeIs:edge].(server[idle,idle].(clone[link:edge,a:edge].job[idle] | service[idle,idle,a:edge,idle]) | zone[idle,idle].mobile[idle,idle,idle,idle,hasCAH:edge,idle].(contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | $1) | application[idle,idle,idle,link:edge].job[idle]) | $0) {SysClk:1};
+
+%rule r_5 network[idle,idle,idle,networkTypeIs:edge].(server[idle,idle].(clone[link:edge,a:edge].job[idle] | service[idle,idle,a:edge,idle]) | zone[idle,idle].mobile[idle,idle,idle,idle,hasCAH:edge,idle].(contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | $1) | application[idle,idle,idle,link:edge].job[idle]) | $0) -> network[idle,idle,idle,networkTypeIs:edge].(server[idle,idle].(clone[link:edge,a:edge].job[idle] | service[idle,idle,a:edge,idle].result) | zone[idle,idle].mobile[idle,idle,idle,idle,hasCAH:edge,idle].(contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | $1) | application[idle,idle,idle,link:edge].job[idle]) | $0) {SysClk:1};
+
+%rule r_6 network[idle,idle,idle,networkTypeIs:edge].(server[idle,idle].(clone[link:edge,a:edge].job[idle] | service[idle,idle,a:edge,idle].result) | zone[idle,idle].mobile[idle,idle,idle,idle,hasCAH:edge,idle].(contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | $1) | application[idle,idle,idle,link:edge].job[idle]) | $0) -> network[idle,idle,idle,networkTypeIs:edge].(server[idle,idle].(clone[link:edge,a:edge].(job[idle] | result) | service[idle,idle,a:edge,idle]) | zone[idle,idle].mobile[idle,idle,idle,idle,hasCAH:edge,idle].(contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | $1) | application[idle,idle,idle,link:edge].job[idle]) | $0) {SysClk:1};
+
+%rule r_7 network[idle,idle,idle,networkTypeIs:edge].(server[idle,idle].(clone[link:edge,a:edge].(job[idle] | result) | service[idle,idle,a:edge,idle]) | zone[idle,idle].mobile[idle,idle,idle,idle,hasCAH:edge,idle].(contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | $1) | application[idle,idle,idle,link:edge].job[idle]) | $0) -> network[idle,idle,idle,networkTypeIs:edge].(server[idle,idle].(clone[idle,idle] | service[idle,idle,idle,idle]) | zone[idle,idle].mobile[idle,idle,idle,idle,hasCAH:edge,idle].(contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | $1) | application[idle,idle,idle,idle].(job[idle] | result)) | $0) {SysClk:1};
+
+%rule r_8 network[idle,idle,idle,networkTypeIs:edge].(zone[idle,idle].(mobile[idle,idle,idle,idle,hasCAH:edge,idle].(application[idle,idle,idle,idle].job[idle] | contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | speed[speedIs:edge]))) | networkType[networkTypeIs:edge]) -> network[idle,idle,idle,networkTypeIs:edge].(zone[idle,idle].(mobile[idle,idle,idle,idle,hasCAH:edge,idle].(application[idle,idle,idle,idle].(job[idle] | result) | contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power[powerIs:edge] | speed[speedIs:edge]))) | networkType[networkTypeIs:edge]) {SysClk:15	Cond:speed<=2||networkType>2};
+
+# Model
+%agent network:network[idle,idle,idle,networkTypeIs:edge].(square:zone[idle,idle] | remoteServer:server[idle,idle].(service:service[idle,idle,idle,idle] | clone:clone[idle,idle]) | networktype:networkType[networkTypeIs:edge] | apple:mobile[idle,idle,idle,idle,hasCAH:edge,idle].(cah:contextAware[hasCAH:edge,idle,speedIs:edge,powerIs:edge].(power:power[powerIs:edge] | speed:speed[speedIs:edge]) | app:application[idle,idle,idle,idle]));
+
+# Go!
+%check;

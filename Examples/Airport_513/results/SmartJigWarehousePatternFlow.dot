@@ -1,0 +1,133 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N__615849785[color = aliceblue label = ""];
+ N__615849785
+ [shape=circle, color=lightblue2, style=filled];
+N_1924229343[ label="N_1924229343"];
+ N_1924229343 -> N_1954793205[ color = darkgoldenrod1 label = "System Clock: 4.0
+r_operator_choose_and_commit"];
+N_1573359246[ label="N_1573359246"];
+ N_1573359246 -> N__1208759554[ color = darkgoldenrod1 label = "System Clock: 9.0
+r_operator_find_slot"];
+N__83048839[ label="N__83048839"];
+ N__83048839 -> N_166503230[ color = darkgoldenrod1 label = "System Clock: 12.0
+r_operator_finish_operation"];
+N_1954793205[ label="N_1954793205"];
+ N_1954793205 -> N__1543968717[ color = darkgoldenrod1 label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N__1543968717[ label="N__1543968717"];
+ N__1543968717 -> N_1252335119[ color = darkgoldenrod1 label = "System Clock: 6.0
+r_coapserver_call_ble (define: BLE[Bluetooth:edge,idle].SlotInfo.nil)"];
+N_2033063182[ label="N_2033063182"];
+ N_2033063182 -> N_2113309550[ color = darkgoldenrod1 label = "System Clock: 2.0
+r_aggregator_connectdb_suc"];
+N__1532350631[ label="N__1532350631"];
+ N__1532350631 -> N__83048839[ color = darkgoldenrod1 label = "System Clock: 11.0
+r_operator_leave_slot"];
+N_2113309550[ label="N_2113309550"];
+ N_2113309550 -> N_1924229343[ color = darkgoldenrod1 label = "System Clock: 3.0
+r_aggregator_connectdb_right_result"];
+N__2121381838[ shape = circle, color=orange, style=filled, label="N__2121381838"];
+ N__2121381838 -> N_1573359246[ color = darkgoldenrod1 label = "System Clock: 8.0
+r_bus_light_led"];
+N_1252335119[ shape = circle, color=green, style=filled, label="N_1252335119"];
+ N_1252335119 -> N__2121381838[ color = darkgoldenrod1 label = "System Clock: 7.0
+r_ble_call_bus (cuse: BLE[Bluetooth:edge,idle].SlotInfo.nil)"];
+N_166503230[ shape = doublecircle, color=lightblue2, style=filled, label="N_166503230"];
+N__1208759554[ label="N__1208759554"];
+ N__1208759554 -> N__1532350631[ color = darkgoldenrod1 label = "System Clock: 10.0
+r_operator_getJig_and_lightoff"];
+N__615849785[ label="N__615849785"];
+ N__615849785 -> N_2033063182[ color = darkgoldenrod1 label = "System Clock: 1.0
+r_operator_input_right_search_condition"];
+N_1924229343[ label="N_1924229343"];
+ N_1924229343 -> N_1954793205[ color = darkslategray1 label = "System Clock: 4.0
+r_operator_choose_and_commit"];
+N_1954793205[ label="N_1954793205"];
+ N_1954793205 -> N__1543968717[ color = darkslategray1 label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N__1543968717[ label="N__1543968717"];
+ N__1543968717 -> N_1252335119[ color = darkslategray1 label = "System Clock: 6.0
+r_coapserver_call_ble (define: BLE[Bluetooth:edge,idle].SlotInfo.nil)"];
+N__1114371473[ shape = doublecircle, color=lightblue2, style=filled, label="N__1114371473"];
+N_2033063182[ label="N_2033063182"];
+ N_2033063182 -> N_2113309550[ color = darkslategray1 label = "System Clock: 2.0
+r_aggregator_connectdb_suc"];
+N_1252335119[ shape = circle, color=green, style=filled, label="N_1252335119"];
+ N_1252335119 -> N__1114371473[ color = darkslategray1 label = "System Clock: 7.0
+r_breaken_bluetooth"];
+N_2113309550[ label="N_2113309550"];
+ N_2113309550 -> N_1924229343[ color = darkslategray1 label = "System Clock: 3.0
+r_aggregator_connectdb_right_result"];
+N__615849785[ label="N__615849785"];
+ N__615849785 -> N_2033063182[ color = darkslategray1 label = "System Clock: 1.0
+r_operator_input_right_search_condition"];
+N_1924229343[ label="N_1924229343"];
+ N_1924229343 -> N_1954793205[ color = crimson label = "System Clock: 4.0
+r_operator_choose_and_commit"];
+N__1013282930[ label="N__1013282930"];
+ N__1013282930 -> N_752403454[ color = crimson label = "System Clock: 9.0
+r_operator_find_slot"];
+N__1246771167[ label="N__1246771167"];
+ N__1246771167 -> N_935744321[ color = crimson label = "System Clock: 11.0
+r_operator_leave_slot"];
+N_1954793205[ label="N_1954793205"];
+ N_1954793205 -> N__1543968717[ color = crimson label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N_1729415814[ shape = doublecircle, color=lightblue2, style=filled, label="N_1729415814"];
+N__1543968717[ label="N__1543968717"];
+ N__1543968717 -> N_1252335119[ color = crimson label = "System Clock: 6.0
+r_coapserver_call_ble (define: BLE[Bluetooth:edge,idle].SlotInfo.nil)"];
+N_2033063182[ label="N_2033063182"];
+ N_2033063182 -> N_2113309550[ color = crimson label = "System Clock: 2.0
+r_aggregator_connectdb_suc"];
+N_935744321[ label="N_935744321"];
+ N_935744321 -> N_1729415814[ color = crimson label = "System Clock: 12.0
+r_operator_finish_operation"];
+N_2113309550[ label="N_2113309550"];
+ N_2113309550 -> N_1924229343[ color = crimson label = "System Clock: 3.0
+r_aggregator_connectdb_right_result"];
+N__2121381838[ shape = circle, color=orange, style=filled, label="N__2121381838"];
+ N__2121381838 -> N__1013282930[ color = crimson label = "System Clock: 8.0
+r_bus_light_led"];
+N_1252335119[ shape = circle, color=green, style=filled, label="N_1252335119"];
+ N_1252335119 -> N__2121381838[ color = crimson label = "System Clock: 7.0
+r_ble_call_bus (cuse: BLE[Bluetooth:edge,idle].SlotInfo.nil)"];
+N_752403454[ label="N_752403454"];
+ N_752403454 -> N__1246771167[ color = crimson label = "System Clock: 10.0
+r_operator_getJig_and_lightoff"];
+N__615849785[ label="N__615849785"];
+ N__615849785 -> N_2033063182[ color = crimson label = "System Clock: 1.0
+r_operator_input_right_search_condition"];
+N_2067479396[ shape = doublecircle, color=lightblue2, style=filled, label="N_2067479396"];
+N_1924229343[ label="N_1924229343"];
+ N_1924229343 -> N_1954793205[ color = brown1 label = "System Clock: 4.0
+r_operator_choose_and_commit"];
+N_1954793205[ label="N_1954793205"];
+ N_1954793205 -> N__1543968717[ color = brown1 label = "System Clock: 5.0
+r_aggregator_call_coapserver"];
+N__1543968717[ label="N__1543968717"];
+ N__1543968717 -> N_1252335119[ color = brown1 label = "System Clock: 6.0
+r_coapserver_call_ble (define: BLE[Bluetooth:edge,idle].SlotInfo.nil)"];
+N__577412978[ label="N__577412978"];
+ N__577412978 -> N_2067479396[ color = brown1 label = "System Clock: 9.0
+r_breaken_bluetooth"];
+N_2033063182[ label="N_2033063182"];
+ N_2033063182 -> N_2113309550[ color = brown1 label = "System Clock: 2.0
+r_aggregator_connectdb_suc"];
+N__2121381838[ shape = circle, color=orange, style=filled, label="N__2121381838"];
+ N__2121381838 -> N__577412978[ color = brown1 label = "System Clock: 8.0
+r_bus_light_led"];
+N_1252335119[ shape = circle, color=green, style=filled, label="N_1252335119"];
+ N_1252335119 -> N__2121381838[ color = brown1 label = "System Clock: 7.0
+r_ble_call_bus (cuse: BLE[Bluetooth:edge,idle].SlotInfo.nil)"];
+N_2113309550[ label="N_2113309550"];
+ N_2113309550 -> N_1924229343[ color = brown1 label = "System Clock: 3.0
+r_aggregator_connectdb_right_result"];
+N__615849785[ label="N__615849785"];
+ N__615849785 -> N_2033063182[ color = brown1 label = "System Clock: 1.0
+r_operator_input_right_search_condition"];
+}

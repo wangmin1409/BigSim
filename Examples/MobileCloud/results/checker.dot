@@ -1,0 +1,59 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N__72921429[color = aliceblue label = "wExpr==0.0
+SysClk=19.0,customer=4.0"];
+ N__72921429
+ [shape=circle, color=lightblue2, style=filled];
+N__1305801189[ label="N__1305801189"];
+ N__1305801189 -> N__697742284[ label = "r_0
+SysClk=9.0,customer=4.0
+SysClk%3==0"];
+N_1400205363[ label="N_1400205363"];
+ N_1400205363 -> N__260113217[ label = "r_0
+SysClk=6.0,customer=3.0
+SysClk%3==0"];
+N_710929529[ label="N_710929529"];
+ N_710929529 -> N_1771773451[ label = "r_1
+SysClk=11.0,customer=4.0
+"];
+N__72921429[ shape = doublecircle, color=lightblue2, style=filled, label="N__72921429"];
+ N__72921429 -> N_293486067[ label = "r_0
+SysClk=0.0,customer=1.0
+SysClk%3==0"];
+N_293486067[ label="N_293486067"];
+ N_293486067 -> N__73441037[ label = "r_1
+SysClk=2.0,customer=1.0
+"];
+N__260113217[ label="N__260113217"];
+ N__260113217 -> N_1551139611[ label = "r_2
+SysClk=7.0,customer=3.0
+"];
+N_1551139611[ label="N_1551139611"];
+ N_1551139611 -> N__1305801189[ label = "r_1
+SysClk=8.0,customer=3.0
+"];
+N__697742284[ label="N__697742284"];
+ N__697742284 -> N_710929529[ label = "r_2
+SysClk=10.0,customer=4.0
+"];
+N_1771773451[ label="N_1771773451"];
+ N_1771773451 -> N_507311973[ label = "r_2
+SysClk=13.0,customer=4.0
+"];
+N__73441037[ label="N__73441037"];
+ N__73441037 -> N_1109752029[ label = "r_0
+SysClk=3.0,customer=2.0
+SysClk%3==0"];
+N_1832632172[ label="N_1832632172"];
+N_1109752029[ label="N_1109752029"];
+ N_1109752029 -> N_1400205363[ label = "r_1
+SysClk=5.0,customer=2.0
+"];
+N_507311973[ label="N_507311973"];
+ N_507311973 -> N_1832632172[ label = "r_2
+SysClk=16.0,customer=4.0
+"];
+}

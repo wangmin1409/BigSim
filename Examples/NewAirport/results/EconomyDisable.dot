@@ -1,0 +1,40 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N_1911778573[color = aliceblue label = "sz.passengers=3.0,gl.lubTime=266.0,de.light=1,de.flightTime=360,de.fee=0,gl.light=13.199833434205301,sz.light=13.483870770863682,de.traffic=false,de.weight=0.9242414682742393,sz.lubTime=227.0,sz.luaTime=232.0,SysClk=267,sz.weight=0.4090909,gl.passengers=4.0,gl.luaTime=267.0,gl.weight=1.9473684"];
+ N_1911778573
+ [shape=circle, color=lightblue2, style=filled];
+N__1455463404[ label="N__1455463404"];
+ N__1455463404 -> N_364531416[ label = "r_update_gllight
+System Clock: 267"];
+N_364531416[ label="N_364531416"];
+ N_364531416 -> N_1370165026[ label = "r_error_gllight_old
+System Clock: 267
+Cond:gl.luaTime-gl.lubTime<2.95,gl.light>=10&&gl.light<=15"];
+N_1954405222[ label="N_1954405222"];
+ N_1954405222 -> N_1559688152[ label = "r_update_szlight
+System Clock: 232"];
+N_926229573[ label="N_926229573"];
+ N_926229573 -> N__227877616[ label = "r_enter_security
+System Clock: 141"];
+N_1559688152[ label="N_1559688152"];
+ N_1559688152 -> N__1467402828[ label = "r_error_szlight_timeout
+System Clock: 232
+Cond:sz.luaTime-sz.lubTime>=2.95"];
+N__227877616[ label="N__227877616"];
+ N__227877616 -> N_1954405222[ label = "r_go_shopping
+System Clock: 227
+Cond:de.traffic=='false'"];
+N_1370165026[ shape = doublecircle, color=lightblue2, style=filled, label="N_1370165026"];
+N_843993034[ label="N_843993034"];
+ N_843993034 -> N_926229573[ label = "r_enter_checkin
+System Clock: 112"];
+N_1911778573[ shape = doublecircle, color=lightblue2, style=filled, label="N_1911778573"];
+ N_1911778573 -> N_843993034[ label = "r_enter_airport
+System Clock: 88"];
+N__1467402828[ label="N__1467402828"];
+ N__1467402828 -> N__1455463404[ label = "r_sz_to_gl
+System Clock: 266"];
+}
