@@ -1,0 +1,2 @@
+# BigSim
+bigraph model checking
