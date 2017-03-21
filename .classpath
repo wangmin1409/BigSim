@@ -7,5 +7,6 @@
 	<classpathentry exported="true" kind="lib" path="jars/concurrent.jar"/>
 	<classpathentry kind="lib" path="jars/scala-parser-combinators-2.11.0-M4.jar"/>
 	<classpathentry kind="lib" path="jars/scala-xml-2.11.0-M4.jar"/>
+	<classpathentry kind="lib" path="jars/ltl2ba4j.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
