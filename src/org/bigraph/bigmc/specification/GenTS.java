@@ -5,15 +5,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.bigraph.bigmc.model.BigraphPair;
 import org.bigraph.bigsim.model.Bigraph;
 
-import rwth.i2.ltl2ba4j.DottyWriter;
 import rwth.i2.ltl2ba4j.LTL2BA4J;
 import rwth.i2.ltl2ba4j.model.IGraphProposition;
 import rwth.i2.ltl2ba4j.model.ITransition;
 
 public class GenTS {
-	Bigraph b = new Bigraph();
 	private static String formula = "<>a";
 	
     static LTL2BA4J lTL2BA4J = new LTL2BA4J();
@@ -27,18 +26,7 @@ public class GenTS {
      */
     public static void main(String[] args) {
     	GenTS test = new GenTS();
-    	test.genTS();
-	}
-    
-	public void entry(){
-		
-		String formula = "a U(b U c)";
-		for(ITransition t: LTL2BA4J.formulaToBA(formula)) {
-		    System.out.println(t);
-		}
-		
-		Collection<ITransition> automaton = LTL2BA4J.formulaToBA(formula);
-        System.out.println(DottyWriter.automatonToDot(automaton));
+    	test.getBigraphPair();
 	}
 	
 	/**
@@ -47,7 +35,7 @@ public class GenTS {
 	 */
 	private  Collection<ITransition> genTS() {
 		Collection<ITransition> automaton = LTL2BA4J.formulaToBA(formula);
-		for(ITransition t: automaton) {
+		/*for(ITransition t: automaton) {
 			System.out.println("Transition---" + t);
 			System.out.println("label-----" + t.getLabels());
 			System.out.println("sourceState-----" + t.getSourceState());
@@ -58,7 +46,7 @@ public class GenTS {
 			System.out.println("targetState----label----" + t.getTargetState().getLabel());
 			System.out.println("targetState----isInitial----" + t.getTargetState().isInitial());
 			System.out.println("targetState----isFinal------" + t.getTargetState().isFinal());
-		}
+		}*/
 		return automaton;
 	}
 	
@@ -66,16 +54,49 @@ public class GenTS {
 	 * 从迁移系统生成Bigraph键值对，key-value均为Bigraph
 	 * 然后得到此结构的List
 	 */
-	private List<BigraphPair> getBigraphPair(Collection<ITransition> automaton) {
+	private List<BigraphPair> getBigraphPair() {
+		Collection<ITransition> automaton = genTS();
 		List<BigraphPair> bigraphPairList = new ArrayList<BigraphPair>();
+		BigraphPair bigraphPair = new BigraphPair(null, null);
+		Bigraph trueB = new Bigraph();
+		Bigraph init = new Bigraph();
 		for(ITransition t: automaton) {
 			System.out.println(t);
-			Set<IGraphProposition> label = t.getLabels();
+			Set<IGraphProposition> labelSet = t.getLabels();
+			System.out.println(labelSet.size());
+			if (labelSet.size() == 1) {
+				if (isSIGMA(labelSet)) {
+					System.out.println("label为siegma");
+					if (t.getSourceState().isFinal()) {
+						bigraphPair.setSourceBigraph(trueB);
+						bigraphPair.setTargetBigraph(trueB);
+						bigraphPairList.add(bigraphPair);
+					}
+					t.getTargetState().isInitial()
+				}
+			}else {
+				for (IGraphProposition graphProposition : labelSet) {
+					System.out.println(graphProposition.getLabel());
+				}
+			}
 		}
 		return bigraphPairList;
 		
 	}
 	
+	/**
+	 * 判断label是否为<SIGMA>
+	 */
+	
+	private boolean isSIGMA(Set<IGraphProposition> labelSet) {
+		boolean res = false; 
+		for (IGraphProposition graphProposition : labelSet) {
+			if (("<SIGMA>").equals(graphProposition.getLabel())) {
+				res = true;
+			}
+		}
+		return res;
+	}
 	 	
 }
 

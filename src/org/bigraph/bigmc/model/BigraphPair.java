@@ -1,4 +1,4 @@
-package org.bigraph.bigmc.specification;
+package org.bigraph.bigmc.model;
 
 import org.bigraph.bigsim.model.Bigraph;
 
