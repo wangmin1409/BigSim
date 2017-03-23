@@ -200,6 +200,11 @@ class Bigraph(roots: Int = 1) {
   var placeSortConstraints: Set[String] = Set();
   var linkSortConstraints: Set[String] = Set(); 
   
+  // add by wangmin
+  var isInitial = false;
+  var isFinal = false;
+  
+  
   def this() = this(1);
 
   def addOuterName(n: Name) = {

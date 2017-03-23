@@ -26,14 +26,14 @@ public class GenTS {
      */
     public static void main(String[] args) {
     	GenTS test = new GenTS();
-    	test.getBigraphPair();
 	}
 	
 	/**
 	 * 调用formulaToBA生成迁移系统
 	 * @return
 	 */
-	private  Collection<ITransition> genTS() {
+	public static ArrayList<ITransition> genTS() {
+		ArrayList<ITransition> res = new ArrayList<ITransition>();
 		Collection<ITransition> automaton = LTL2BA4J.formulaToBA(formula);
 		/*for(ITransition t: automaton) {
 			System.out.println("Transition---" + t);
@@ -47,7 +47,10 @@ public class GenTS {
 			System.out.println("targetState----isInitial----" + t.getTargetState().isInitial());
 			System.out.println("targetState----isFinal------" + t.getTargetState().isFinal());
 		}*/
-		return automaton;
+		for (ITransition t : automaton) {
+			res.add(t);
+		}
+		return  res;
 	}
 	
 	/**
@@ -68,6 +71,7 @@ public class GenTS {
 				if (isSIGMA(labelSet)) {
 					System.out.println("label为siegma");
 					if (t.getSourceState().isFinal()) {
+						trueB.isFinal() = true;
 						bigraphPair.setSourceBigraph(trueB);
 						bigraphPair.setTargetBigraph(trueB);
 						bigraphPairList.add(bigraphPair);
