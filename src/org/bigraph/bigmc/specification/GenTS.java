@@ -15,6 +15,8 @@ import rwth.i2.ltl2ba4j.model.ITransition;
 public class GenTS {
 	private static String formula = "<>a";
 	
+	//private static String formula = "a U (b U c)";
+	
     static LTL2BA4J lTL2BA4J = new LTL2BA4J();
     
     /**
@@ -25,7 +27,7 @@ public class GenTS {
         X   (next)
      */
     public static void main(String[] args) {
-    	GenTS test = new GenTS();
+    	genTS();
 	}
 	
 	/**
@@ -48,6 +50,7 @@ public class GenTS {
 			System.out.println("targetState----isFinal------" + t.getTargetState().isFinal());
 		}*/
 		for (ITransition t : automaton) {
+			System.out.println("Transition---" + t);
 			res.add(t);
 		}
 		return  res;
@@ -71,12 +74,8 @@ public class GenTS {
 				if (isSIGMA(labelSet)) {
 					System.out.println("label为siegma");
 					if (t.getSourceState().isFinal()) {
-						trueB.isFinal() = true;
-						bigraphPair.setSourceBigraph(trueB);
-						bigraphPair.setTargetBigraph(trueB);
 						bigraphPairList.add(bigraphPair);
 					}
-					t.getTargetState().isInitial()
 				}
 			}else {
 				for (IGraphProposition graphProposition : labelSet) {

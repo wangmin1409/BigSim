@@ -39,6 +39,19 @@ case class BGMProposition(n: String,content: String) extends BGMTerm
 
 
 object BGMTerm {
+  
+  def toFormula(t: List[BGMTerm]): String = {
+    var formula: String = "";
+    t.filter(_ match {
+      case BGMFormula(_) => true
+      case _             => false
+    }).map(x => {
+      val formula: BGMFormula = x.asInstanceOf[BGMFormula];
+    });
+    return formula; 
+  }
+  
+  
   def toBigraph(t: List[BGMTerm]): Bigraph = {
     val b: Bigraph = new Bigraph(1);
     // BGMControl
@@ -316,7 +329,6 @@ object BGMParser extends RegexParsers {
     "%linkConstraint" ~> (ws ~> exp) ^^ { x => BGMLinkSortConstraint(x) } |
     "%property" ~> (ws ~> ident ~ (ws ~> exp)) ^^ { case i ~ p => BGMProp(i, p) } |
     "%placeConstraint" ~> (ws ~> exp) ^^ { x => BGMPlaceSortConstraint(x) } |
-   //add by wangmin
     "%formula" ~> (ws ~> exp) ^^ { x => BGMFormula(x) } |  
     "%proposition" ~> (ws ~> ident ~ (ws ~> exp)) ^^ {  
       case i ~ s => {
@@ -360,7 +372,7 @@ object testBGMParser {
     //      println();
     //    });
 
-    val fileName: String = "Examples/Airport_513/models/SmartJigWarehouseBackDerivation.bgm";
+  /*  val fileName: String = "Examples/Airport_513/models/SmartJigWarehouseBackDerivation.bgm";
     val p: List[BGMTerm] = BGMParser.parse(new File(fileName));
     var b = BGMTerm.toBigraph(p);
     println("Bigraph:" + b);
@@ -371,11 +383,17 @@ object testBGMParser {
       println(r.reactum);
       println(r.redex);
       println();
-    });
+    });*/
 
     //    var s = "test"
     //    val rr = s.split("->")
     //    println(rr(0))
+    
+    
+    val fileName: String = "Examples/111/models/test20170323.bgm";
+    val p: List[BGMTerm] = BGMParser.parse(new File(fileName));
+    var f = BGMTerm.toFormula(p);
+    println("formula:" + f);
   }
 }
 
