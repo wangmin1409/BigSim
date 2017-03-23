@@ -10,6 +10,7 @@ import org.bigraph.bigsim.BRS.Match
 import org.bigraph.bigsim.model.Bigraph
 import org.bigraph.bigsim.model.ReactionRule
 import org.bigraph.bigsim.model.Nil
+import org.bigraph.bigsim.Verify
 
 /**
  * Enum Simulator is designed for enumerate all the agents
@@ -49,6 +50,12 @@ class EnumFeature(b: Bigraph){
     steps += 1;
     var step: Int = steps;
     var b: Bigraph = v.bigraph;
+    println("ywlog=========");
+    println(b);
+    println("ywlog=========");
+    Verify.AddModel(b);
+    
+    
     var matches: Set[Match] = b.findMatches;
 
     /** if no match of this agent, it will be a terminal agent */
