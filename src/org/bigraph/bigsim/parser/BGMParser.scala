@@ -33,6 +33,11 @@ case class BGMLinkSort(n: String, pns: String) extends BGMTerm
 case class BGMPlaceSortConstraint(n: String) extends BGMTerm
 case class BGMLinkSortConstraint(n: String) extends BGMTerm
 
+//add by wangmin
+case class BGMFormula(n: String) extends BGMTerm
+case class BGMProposition(n: String,content: String) extends BGMTerm
+
+
 object BGMTerm {
   def toBigraph(t: List[BGMTerm]): Bigraph = {
     val b: Bigraph = new Bigraph(1);
@@ -310,6 +315,14 @@ object BGMParser extends RegexParsers {
     "%placeConstraint" ~> (ws ~> exp) ^^ { x => BGMPlaceSortConstraint(x) } |
     "%linkConstraint" ~> (ws ~> exp) ^^ { x => BGMLinkSortConstraint(x) } |
     "%property" ~> (ws ~> ident ~ (ws ~> exp)) ^^ { case i ~ p => BGMProp(i, p) } |
+    "%placeConstraint" ~> (ws ~> exp) ^^ { x => BGMPlaceSortConstraint(x) } |
+   //add by wangmin
+    "%formula" ~> (ws ~> exp) ^^ { x => BGMFormula(x) } |  
+    "%proposition" ~> (ws ~> ident ~ (ws ~> exp)) ^^ {  
+      case i ~ s => {
+        BGMProposition(i,s)
+      }
+    } |
     "%check" ^^^ { BGMNil() } |
     "#" ~ comment ^^^ { BGMNil() }
 

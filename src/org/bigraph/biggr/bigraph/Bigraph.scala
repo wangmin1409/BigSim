@@ -13,6 +13,8 @@ class Bigraph{
   var nodeNameToNode:Map[String,Node] = null
   var innerNames:ArrayBuffer[InnerName] = ArrayBuffer()
   var outerNames:ArrayBuffer[OuterName] = ArrayBuffer()
+  var isInitial:Boolean = false;
+  var isFinal:Boolean = false;
 
   
   var allNodes:List[Node] = List()

@@ -85,5 +85,10 @@
 #%agent operator:Operator[operate:edge,idle] | sysUI:SysUI[operate:edge,http:edge] | coordinator:Coordinator[http:edge,wifi:edge].(aggregator:Aggregator[idle,idle] | db:DB[idle]) | canbus:CANBus[wiredconn:edge,idle].(n01:LED[idle] | n02:LED[idle] | n03:LED[idle] | n04:LED[idle] | n05:LED[idle] | n07:LED[idle] | n08:LED[idle] | n09:LED[idle] | n10:LED[idle] | s01:Slot.g1:Jig[idle] | s02:Slot.g2:Jig[idle] | s03:Slot.g3:Jig[idle] | s04:Slot.g4:Jig[idle] | s05:Slot.g5:Jig[idle] | s06:Slot.g6:Jig[idle] | s07:Slot.g7:Jig[idle] | s08:Slot.g8:Jig[idle] | s09:Slot.g9:Jig[idle] | s10:Slot.g10:Jig[idle] | n11:LED[idle] | n12:LED[idle] | n13:LED[idle] | n14:LED[idle] | n15:LED[idle] | s11:Slot.g11:Jig[idle] | s12:Slot.g12:Jig[idle] | s13:Slot.g13:Jig[idle] | s14:Slot.g14:Jig[idle] | s15:Slot.g15:Jig[idle] | n16:LED[idle] | n17:LED[idle] | n18:LED[idle] | n19:LED[idle] | n20:LED[idle] | n21:LED[idle] | n22:LED[idle] | n23:LED[idle] | n24:LED[idle] | n25:LED[idle] | n26:LED[idle] | n27:LED[idle] | n28:LED[idle] | n29:LED[idle] | n30:LED[idle] | s16:Slot.g16:Jig[idle] | s17:Slot.g17:Jig[idle] | s18:Slot.g18:Jig[idle] | s19:Slot.g19:Jig[idle] | s20:Slot.g20:Jig[idle] | s21:Slot.g21:Jig[idle] | s22:Slot.g22:Jig[idle] | s23:Slot.g23:Jig[idle] | s24:Slot.g24:Jig[idle] | s25:Slot.g25:Jig[idle] | s26:Slot.g26:Jig[idle] | s27:Slot.g27:Jig[idle] | s28:Slot.g28:Jig[idle] | s29:Slot.g29:Jig[idle] | s30:Slot.g30:Jig[idle]) | beaglebone:Beaglebone[wifi:edge,wiredconn:edge,idle].coap:CoAP_Server;
 
 
+#LTL formula
+%formula p1 U p2 
+%proposition p1  operator:Operator[operate:edge,idle] | sysUI:SysUI[operate:edge,http:edge] 
+%proposition p2  operator:Operator[operate:edge,idle] | sysUI:SysUI[operate:edge,http:edge] 
+
 # Go!
 %check;
