@@ -1,0 +1,20 @@
+# Controls
+%active Dorm : 0;
+%active Office :0;
+%active Canteen :0;
+%passive Student :0;
+
+# rules
+
+%rule r_goOfficeFromDorm Dorm.Student| Office | Canteen -> Dorm| Office.Student | Canteen;
+
+%rule r_goCanteen Dorm| Office.Student | Canteen -> Dorm| Office | Canteen.Student;
+
+%rule r_goDorm Dorm| Office | Canteen.Student -> Dorm.Student | Office | Canteen;
+
+
+# model
+%agent dorm:Dorm.student:Student | office:Office| canteen:Canteen;
+
+# Go!
+%check;

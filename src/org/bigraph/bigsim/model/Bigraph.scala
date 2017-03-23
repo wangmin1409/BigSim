@@ -184,6 +184,8 @@ object Bigraph {
 }
 
 class Bigraph(roots: Int = 1) {
+  
+  var linked:Bigraph = null;  //for verify
   var root: Term = null;
   var inner: Set[Name] = Set();
   var outer: Set[Name] = Set();

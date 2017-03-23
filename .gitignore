@@ -1,2 +1,9 @@
 bin/
 .cache
+.cache-main
+.settings
+.classpath
+.project
+target 
+*.class
+.gitignore

@@ -81,6 +81,11 @@ class EnumSimulator(b: Bigraph) extends Simulator {
     steps += 1;
     var step: Int = steps;
     var b: Bigraph = v.bigraph;
+    
+    println("ywlog:======");
+    println(b);
+    println("ywlog:======");
+    
     var matches: Set[Match] = b.findMatches;
 
     /** if no match of this agent, it will be a terminal agent */
