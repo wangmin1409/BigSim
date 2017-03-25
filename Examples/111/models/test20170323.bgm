@@ -1,7 +1,2 @@
-#LTL formula
-%formula <>a;
 
-#proposition 
-%proposition a  operator:Operator[operate:edge,idle] | sysUI:SysUI[operate:edge,http:edge];
-# Go!
 %check;

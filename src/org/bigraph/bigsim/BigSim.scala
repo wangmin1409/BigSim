@@ -127,6 +127,8 @@ Usage: BigSim [options] <filename>
     Simulator.simulate
  //   ok(GlobalCfg.dotContent);
     var end = System.currentTimeMillis();
+    
+    Verify.Calculate();
 //     println("\n****************************************************************")
 //    println("  Total:\tstart:" + start + ", end:" + end + ", used:" + (end - start) + " ms");
 //    println("****************************************************************")

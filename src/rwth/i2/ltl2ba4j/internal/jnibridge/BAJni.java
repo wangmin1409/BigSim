@@ -182,7 +182,8 @@ public class BAJni {
         } else if (System.getProperty("os.name").startsWith("FreeBSD")) {
             filePath = workDir+"/c-lib/freebsd/libBAJni.so";
         } else {
-            filePath = workDir+"ltl2ba";
+            //filePath = workDir+"ltl2ba";
+        	filePath = workDir+"/c-lib/linux/libBAJni.so";
         }
         if(filePath != null) {
             try {

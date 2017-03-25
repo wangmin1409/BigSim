@@ -1,10 +1,11 @@
 package org.bigraph.bigsim
 
 import org.bigraph.bigsim.model.Bigraph
+
 import scala.collection.mutable.Set;
 import java.lang.Boolean
 import scala.collection.mutable.ListBuffer;
-import org.omg.CORBA.Object
+import org.bigraph.bigmc.specification.GenBigraph;
 
 
 /*
@@ -41,6 +42,8 @@ object Verify{
       models.add(b);
    }
    
+   
+   
    def isSame(bl:Bigraph,br:Bigraph):Boolean = {
     
       println("Verify_isSame_bl_root:"+bl.root);
@@ -56,6 +59,8 @@ object Verify{
      /*
       *  step1: 构建笛卡尔积
       */
+     
+     specification = GenBigraph.getAllBigraph();
      
       models.foreach { x => 
          specification.foreach { y =>
@@ -85,7 +90,8 @@ object Verify{
             graph.foreach { otherNode => 
               if(node!=otherNode){
                 if(node.s.linked == otherNode.s){
-                  var sets = getNextFromSpec(node.q);
+                  var sets = GenBigraph.getNextBigraph(node.q);
+       
                   sets.foreach { allLinked =>  
                       if(allLinked ==otherNode.q){
                         node.AddNext(otherNode);
