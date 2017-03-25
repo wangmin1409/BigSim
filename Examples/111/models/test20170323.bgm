@@ -1,6 +1,7 @@
 #LTL formula
-%formula p1Up2 
-%proposition p1  operator:Operator[operate:edge,idle] | sysUI:SysUI[operate:edge,http:edge] 
-%proposition p2  operator:Operator[operate:edge,idle] | sysUI:SysUI[operate:edge,http:edge] 
+%formula <>a;
+
+#proposition 
+%proposition a  operator:Operator[operate:edge,idle] | sysUI:SysUI[operate:edge,http:edge];
 # Go!
 %check;

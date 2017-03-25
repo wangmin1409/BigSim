@@ -203,8 +203,9 @@ class Bigraph(roots: Int = 1) {
   var linkSortConstraints: Set[String] = Set(); 
   
   // add by wangmin
-  var isInitial = false;
-  var isFinal = false;
+  var isInitial: Boolean = false;
+  var isFinal: Boolean = false;
+  var lable: String = null;
   
   
   def this() = this(1);

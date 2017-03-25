@@ -1,13 +1,17 @@
 package org.bigraph.bigmc.specification
 
-
-import java.util.ArrayList
+import java.io.File
+import scala.collection.mutable.ListBuffer
 import scala.collection.JavaConversions._
+import scala.collection.mutable.Set
+
 import rwth.i2.ltl2ba4j.model.ITransition
 import rwth.i2.ltl2ba4j.model.IGraphProposition
 import org.bigraph.bigmc.model.BigraphPair;
 import org.bigraph.bigsim.model.Bigraph
-
+import org.bigraph.bigsim.parser.BGMTerm;
+import org.bigraph.bigsim.parser.BGMParser;
+import org.bigraph.bigsim.Verify
  
 
 /**
@@ -15,13 +19,40 @@ import org.bigraph.bigsim.model.Bigraph
  */
 object GenBigraph {
   
-  var b: Bigraph = null;
-  var proBigMap: Map[String, Bigraph] = Map("a" -> b);
+  var initBi: Bigraph = getInit();
+  var trueBi: Bigraph = getTrueBigraph();
+  
+  //result of the ltl2ba， list of ITransition
+  var automaton = GenTS.genTS(); 
+  //由automaton转换后的所有Bigraph pair
+  var bigraphPairList: ListBuffer[BigraphPair] = new ListBuffer[BigraphPair]();
   
   def main(args: Array[String]): Unit = {
     getBigraphPair();
+    var b = getInit();
+    //getNextBigraph(b);
   }
   
+  
+  
+  
+  
+  /**
+   * 从bgm文件获取formula和proposition
+   */
+  def getFormula(): String = {
+    val fileName: String = "Examples/111/models/test20170323.bgm";
+    val p: List[BGMTerm] = BGMParser.parse(new File(fileName));
+    return BGMTerm.parseFormula(p);
+  }
+  
+  
+  def getProposition: Map[String,Bigraph] = {
+    val fileName: String = "Examples/111/models/test20170323.bgm";
+    val p: List[BGMTerm] = BGMParser.parse(new File(fileName));
+    return BGMTerm.parseProposition(p);
+  }
+ 
   /**
    * 获取BA中每个state对应的Bigraph
    * 将label内容赋予其targetState
@@ -29,20 +60,24 @@ object GenBigraph {
   
   def getstateBigraph(): Map[String, Bigraph]  = {
     var res: Map[String, Bigraph] = Map();
-    var automaton = GenTS.genTS(); 
     automaton.foreach { x => 
       var labelSet: scala.collection.mutable.Set[IGraphProposition] = x.getLabels;
       if(labelSet.size == 1) {
         if (!isSIGMA(labelSet)) {
-          var b: Bigraph = getBigraph(getLabel(labelSet));
-          var str = x.getTargetState.getLabel;
-          println(str);
-          res += (str -> b);
-        }
+          if(x.getSourceState.isInitial()) {
+            var sourceStr = x.getSourceState.getLabel;
+            res += (sourceStr -> initBi);
+            var b: Bigraph = getBigraph(getLabel(labelSet));
+            var targetStr = x.getTargetState.getLabel;
+            res += (targetStr -> b);
+          } else {
+            var b: Bigraph = getBigraph(getLabel(labelSet));
+            var str = x.getTargetState.getLabel;
+            res += (str -> b);
+          }
+        } 
       }
      }
-    println(res.keys);
-    println(res.values);
     return res;
   }
   
@@ -50,41 +85,62 @@ object GenBigraph {
    * 获得Bigraph迁移关系
    * 以迁移对的方式返回
    */
-  def getBigraphPair(): List[BigraphPair] = {
-    var automaton = GenTS.genTS(); 
+  def getBigraphPair(): Unit = {
+    bigraphPairList.clear();
     var stateBigraph: Map[String, Bigraph] = getstateBigraph();
-    var bigraphPairList: List[BigraphPair] = List()
-    var bigraphPair: BigraphPair = null;
-    var trueB: Bigraph = null;
-    var init: Bigraph = null;
+    var bigraphPair: BigraphPair = new BigraphPair(); 
     automaton.foreach { x => 
       var labelSet: scala.collection.mutable.Set[IGraphProposition] = x.getLabels;
-      println(labelSet.size)
       if(labelSet.size == 1) {
         if (isSIGMA(labelSet)) { //标签为siegma
-          println("label是siegma");
           if (x.getSourceState.isFinal()) { //状态为终止状态
-            trueB.isFinal = true;
-            bigraphPair.init(trueB, trueB); 
-            bigraphPairList.add(bigraphPair);
+            bigraphPair.init(trueBi, trueBi);
+            bigraphPairList.append(bigraphPair);
           }else if(x.getSourceState.isInitial()) { //状态为起始状态
-            init.isInitial = true;
-            bigraphPair.init(init, init);
-            bigraphPairList.add(bigraphPair);
-          } else { //label为siegma，但是前后非起始非终止状态
-            bigraphPair.init(init, init);
-            bigraphPairList.add(bigraphPair);
-          }
+            bigraphPair.init(initBi, initBi);
+            bigraphPairList.append(bigraphPair);
+          }  
         }else { //label为普通命题
           var source = stateBigraph(x.getSourceState.getLabel);
           var target = stateBigraph(x.getTargetState.getLabel);
           bigraphPair.init(source, target);
-          bigraphPairList.add(bigraphPair);
+          bigraphPairList.append(bigraphPair);
         }
       }
      }
-    return bigraphPairList;
+    println(bigraphPairList)
   }
+  
+  
+  /**
+   * 根据输入的Bigraph获取所有它的下一状态
+   */
+  
+  def getNextBigraph(b: Bigraph): Set[Bigraph] = {
+    var res: Set[Bigraph] = Set();
+    bigraphPairList.foreach { x => 
+      if(x.sourceBigraph == b) {
+        res.add(x.targetBigraph);
+      }
+     }
+    println(res.size())
+    return res;
+  }
+  
+  /**
+   * 根据所有的Bigraph
+   */
+  
+  def getAllBigraph():Set[Bigraph] = {
+    var res: Set[Bigraph] = Set();
+    bigraphPairList.foreach { x => 
+      res.add(x.sourceBigraph);
+      res.add(x.targetBigraph); 
+     }
+    println(res.size())
+    return res;
+  }
+  
   
  /**
   * 判断label是否为<SIGMA>
@@ -115,9 +171,30 @@ object GenBigraph {
    *  命题对应的Bigraph
    */
   def getBigraph(str: String): Bigraph = {
-    //var b: Bigraph = null;
-    var b: Bigraph = proBigMap(str);
+    val fileName: String = "Examples/111/models/test20170323.bgm";
+    val p: List[BGMTerm] = BGMParser.parse(new File(fileName));
+    var pair: Map[String, Bigraph] = BGMTerm.parseProposition(p);
+    var b: Bigraph = pair(str);
     return b;
   }
- 
+  
+  /**
+   * 获取初始Bigraph
+   */
+  def getInit(): Bigraph = {
+    var init: Bigraph = new Bigraph(1);
+    init.isInitial = true;
+    init.lable = "init";
+    return init;
+  }
+  
+  /**
+   * 获取最终自循环的Bigraph
+   */
+  def getTrueBigraph(): Bigraph = {
+    var trueB: Bigraph = new Bigraph(1);
+    trueB.isFinal = true;
+    trueB.lable = "true";
+    return trueB;
+  }
 }

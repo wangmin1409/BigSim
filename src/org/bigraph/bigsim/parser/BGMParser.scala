@@ -6,7 +6,7 @@ import org.bigraph.bigsim.data.DataModel
 import org.bigraph.bigsim.model._
 import org.bigraph.bigsim.data.Data
 import org.bigraph.bigsim.utils.GlobalCfg
-import scala.collection.mutable.Map
+import scala.collection.immutable.Map
 import scala.collection.mutable.Set
 import scala.xml.Null
 
@@ -40,15 +40,34 @@ case class BGMProposition(n: String,content: String) extends BGMTerm
 
 object BGMTerm {
   
-  def toFormula(t: List[BGMTerm]): String = {
+  def parseFormula(t: List[BGMTerm]): String = {
     var formula: String = "";
     t.filter(_ match {
       case BGMFormula(_) => true
       case _             => false
     }).map(x => {
-      val formula: BGMFormula = x.asInstanceOf[BGMFormula];
+      val f: BGMFormula = x.asInstanceOf[BGMFormula];
+      formula = f.n
     });
     return formula; 
+  }
+  
+  def parseProposition(t: List[BGMTerm]): Map[String, Bigraph] = {
+    var res: Map[String, Bigraph] = Map();
+    t.filter(_ match {
+      case BGMProposition(_,_) => true
+      case _             => false
+    }).map(x => {
+      val p: BGMProposition = x.asInstanceOf[BGMProposition];
+      res += (p.n -> proToBigraph(p.content));
+    });
+    return res; 
+  }
+  
+  def proToBigraph(str: String): Bigraph = {
+    var b: Bigraph = new Bigraph(1);
+    b.root = TermParser.apply(str);
+    return b;
   }
   
   
@@ -329,7 +348,7 @@ object BGMParser extends RegexParsers {
     "%linkConstraint" ~> (ws ~> exp) ^^ { x => BGMLinkSortConstraint(x) } |
     "%property" ~> (ws ~> ident ~ (ws ~> exp)) ^^ { case i ~ p => BGMProp(i, p) } |
     "%placeConstraint" ~> (ws ~> exp) ^^ { x => BGMPlaceSortConstraint(x) } |
-    "%formula" ~> (ws ~> exp) ^^ { x => BGMFormula(x) } |  
+    "%formula" ~> (ws ~> exp) ^^ { x => BGMFormula(x) } | 
     "%proposition" ~> (ws ~> ident ~ (ws ~> exp)) ^^ {  
       case i ~ s => {
         BGMProposition(i,s)
@@ -392,8 +411,10 @@ object testBGMParser {
     
     val fileName: String = "Examples/111/models/test20170323.bgm";
     val p: List[BGMTerm] = BGMParser.parse(new File(fileName));
-    var f = BGMTerm.toFormula(p);
+    var f = BGMTerm.parseFormula(p);
+    var res = BGMTerm.parseProposition(p);
     println("formula:" + f);
+    println("proposition:" + res);
   }
 }
 
