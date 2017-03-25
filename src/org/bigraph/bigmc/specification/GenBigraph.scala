@@ -117,6 +117,7 @@ object GenBigraph {
    */
   
   def getNextBigraph(b: Bigraph): Set[Bigraph] = {
+    getBigraphPair();
     var res: Set[Bigraph] = Set();
     bigraphPairList.foreach { x => 
       if(x.sourceBigraph == b) {
@@ -132,6 +133,7 @@ object GenBigraph {
    */
   
   def getAllBigraph():Set[Bigraph] = {
+    getBigraphPair();
     var res: Set[Bigraph] = Set();
     bigraphPairList.foreach { x => 
       res.add(x.sourceBigraph);

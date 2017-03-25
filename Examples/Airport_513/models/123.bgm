@@ -23,5 +23,4 @@
 %proposition a  dorm:Dorm | office:Office.student:Student| canteen:Canteen;
 # Go!
 
-# Go!
 %check;

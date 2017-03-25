@@ -46,8 +46,14 @@ object Verify{
    
    def isSame(bl:Bigraph,br:Bigraph):Boolean = {
     
+     //if(bl==null||br==null||bl.root==null||br.root==null)return false;
       println("Verify_isSame_bl_root:"+bl.root);
      println("Verify_isSame_br_root:"+br.root);
+     
+     if(bl.isInitial ||br.isInitial) return true;
+     if(bl.isFinal&&bl.lable!=null&&bl.lable.equals("true"))return true;
+     if(br.isFinal&&br.lable!=null&&br.lable.equals("true"))return true;
+     
      if(bl.root.toString().equals(br.root.toString())){
        return true;
      }
@@ -57,15 +63,19 @@ object Verify{
    
    def Calculate(){
      /*
-      *  step1: 构建笛卡尔积
+      *  step1: 构建同步积
       */
      
      specification = GenBigraph.getAllBigraph();
+     println("Verify======specification======");
+  //   specification.foreach { x => println(x) });
+      println("Verify======specification======");
      
       models.foreach { x => 
          specification.foreach { y =>
              var g = new GraphNode(x,y);
              graph.add(g);
+        
          }    
       }
       
