@@ -10,11 +10,16 @@
 
 %rule r_goCanteen Dorm| Office.Student | Canteen -> Dorm| Office | Canteen.Student;
 
+%rule Dorm| Office | Canteen.Student -> Dorm.Student| Office | Canteen;
 
 # model
 %agent dorm:Dorm.student:Student | office:Office| canteen:Canteen;
 
+#LTL formula
+%formula <>a;
+
+#proposition 
+%proposition a  dorm:Dorm | office:Office.student:Student| canteen:Canteen;
 
 # Go!
-
 %check;

@@ -1,5 +1,5 @@
 #LTL formula
-%formula <>!a;
+%formula <>a;
 
 #proposition 
 %proposition a  dorm:Dorm | office:Office.student:Student| canteen:Canteen;

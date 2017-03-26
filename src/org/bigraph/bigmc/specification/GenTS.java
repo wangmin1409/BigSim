@@ -35,7 +35,7 @@ public class GenTS {
 	 * @return
 	 */
 	public static ArrayList<ITransition> genTS() {
-		String formula = GenBigraph.getFormula();
+		String formula = ParserSpec.processSpec().formula();
 		ArrayList<ITransition> res = new ArrayList<ITransition>();
 		Collection<ITransition> automaton = LTL2BA4J.formulaToBA(formula);
 		for (ITransition t : automaton) {

@@ -1,5 +1,0 @@
-1{
-canteen:Canteen.nil|dorm:Dorm.student:Student.nil|office:Office.nil;
-canteen:Canteen.nil|dorm:Dorm.nil|office:Office.student:Student.nil;
-canteen:Canteen.student:Student.nil|dorm:Dorm.nil|office:Office.nil;
-}100.0%

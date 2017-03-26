@@ -22,6 +22,7 @@ object GenBigraph {
   var initBi: Bigraph = getInit();
   var trueBi: Bigraph = getTrueBigraph();
   
+  var spec: Spec = ParserSpec.processSpec();
   //result of the ltl2ba， list of ITransition
   var automaton = GenTS.genTS(); 
   //由automaton转换后的所有Bigraph pair
@@ -38,7 +39,7 @@ object GenBigraph {
   /**
    * 从bgm文件获取formula和proposition
    */
-  def getFormula(): String = {
+  /*def getFormula(): String = {
     val fileName: String = "Examples/111/models/test20170323.bgm";
     val p: List[BGMTerm] = BGMParser.parse(new File(fileName));
     return BGMTerm.parseFormula(p);
@@ -49,7 +50,7 @@ object GenBigraph {
     val fileName: String = "Examples/111/models/test20170323.bgm";
     val p: List[BGMTerm] = BGMParser.parse(new File(fileName));
     return BGMTerm.parseProposition(p);
-  }
+  }*/
  
   /**
    * 获取BA中每个state对应的Bigraph
@@ -189,9 +190,7 @@ object GenBigraph {
    *  命题对应的Bigraph
    */
    def getBigraph(str: String): Bigraph = {
-    val fileName: String = "Examples/111/models/test20170323.bgm";
-    val p: List[BGMTerm] = BGMParser.parse(new File(fileName));
-    var pair: Map[String, Bigraph] = BGMTerm.parseProposition(p);
+    var pair: Map[String, Bigraph] = spec.proposition;
     var b: Bigraph = pair(str);
     return b;
   }
