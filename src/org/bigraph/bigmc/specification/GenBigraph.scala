@@ -35,23 +35,6 @@ object GenBigraph {
     println(isNegative("fffa"));
   }
    
-  
-  /**
-   * 从bgm文件获取formula和proposition
-   */
-  /*def getFormula(): String = {
-    val fileName: String = "Examples/111/models/test20170323.bgm";
-    val p: List[BGMTerm] = BGMParser.parse(new File(fileName));
-    return BGMTerm.parseFormula(p);
-  }
-  
-  
-  def getProposition: Map[String,Bigraph] = {
-    val fileName: String = "Examples/111/models/test20170323.bgm";
-    val p: List[BGMTerm] = BGMParser.parse(new File(fileName));
-    return BGMTerm.parseProposition(p);
-  }*/
- 
   /**
    * 获取BA中每个state对应的Bigraph
    * 将label内容赋予其targetState
