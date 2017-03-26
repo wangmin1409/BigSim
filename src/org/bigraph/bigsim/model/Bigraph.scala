@@ -443,6 +443,9 @@ class Bigraph(roots: Int = 1) {
       s.append("\t\t" + rule + "\n");
     }
     s.append("\tModel:\n\t\t" + root + "\n");
+    s.append("\tIsStart:"+isInitial +"\n");
+      s.append("\tIsFinal:"+isFinal+"\n");
+      s.append("\tlabel:"+lable+"\n");
     s.toString();
   }
 }
