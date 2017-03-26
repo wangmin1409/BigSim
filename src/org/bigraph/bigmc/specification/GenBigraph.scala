@@ -28,14 +28,12 @@ object GenBigraph {
   var bigraphPairList: ListBuffer[BigraphPair] = new ListBuffer[BigraphPair]();
   
   def main(args: Array[String]): Unit = {
-    getBigraphPair();
-    var b = getInit();
+    //getBigraphPair();
+    getAllBigraph();
     //getNextBigraph(b);
+    println(isNegative("fffa"));
   }
-  
-  
-  
-  
+   
   
   /**
    * 从bgm文件获取formula和proposition
@@ -63,16 +61,25 @@ object GenBigraph {
     automaton.foreach { x => 
       var labelSet: scala.collection.mutable.Set[IGraphProposition] = x.getLabels;
       if(labelSet.size == 1) {
+        //如果label不是sigma
         if (!isSIGMA(labelSet)) {
           if(x.getSourceState.isInitial()) {
             var sourceStr = x.getSourceState.getLabel;
             res += (sourceStr -> initBi);
             var b: Bigraph = getBigraph(getLabel(labelSet));
+            b.label = getLabel(labelSet);
+            if (isNegative(b.label)) {
+              b.isNegative = true;
+            }
             var targetStr = x.getTargetState.getLabel;
             res += (targetStr -> b);
           } else {
             var b: Bigraph = getBigraph(getLabel(labelSet));
             var str = x.getTargetState.getLabel;
+            b.label = getLabel(labelSet);
+            if (isNegative(b.label)) {
+              b.isNegative = true;
+            }
             res += (str -> b);
           }
         } 
@@ -88,27 +95,29 @@ object GenBigraph {
   def getBigraphPair(): Unit = {
     bigraphPairList.clear();
     var stateBigraph: Map[String, Bigraph] = getstateBigraph();
-    var bigraphPair: BigraphPair = new BigraphPair(); 
+    var bigraphPair: BigraphPair = new BigraphPair();
     automaton.foreach { x => 
       var labelSet: scala.collection.mutable.Set[IGraphProposition] = x.getLabels;
       if(labelSet.size == 1) {
         if (isSIGMA(labelSet)) { //标签为siegma
           if (x.getSourceState.isFinal()) { //状态为终止状态
-            bigraphPair.init(trueBi, trueBi);
-            bigraphPairList.append(bigraphPair);
+            var bigraphPair1: BigraphPair = new BigraphPair(); 
+            bigraphPair1.init(trueBi, trueBi);
+            bigraphPairList.add(bigraphPair1);
           }else if(x.getSourceState.isInitial()) { //状态为起始状态
-            bigraphPair.init(initBi, initBi);
-            bigraphPairList.append(bigraphPair);
+            var bigraphPair2: BigraphPair = new BigraphPair(); 
+            bigraphPair2.init(initBi, initBi);
+            bigraphPairList.add(bigraphPair2);
           }  
         }else { //label为普通命题
+          var bigraphPair3: BigraphPair = new BigraphPair(); 
           var source = stateBigraph(x.getSourceState.getLabel);
           var target = stateBigraph(x.getTargetState.getLabel);
-          bigraphPair.init(source, target);
-          bigraphPairList.append(bigraphPair);
+          bigraphPair3.init(source, target);
+          bigraphPairList.add(bigraphPair3);
         }
       }
      }
-    println(bigraphPairList)
   }
   
   
@@ -124,7 +133,6 @@ object GenBigraph {
         res.add(x.targetBigraph);
       }
      }
-    println(res.size())
     return res;
   }
   
@@ -139,7 +147,6 @@ object GenBigraph {
       res.add(x.sourceBigraph);
       res.add(x.targetBigraph); 
      }
-    println(res.size())
     return res;
   }
   
@@ -157,14 +164,23 @@ object GenBigraph {
     return res;
   }
   
-  
-  /**
-   *  获取label标签内容 
-   */
-  def getLabel(labelSet: scala.collection.mutable.Set[IGraphProposition]): String = {
+   /**
+  * 获取labelSet内容
+  */
+  private def getLabel(labelSet: scala.collection.mutable.Set[IGraphProposition]): String = {
     var res: String = "";
     labelSet.foreach { x => 
       res = x.getLabel;
+    }
+    return res;
+  }
+  /**
+   * 判断label内容是否为否定形式
+   */
+   private def isNegative(str: String): Boolean = {
+    var res: Boolean = false;
+    if (str.startsWith("!")) {
+      res = true;
     }
     return res;
   }
@@ -172,7 +188,7 @@ object GenBigraph {
    /**
    *  命题对应的Bigraph
    */
-  def getBigraph(str: String): Bigraph = {
+   def getBigraph(str: String): Bigraph = {
     val fileName: String = "Examples/111/models/test20170323.bgm";
     val p: List[BGMTerm] = BGMParser.parse(new File(fileName));
     var pair: Map[String, Bigraph] = BGMTerm.parseProposition(p);
@@ -183,10 +199,10 @@ object GenBigraph {
   /**
    * 获取初始Bigraph
    */
-  def getInit(): Bigraph = {
+  private def getInit(): Bigraph = {
     var init: Bigraph = new Bigraph(1);
     init.isInitial = true;
-    init.lable = "init";
+    init.label = "init";
     return init;
   }
   
@@ -196,7 +212,7 @@ object GenBigraph {
   def getTrueBigraph(): Bigraph = {
     var trueB: Bigraph = new Bigraph(1);
     trueB.isFinal = true;
-    trueB.lable = "true";
+    trueB.label = "true";
     return trueB;
   }
 }
