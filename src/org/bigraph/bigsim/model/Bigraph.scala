@@ -185,7 +185,13 @@ object Bigraph {
 
 class Bigraph(roots: Int = 1) {
   
+  /*
+   * yw added for verify
+   */
   var linked:Bigraph = null;  //for verify
+  var verifyID:String = "";
+  
+  
   var root: Term = null;
   var inner: Set[Name] = Set();
   var outer: Set[Name] = Set();

@@ -61,7 +61,7 @@ class TarJanAlgorithm(graph:Set[GraphNode]) {
       do{
         n = stack.pop();
         inStack(n) = false;
-        println("TarJan:------>"+n);
+        println("TarJan:------>"+n.s.verifyID+" " +n.q.verifyID);
       }while(n!=curNode);
     } 
   }

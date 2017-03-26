@@ -66,16 +66,24 @@ object Verify{
       *  step1: 构建同步积
       */
      
-     specification = GenBigraph.getAllBigraph();
-     println("Verify======specification======");
-  //   specification.foreach { x => println(x) });
-      println("Verify======specification======");
+     var sIndex = 0;
+     var mIndex = 0;
      
-      models.foreach { x => 
-         specification.foreach { y =>
-             var g = new GraphNode(x,y);
-             graph.add(g);
-        
+     specification = GenBigraph.getAllBigraph();
+     
+      specification.foreach { x => 
+         models.foreach { y =>
+             if(y.verifyID.equals("")){
+               y.verifyID = "S" +mIndex;
+               mIndex = mIndex +1;
+             }
+              if(x.verifyID.equals("")){
+               x.verifyID = "P" +mIndex;
+               sIndex = sIndex +1;
+             }
+             
+             var g = new GraphNode(y,x);
+             graph.add(g);   
          }    
       }
       
