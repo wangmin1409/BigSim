@@ -211,7 +211,8 @@ class Bigraph(roots: Int = 1) {
   // add by wangmin
   var isInitial: Boolean = false;
   var isFinal: Boolean = false;
-  var lable: String = null;
+  var label: String = null;
+  var isNegative: Boolean = false;
   
   
   def this() = this(1);
@@ -443,9 +444,10 @@ class Bigraph(roots: Int = 1) {
       s.append("\t\t" + rule + "\n");
     }
     s.append("\tModel:\n\t\t" + root + "\n");
-    s.append("\tIsStart:"+isInitial +"\n");
-      s.append("\tIsFinal:"+isFinal+"\n");
-      s.append("\tlabel:"+lable+"\n");
+    s.append("IsStart:"+isInitial +"\n");
+    s.append("IsFinal:"+isFinal+"\n");
+    s.append("label:"+label+"\n");
+    s.append("isNegative:"+isNegative+"\n")
     s.toString();
   }
 }

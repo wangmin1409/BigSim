@@ -51,8 +51,8 @@ object Verify{
      println("Verify_isSame_br_root:"+br.root);
      
      if(bl.isInitial ||br.isInitial) return true;
-     if(bl.isFinal&&bl.lable!=null&&bl.lable.equals("true"))return true;
-     if(br.isFinal&&br.lable!=null&&br.lable.equals("true"))return true;
+     if(bl.isFinal&&bl.label!=null&&bl.label.equals("true"))return true;
+     if(br.isFinal&&br.label!=null&&br.label.equals("true"))return true;
      
      if(bl.root.toString().equals(br.root.toString())){
        return true;

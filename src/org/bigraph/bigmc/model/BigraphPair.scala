@@ -21,6 +21,6 @@ class BigraphPair {
     this.targetBigraph = targetBigraph;
   }
   
-  override def toString = "sourceBigraph：" + sourceBigraph + "--->" + "\n" + "targetBigraph：" + targetBigraph + ";";
+  override def toString = "sourceBigraph：" + sourceBigraph + "\n--------------->" + "\n" + "targetBigraph：" + targetBigraph + ";";
   
 }
