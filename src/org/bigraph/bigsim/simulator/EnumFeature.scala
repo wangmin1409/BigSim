@@ -50,11 +50,8 @@ class EnumFeature(b: Bigraph){
     steps += 1;
     var step: Int = steps;
     var b: Bigraph = v.bigraph;
-    println("ywlog=========");
-    println(b);
-    println("ywlog=========");
-    Verify.AddModel(b);
     
+    Verify.AddModel(b);
     
     var matches: Set[Match] = b.findMatches;
 

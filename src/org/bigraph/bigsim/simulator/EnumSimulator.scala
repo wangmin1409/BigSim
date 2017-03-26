@@ -10,6 +10,7 @@ import org.bigraph.bigsim.BRS.Match
 import org.bigraph.bigsim.model.Bigraph
 import org.bigraph.bigsim.model.ReactionRule
 import org.bigraph.bigsim.model.Nil
+import org.bigraph.bigsim.Verify
 
 /**
  * Enum Simulator is designed for enumerate all the agents
@@ -85,6 +86,7 @@ class EnumSimulator(b: Bigraph) extends Simulator {
     println("ywlog:======");
     println(b);
     println("ywlog:======");
+    Verify.AddModel(b);
     
     var matches: Set[Match] = b.findMatches;
 

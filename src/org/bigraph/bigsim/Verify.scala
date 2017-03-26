@@ -69,7 +69,7 @@ object Verify{
      var sIndex = 0;
      var mIndex = 0;
      
-     specification = GenBigraph.getAllBigraph();
+   //  specification = GenBigraph.getAllBigraph();
      
       specification.foreach { x => 
          models.foreach { y =>
