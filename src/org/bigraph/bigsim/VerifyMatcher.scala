@@ -18,9 +18,9 @@ import org.bigraph.bigsim.parser.TermParser;
 object VerifyMatcher {
   
   def main(args: Array[String]): Unit = {
-    var terml: Term = TermParser.apply("a:Hospital");
-    var termr: Term = TermParser.apply("a:Hospital");
-    BigraphIsEqual(terml, termr);
+    var terml: Term = TermParser.apply("office:Office.student:Student.Nil");
+    var termr: Term = TermParser.apply("office:Office.Nil");
+    println(BigraphIsEqual(terml, termr));
   }
   
   def Match(bl:Bigraph,br:Bigraph):Boolean = {
@@ -42,7 +42,7 @@ object VerifyMatcher {
         }
         if(p1.node.name.equals(p2.node.name)&&p1.node.ctrl.name.equals(p2.node.ctrl.name)){
           return BigraphIsEqual(p1.suffix,p2.suffix)
-        }
+        } else return false;
     }
     else if(bl.termType==TermType.TPAR){
       var p1 = bl.asInstanceOf[Paraller];
