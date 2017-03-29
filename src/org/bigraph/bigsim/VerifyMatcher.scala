@@ -7,6 +7,7 @@ import org.bigraph.bigsim.model.TermType
 import org.bigraph.bigsim.model.Prefix
 import org.bigraph.bigsim.model.Paraller
 import scala.collection.Parallel
+import org.bigraph.bigsim.parser.TermParser;
 
 
 /*
@@ -15,6 +16,12 @@ import scala.collection.Parallel
  * */
 
 object VerifyMatcher {
+  
+  def main(args: Array[String]): Unit = {
+    var terml: Term = TermParser.apply("a:Hospital");
+    var termr: Term = TermParser.apply("a:Hospital");
+    BigraphIsEqual(terml, termr);
+  }
   
   def Match(bl:Bigraph,br:Bigraph):Boolean = {
      if(bl.isInitial ||br.isInitial) return true; 
