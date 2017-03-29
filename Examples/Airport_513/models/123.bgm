@@ -13,7 +13,7 @@
 %rule Dorm| Office | Canteen.Student -> Dorm.Student| Office | Canteen;
 
 # model
-%agent dorm:Dorm.student:Student | office:Office| canteen:Canteen;
+%agent dorm:Dorm.student:Student.(office:Office| canteen:Canteen);
 
 #LTL formula
 %formula <>a;

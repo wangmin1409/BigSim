@@ -6,9 +6,5 @@ Report"];
 BigSim_Report -> N__156667356[color = aliceblue label = ""];
  N__156667356
  [shape=circle, color=lightblue2, style=filled];
-N_2077530276[ label="N_2077530276"];
 N__156667356[ label="N__156667356"];
- N__156667356 -> N__1355995996[ color = purple label = "r_goOfficeFromDorm"];
-N__1355995996[ label="N__1355995996"];
- N__1355995996 -> N_2077530276[ color = purple label = "r_goCanteen"];
 }

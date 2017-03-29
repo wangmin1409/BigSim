@@ -6,6 +6,7 @@ import scala.collection.mutable.Set;
 import java.lang.Boolean
 import scala.collection.mutable.ListBuffer;
 import org.bigraph.bigmc.specification.GenBigraph;
+import scala.collection.Parallel
 
 
 /*
@@ -35,30 +36,16 @@ object Verify{
    
    var curBI:Bigraph = null;
    
-   def AddModel(b:Bigraph) = {
+   def AddModel(b:Bigraph):Unit = {
+     models.foreach { model =>  
+       if(VerifyMatcher.BigraphIsEqual(b.root,model.root)){
+         return;
+       }
+     }
      if(curBI!=null)
         curBI.linked = b;
       curBI = b;
       models.add(b);
-   }
-   
-   
-   
-   def isSame(bl:Bigraph,br:Bigraph):Boolean = {
-    
-     //if(bl==null||br==null||bl.root==null||br.root==null)return false;
-      println("Verify_isSame_bl_root:"+bl.root);
-     println("Verify_isSame_br_root:"+br.root);
-     
-     if(bl.isInitial ||br.isInitial) return true;
-     if(bl.isFinal&&bl.label!=null&&bl.label.equals("true"))return true;
-     if(br.isFinal&&br.label!=null&&br.label.equals("true"))return true;
-     
-     if(bl.root.toString().equals(br.root.toString())){
-       return true;
-     }
-     
-     return false;
    }
    
    def Calculate(){
@@ -94,7 +81,7 @@ object Verify{
       var g:Set[GraphNode] = Set();
       
       graph.foreach { node => 
-          if(isSame(node.s,node.q)){
+          if(VerifyMatcher.Match(node.s, node.q)){
             g.add(node);
           }
       }
@@ -126,12 +113,11 @@ object Verify{
       al.run();
    }
    
-   def getNextFromSpec(spec:Bigraph):Set[Bigraph] = {
-     return null; 
-   }
 }
+
 
 object test extends App{
    override def main(args: Array[String]) = {     
+     
    }
 }

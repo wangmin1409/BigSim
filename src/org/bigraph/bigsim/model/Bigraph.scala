@@ -181,6 +181,7 @@ object Bigraph {
 
     true;
   }
+ 
 }
 
 class Bigraph(roots: Int = 1) {

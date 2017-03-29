@@ -11,6 +11,10 @@ import org.bigraph.bigsim.model.Bigraph
 import org.bigraph.bigsim.model.ReactionRule
 import org.bigraph.bigsim.model.Nil
 import org.bigraph.bigsim.Verify
+import org.bigraph.bigsim.model.TermType
+import org.bigraph.bigsim.model.Term
+import org.bigraph.bigsim.model.Paraller
+import org.bigraph.bigsim.model.Prefix
 
 /**
  * Enum Simulator is designed for enumerate all the agents
@@ -50,7 +54,7 @@ class EnumFeature(b: Bigraph){
     steps += 1;
     var step: Int = steps;
     var b: Bigraph = v.bigraph;
-    
+
     Verify.AddModel(b);
     
     var matches: Set[Match] = b.findMatches;
