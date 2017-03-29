@@ -1,0 +1,4 @@
+1{
+r_goOfficeFromDorm
+r_goCanteen
+}

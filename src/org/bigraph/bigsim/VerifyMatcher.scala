@@ -24,17 +24,17 @@ object VerifyMatcher {
   }
   
   def BigraphIsEqual(bl:Term,br:Term):Boolean = {
-    if(bl.termType != br.termType)false;
+    if(bl.termType != br.termType)return false;
     if(bl.termType == TermType.TPREF){
       var p1 = bl.asInstanceOf[Prefix];
       var p2 = br.asInstanceOf[Prefix]
         if(p1.suffix.termType ==TermType.TNIL&&p2.suffix.termType ==TermType.TNIL){
           if(!bl.termType.toString().equals(br.termType.toString())){
-            false;
+            return false;
           }
         }
         if(p1.node.name.equals(p2.node.name)&&p1.node.ctrl.name.equals(p2.node.ctrl.name)){
-          BigraphIsEqual(p1.suffix,p2.suffix)
+          return BigraphIsEqual(p1.suffix,p2.suffix)
         }
     }
     else if(bl.termType==TermType.TPAR){
@@ -42,7 +42,7 @@ object VerifyMatcher {
       var p2 = br.asInstanceOf[Paraller];
       return (BigraphIsEqual(p1.leftTerm,p2.rightTerm)&&
         BigraphIsEqual(p1.rightTerm,p2.leftTerm))||
-         (BigraphIsEqual(p1.leftTerm,p1.leftTerm)&&
+         (BigraphIsEqual(p1.leftTerm,p2.leftTerm)&&
         BigraphIsEqual(p1.rightTerm,p2.rightTerm))
     }
     return true;
