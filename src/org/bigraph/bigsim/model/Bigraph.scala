@@ -449,6 +449,7 @@ class Bigraph(roots: Int = 1) {
     s.append("IsFinal:"+isFinal+"\n");
     s.append("label:"+label+"\n");
     s.append("isNegative:"+isNegative+"\n")
+    s.append("VerifyID"+ verifyID+"\n")
     s.toString();
   }
 }
