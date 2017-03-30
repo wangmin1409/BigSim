@@ -36,8 +36,9 @@ public class GenTS {
 	 */
 	public static ArrayList<ITransition> genTS() {
 		String formula = ParserSpec.processSpec().formula();
+		String negFormula = "!" + formula; 
 		ArrayList<ITransition> res = new ArrayList<ITransition>();
-		Collection<ITransition> automaton = LTL2BA4J.formulaToBA(formula);
+		Collection<ITransition> automaton = LTL2BA4J.formulaToBA(negFormula);
 		for (ITransition t : automaton) {
 			System.out.println("Transition---" + t);
 			res.add(t);
