@@ -9,6 +9,7 @@ import org.bigraph.bigsim.utils.GlobalCfg
 import scala.collection.immutable.Map
 import scala.collection.mutable.Set
 import scala.xml.Null
+import org.bigraph.bigsim.model.Specification
 
 abstract class BGMTerm {
 }
@@ -33,35 +34,33 @@ case class BGMLinkSort(n: String, pns: String) extends BGMTerm
 case class BGMPlaceSortConstraint(n: String) extends BGMTerm
 case class BGMLinkSortConstraint(n: String) extends BGMTerm
 
-//add by wangmin
+//add by wm
 case class BGMFormula(n: String) extends BGMTerm
 case class BGMProposition(n: String,content: String) extends BGMTerm
 
 
 object BGMTerm {
   
-  def parseFormula(t: List[BGMTerm]): String = {
-    var formula: String = "";
+  
+  def toSpecification(t: List[BGMTerm]): Specification = {
+    val spec: Specification = new Specification();
+    //BGMFormula
     t.filter(_ match {
       case BGMFormula(_) => true
       case _             => false
     }).map(x => {
       val f: BGMFormula = x.asInstanceOf[BGMFormula];
-      formula = f.n
+      spec.formula = f.n
     });
-    return formula; 
-  }
-  
-  def parseProposition(t: List[BGMTerm]): Map[String, Bigraph] = {
-    var res: Map[String, Bigraph] = Map();
+    //BGMProposition
     t.filter(_ match {
       case BGMProposition(_,_) => true
       case _             => false
     }).map(x => {
       val p: BGMProposition = x.asInstanceOf[BGMProposition];
-      res += (p.n -> proToBigraph(p.content));
+      spec.proposition += (p.n -> proToBigraph(p.content));
     });
-    return res; 
+    return spec;
   }
   
   def proToBigraph(str: String): Bigraph = {
@@ -348,8 +347,8 @@ object BGMParser extends RegexParsers {
     "%linkConstraint" ~> (ws ~> exp) ^^ { x => BGMLinkSortConstraint(x) } |
     "%property" ~> (ws ~> ident ~ (ws ~> exp)) ^^ { case i ~ p => BGMProp(i, p) } |
     "%placeConstraint" ~> (ws ~> exp) ^^ { x => BGMPlaceSortConstraint(x) } |
-    "%formula" ~> (ws ~> exp) ^^ { x => BGMFormula(x) } | 
-    "%proposition" ~> (ws ~> ident ~ (ws ~> exp)) ^^ {  
+    "%formula" ~> (ws ~> exp) ^^ { x => BGMFormula(x) } | //LTL公式
+    "%proposition" ~> (ws ~> ident ~ (ws ~> exp)) ^^ {  //命题对应的Bigraph
       case i ~ s => {
         BGMProposition(i,s)
       }
@@ -411,10 +410,6 @@ object testBGMParser {
     
     val fileName: String = "Examples/111/models/test20170323.bgm";
     val p: List[BGMTerm] = BGMParser.parse(new File(fileName));
-    var f = BGMTerm.parseFormula(p);
-    var res = BGMTerm.parseProposition(p);
-    println("formula:" + f);
-    println("proposition:" + res);
   }
 }
 

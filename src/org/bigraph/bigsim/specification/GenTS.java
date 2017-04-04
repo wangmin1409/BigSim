@@ -1,4 +1,4 @@
-package org.bigraph.bigmc.specification;
+package org.bigraph.bigsim.specification;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,6 +8,7 @@ import java.util.Set;
 import rwth.i2.ltl2ba4j.LTL2BA4J;
 import rwth.i2.ltl2ba4j.model.IGraphProposition;
 import rwth.i2.ltl2ba4j.model.ITransition;
+import org.bigraph.bigsim.model.Specification;
 
 public class GenTS {
 	//private static String formula = "<>a";
@@ -32,7 +33,7 @@ public class GenTS {
 	 * @return
 	 */
 	public static ArrayList<ITransition> genTS() {
-		String formula = ParserSpec.processSpec().formula();
+		String formula = Specification.processSpec().formula();
 		String negFormula = "!" + formula; 
 		ArrayList<ITransition> res = new ArrayList<ITransition>();
 		Collection<ITransition> automaton = LTL2BA4J.formulaToBA(negFormula);

@@ -5,9 +5,8 @@ import org.bigraph.bigsim.model.Bigraph
 import scala.collection.mutable.Set;
 import java.lang.Boolean
 import scala.collection.mutable.ListBuffer;
-import org.bigraph.bigmc.specification.GenBigraph;
 import scala.collection.Parallel
-
+import org.bigraph.bigsim.specification.GenBigraph;
 
 /*
  * author: yanwei

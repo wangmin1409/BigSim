@@ -209,7 +209,7 @@ class Bigraph(roots: Int = 1) {
   var placeSortConstraints: Set[String] = Set();
   var linkSortConstraints: Set[String] = Set(); 
   
-  // add by wangmin
+  // add by wm
   var isInitial: Boolean = false;
   var isFinal: Boolean = false;
   var label: String = null;

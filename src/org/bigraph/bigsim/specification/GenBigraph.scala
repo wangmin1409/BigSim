@@ -1,4 +1,5 @@
-package org.bigraph.bigmc.specification
+package org.bigraph.bigsim.specification
+
 
 import java.io.File
 import scala.collection.mutable.ListBuffer
@@ -7,23 +8,22 @@ import scala.collection.mutable.Set
 
 import rwth.i2.ltl2ba4j.model.ITransition
 import rwth.i2.ltl2ba4j.model.IGraphProposition
-import org.bigraph.bigmc.model.BigraphPair;
+import org.bigraph.bigsim.model.Specification;
+import org.bigraph.bigsim.model.BigraphPair;
 import org.bigraph.bigsim.model.Bigraph
 import org.bigraph.bigsim.parser.BGMTerm;
 import org.bigraph.bigsim.parser.BGMParser;
 import org.bigraph.bigsim.Verify
-import org.bigraph.bigsim.model.Specification;
- 
+
 
 /**
  * @author amy
  */
 object GenBigraph {
-  
   var initBi: Bigraph = getInit();
   var trueBi: Bigraph = getTrueBigraph();
   
-  var spec: Specification = ParserSpec.processSpec();
+  var spec: Specification = Specification.processSpec();
   //result of the ltl2ba， list of ITransition
   var automaton = GenTS.genTS(); 
   //由automaton转换后的所有Bigraph pair
