@@ -312,7 +312,7 @@
 %rule r_take_off Airport.($0 | Airplane.$1) -> Airport.$0 | Airplane.$1 {SysClk:35	React:Airplane};
 
 #1 passenger
-#%agent p1:Passenger[isAdult:edge,isEconomy:edge].(t1:Ticket[idle] | c1:CheckinLuggage | d1:Danger)  | a:Airport.(c:Checkin | s:Security | sz:ShoppingZone.bb:Billboard | gl:GateLounge.l:Light | ap:Airplane);
+%agent p1:Passenger[isAdult:edge,isEconomy:edge].(t1:Ticket[idle] | c1:CheckinLuggage | d1:Danger)  | a:Airport.(c:Checkin | s:Security | sz:ShoppingZone.bb:Billboard | gl:GateLounge.l:Light | ap:Airplane);
 
 #2 passengers
 #%agent p1:Passenger[isAdult:edge,isEconomy:edge].(t1:Ticket[idle] | c1:CheckinLuggage | d1:Danger) | p2:Passenger[isAdult:edge,isEconomy:edge].(t2:Ticket[idle] | c2:CheckinLuggage | d2:Danger) | a:Airport.(c:Checkin | s:Security | sz:ShoppingZone.bb:Billboard | gl:GateLounge.l:Light | ap:Airplane);

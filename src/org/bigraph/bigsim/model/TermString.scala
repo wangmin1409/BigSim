@@ -91,7 +91,7 @@ object TermString {
 object testSubtree {
   def main(args: Array[String]) {
 
-    var t2 = TermParser.apply("a:Airport.(d:Security.(Computer[connect:edge,idle].SecurityInfo[idle].nil|Ticket[hasTicket:edge].nil|bb:hangLuggage[hasHangLuggage:edge,idle].nil|w:Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].nil)|database[connect:edge].(dataDangerousList[idle].nil|dataDangerousList[idle].nil|dataDangerousList[idle].nil|dataDangerousList[idle].nil|database[connect:edge].database[connect:edge].(b:Checkin.personinfo[idle].nil|c:PassagewayToSecurity.m:Light[idle].nil|e:PassagewayToShop.n:Light[idle].nil|f:ShoppingZone.(p:BillBoard[idle].nil|q:Store.v:Computer[connect:edge,idle].nil)|g:PassagewayToGate.o:Light[idle].nil|h:GateLounge.l:Computer[connect:edge,idle].nil|i:database[connect:edge].(r:dataPassenger[idle,idle,idle,idle,idle,idle,hasTicket:edge,idle,hasHangLuggage:edge,hasCheckinLuggage:edge].nil|s:dataHangLuggage[hasHangLuggage:edge,idle,idle].nil|t:dataTicket[idle,idle,idle,idle,hasTicket:edge].nil|u:datacheckinLuggage[idle,hasCheckinLuggage:edge,idle,idle].nil|x:dataAD[idle,idle].nil|y:dataShopPrefer[idle,type:edge].nil|z:dataProduct[idle,type:edge,idle].nil))))");
+   /* var t2 = TermParser.apply("a:Airport.(d:Security.(Computer[connect:edge,idle].SecurityInfo[idle].nil|Ticket[hasTicket:edge].nil|bb:hangLuggage[hasHangLuggage:edge,idle].nil|w:Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,idle,hasTicket:edge,idle,idle].nil)|database[connect:edge].(dataDangerousList[idle].nil|dataDangerousList[idle].nil|dataDangerousList[idle].nil|dataDangerousList[idle].nil|database[connect:edge].database[connect:edge].(b:Checkin.personinfo[idle].nil|c:PassagewayToSecurity.m:Light[idle].nil|e:PassagewayToShop.n:Light[idle].nil|f:ShoppingZone.(p:BillBoard[idle].nil|q:Store.v:Computer[connect:edge,idle].nil)|g:PassagewayToGate.o:Light[idle].nil|h:GateLounge.l:Computer[connect:edge,idle].nil|i:database[connect:edge].(r:dataPassenger[idle,idle,idle,idle,idle,idle,hasTicket:edge,idle,hasHangLuggage:edge,hasCheckinLuggage:edge].nil|s:dataHangLuggage[hasHangLuggage:edge,idle,idle].nil|t:dataTicket[idle,idle,idle,idle,hasTicket:edge].nil|u:datacheckinLuggage[idle,hasCheckinLuggage:edge,idle,idle].nil|x:dataAD[idle,idle].nil|y:dataShopPrefer[idle,type:edge].nil|z:dataProduct[idle,type:edge,idle].nil))))");
     var t1 = TermParser.apply("Security.(Passenger[idle,idle,idle,hasHangLuggage:edge,idle,idle,passCom:edge,hasTicket:edge,idle,idle] | Ticket[hasTicket:edge] | hangLuggage[hasHangLuggage:edge,hasHangOrNot:edge] | Computer[connect:edge, passCom:edge].$2) | database[connect:edge].$3 | Equal[hasHangOrNo:edge, hasHang:edge] | True[hasHang:edge] | $0");
     var rule = new ReactionRule("liangwei", t1, t2, "");
 
@@ -100,7 +100,7 @@ object testSubtree {
     println(rule)
     val rand = new Random(System.currentTimeMillis())
     val x = rand.nextInt(1000)
-    println(x)
+    println(x)*/
 
     /*  t1 = TermParser.apply("Pharmacy.Computer[connected:edge] | ChargingRoom.(Patient[patient_prescription:edge,patient_bill_payed:edge,isDecoction:edge].IsDecoction[isDecoction:edge,value_is:edge,leftValue:edge].Value[value_is:edge] | $1) | Equal[leftValue:edge,rightValue:edge] | False[rightValue:edge] | $0")
     rule = new ReactionRule("liangwei", t1, t2);
@@ -114,5 +114,43 @@ object testSubtree {
     var t4 = TermParser.apply("recv[a].recv[a]|send[a].recv[a].recv[a]|send[a].send[a]");
     println("t4:" + t4 + ", orderedString:" + Subtree.preOrderString(t4));
 */
+     var t1 = TermParser.apply("dorm:Dorm.student:Student || office:Office| canteen:Canteen");
+     t1.asInstanceOf[Regions].getChildren.foreach { x => println(x) }
+     //sort(t1);
+     println(t1)
+     def sort(t:Term): Term = {
+        if (t == null) return null;
+        else t.termType match {
+          case TermType.TNIL => return t;
+          case TermType.THOLE => return t;
+          case TermType.TPREF => {
+            sort(t.asInstanceOf[Prefix].suffix);
+          };
+          case TermType.TREGION => {
+            sort(t.asInstanceOf[Regions].leftTerm);
+            sort(t.asInstanceOf[Regions].rightTerm);
+            if (!isOrder(t.asInstanceOf[Regions].leftTerm,t.asInstanceOf[Regions].rightTerm)) {
+              var t1:Term = t.asInstanceOf[Regions].rightTerm;
+              t.asInstanceOf[Regions].rightTerm = t.asInstanceOf[Regions].leftTerm;
+              t.asInstanceOf[Regions].leftTerm = t;
+            }
+          };
+          case TermType.TPAR => {
+            sort(t.asInstanceOf[Paraller].leftTerm);
+            sort(t.asInstanceOf[Paraller].rightTerm);
+            if (!isOrder(t.asInstanceOf[Paraller].leftTerm,t.asInstanceOf[Paraller].rightTerm)) {
+              var t1:Term = t.asInstanceOf[Paraller].rightTerm;
+              t.asInstanceOf[Paraller].rightTerm = t.asInstanceOf[Paraller].leftTerm;
+              t.asInstanceOf[Paraller].leftTerm = t;
+            }
+          };
+        }
+       return t;
+     }
+     
+     def isOrder(lt:Term, rt:Term): Boolean = {
+       return false;
+     }
+     
   }
 }

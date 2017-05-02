@@ -5,6 +5,7 @@ import scala.collection.mutable.Map
 import scala.collection.mutable.Queue
 import scala.collection.mutable.Set
 import org.bigraph.bigsim.BRS._
+import scala.collection.mutable.ListBuffer
 
 /**
  * @author tanch
@@ -210,8 +211,8 @@ class Paraller(sid: Long, lt: Term, rt: Term) extends Term {
     //new Paraller(id, lt, rt);
   }
 
-  override def getAllNames = {
-    leftTerm.getAllNames ++ rightTerm.getAllNames;
+  override def getAllNames: List[Name] = {
+     return leftTerm.getAllNames ++ rightTerm.getAllNames
   }
 
 }
@@ -268,8 +269,8 @@ class Regions(sid: Long, lt: Term, rt: Term) extends Term {
     new Regions(lt, rt);
   }
 
-  override def getAllNames = {
-    leftTerm.getAllNames ++ rightTerm.getAllNames;
+  override def getAllNames: List[Name] = {
+    return leftTerm.getAllNames ++ rightTerm.getAllNames;
   }
 }
 
@@ -334,12 +335,12 @@ class Prefix(sid: Long, n: Node, suff: Term) extends Term {
     }
   }
 
-  override def getAllNames = {
+  override def getAllNames: List[Name] = {
     var names: List[Name] = List();
     node.ports.map(x => names = names.:+(x));
     if (suffix != null)
       names = names ++ suffix.getAllNames;
-    names;
+    return names;
   }
 
 }

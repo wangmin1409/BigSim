@@ -4,3 +4,4 @@
 #proposition 
 %proposition a  dorm:Dorm | office:Office.student:Student| canteen:Canteen;
 %check;
+
