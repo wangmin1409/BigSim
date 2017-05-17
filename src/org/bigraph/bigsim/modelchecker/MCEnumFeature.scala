@@ -15,6 +15,8 @@ import org.bigraph.bigsim.model.TermType
 import org.bigraph.bigsim.model.Term
 import org.bigraph.bigsim.model.Paraller
 import org.bigraph.bigsim.model.Prefix
+import org.bigraph.bigsim.model.BiNode;
+import org.bigraph.bigsim.model.TSPair;
 
 /**
  * @author amy
@@ -33,7 +35,16 @@ class MCEnumFeature(b: Bigraph) {
   workQueue.enqueue(v);//初始节点进队列
   var steps: Int = 0;
   var reachedAgent: Map[Long, Boolean] = Map();
-
+  
+  var init: BiNode = new BiNode(b, null);
+  var tp: TSPair = null;
+  tp.T = null;
+  tp.S = init;
+  tp.pid = null;
+  
+  var head: BiNode = new BiNode(b, tp);
+   
+  
   def step(): Boolean = {
     /** if reach the max steps */
     if (steps >= GlobalCfg.maxSteps) {
@@ -48,6 +59,9 @@ class MCEnumFeature(b: Bigraph) {
     }
     /** get the top element of working queue */
     var v: Vertex = workQueue.dequeue();
+    
+    var node: BiNode = head.tp.first;
+    
     /** if the current agent has been reachedAgent, then stop */
     if (reachedAgent.contains(v.hash)) {//又回到刚才到过的节点，出现环，跳出本次循环，进入下一次循环
       return true;
@@ -74,6 +88,9 @@ class MCEnumFeature(b: Bigraph) {
       var nb: Bigraph = b.applyMatch(it);
       if (nb.root == null) nb.root = new Nil();
       var nv: Vertex = new Vertex(nb, v, rr);
+      
+      node.addTS(rr,nv,rr.pName);
+      
       if (!GlobalCfg.checkLocal) {
         if (MCMainSimulator.g.lut.contains(nv.hash)) {
           nv = MCMainSimulator.g.lut(nv.hash);
