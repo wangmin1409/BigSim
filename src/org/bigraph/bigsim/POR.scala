@@ -3,11 +3,12 @@ package org.bigraph.bigsim
 import org.bigraph.bigsim.model.BiNode
 import org.bigraph.bigsim.model.ReactionRule
 import java.lang.Boolean
+import jdk.nashorn.internal.ir.ContinueNode
 
 
 object POR {
   
-  def check_c1(curState:BiNode,pid:String):Boolean = {
+  def check_c1(transMap:Map[String,List[ReactionRule]]):Boolean = {
     return false;
   }
   
@@ -15,7 +16,7 @@ object POR {
     return false;
   }
   
-  def check_c3(curState:BiNode,trans:List[ReactionRule]):Boolean = {
+  def check_c3(trans:List[ReactionRule]):Boolean = {
     return false;
   }
   
@@ -34,7 +35,12 @@ object POR {
       }
     }
     transMap.keys.foreach { key => 
-          
+        if(transMap(key)!=null){
+           if(check_c1(transMap)&&check_c2(transMap(key))&&check_c3(transMap(key))){
+             in.isTotalExpansion = false;
+            
+           }
+        }
     }
   }
 }
