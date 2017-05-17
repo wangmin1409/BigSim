@@ -9,6 +9,9 @@ import org.bigraph.bigsim.parser.HMM
 import org.bigraph.bigsim.simulator.Simulator
 import org.bigraph.bigsim.utils.GlobalCfg
 import org.bigraph.bigsim.simulator.SimulatorFactory
+import org.bigraph.bigsim.modelchecker.MCSimulator;
+
+
 
 object BigSim extends App {
   def usage = System.err.println("""    
@@ -124,11 +127,18 @@ Usage: BigSim [options] <filename>
    var s:String = "";
 
     GlobalCfg.bgmContent = s; 
-    Simulator.simulate
+    
+    var isMC:Boolean = true;
+    if (isMC) {
+      MCSimulator.simulate;
+      //Verify.Calculate();
+    } else {
+      Simulator.simulate
+    }
+    
  //   ok(GlobalCfg.dotContent);
     var end = System.currentTimeMillis();
     
-    //Verify.Calculate();
 //     println("\n****************************************************************")
 //    println("  Total:\tstart:" + start + ", end:" + end + ", used:" + (end - start) + " ms");
 //    println("****************************************************************")

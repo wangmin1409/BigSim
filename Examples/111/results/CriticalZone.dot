@@ -1,0 +1,27 @@
+digraph reaction_graph {
+   rankdir=LR;
+   Node [shape = circle];
+   BigSim_Report [shape = parallelogram color = aliceblue style=filled label="BigSim
+Report"];
+BigSim_Report -> N_1725761657[color = aliceblue label = ""];
+ N_1725761657
+ [shape=circle, color=lightblue2, style=filled];
+N_520897083[ label="N_520897083"];
+ N_520897083 -> N_520897083[ color = coral1 label = "r_13"];
+ N_520897083 -> N_143158863[ color = coral1 label = "r_01"];
+N_1968474373[ label="N_1968474373"];
+ N_1968474373 -> N_520897083[ color = coral1 label = "r_13"];
+ N_1968474373 -> N_143158863[ color = coral1 label = "r_01"];
+N__135189363[ label="N__135189363"];
+ N__135189363 -> N__1638618599[ color = coral1 label = "r_11"];
+N__972374619[ label="N__972374619"];
+ N__972374619 -> N_1968474373[ color = coral1 label = "r_12"];
+ N__972374619 -> N__1638618599[ color = coral1 label = "r_01"];
+N_1725761657[ label="N_1725761657"];
+ N_1725761657 -> N__972374619[ color = coral1 label = "r_11"];
+ N_1725761657 -> N__135189363[ color = coral1 label = "r_01"];
+N_143158863[ label="N_143158863"];
+ N_143158863 -> N__1638618599[ color = coral1 label = "r_03"];
+N__1638618599[ label="N__1638618599"];
+ N__1638618599 -> N__1638618599[ color = coral1 label = "r_03"];
+}

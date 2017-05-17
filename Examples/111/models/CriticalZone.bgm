@@ -1,0 +1,32 @@
+# Controls
+%active Greater : 2;
+%active Less : 2;
+%active GreaterOrEqual : 2;
+%active LessOrEqual : 2;
+%active Equal : 2;
+%active NotEqual : 2;
+%active ProcessZone : 0;
+%active CriticalZone : 0;
+%active True : 0;
+%active Turn : 1;
+%active Value : 1;
+
+# Rules
+%rule r_01 P0:ProcessZone -> P0:ProcessZone.true:True{};
+
+%rule r_02 P0:ProcessZone.true:True | cz:CriticalZone.turn:Turn[idle].(zero:Value[idle] | one:Value[idle]) -> P0:ProcessZone.true:True | cz:CriticalZone.turn:Turn[critical_turn_zero:edge].(zero:Value[critical_turn_zero:edge] | one:Value[idle]){};
+
+%rule r_03 P0:ProcessZone.true:True | cz:CriticalZone.turn:Turn[critical_turn_zero:edge].(zero:Value[critical_turn_zero:edge] | one:Value[idle]) -> P0:ProcessZone.true:True | cz:CriticalZone.turn:Turn[critical_turn_one:edge].(zero:Value[idle] | one:Value[critical_turn_one:edge]){};
+
+%rule r_11 P1:ProcessZone -> P1:ProcessZone.true:True{};
+
+%rule r_12 P1:ProcessZone.true:True | cz:CriticalZone.turn:Turn[idle].(zero:Value[idle] | one:Value[idle]) -> P1:ProcessZone.true:True | cz:CriticalZone.turn:Turn[critical_turn_one:edge].(zero:Value[idle] | one:Value[critical_turn_one:edge]){};
+
+%rule r_13 P1:ProcessZone.true:True | cz:CriticalZone.turn:Turn[critical_turn_one:edge].(zero:Value[idle] | one:Value[critical_turn_one:edge]) -> P1:ProcessZone.true:True | cz:CriticalZone.turn:Turn[critical_turn_zero:edge].(zero:Value[critical_turn_zero:edge] | one:Value[idle]){};
+
+
+# Model
+%agent P0:ProcessZone | P1:ProcessZone | cz:CriticalZone.turn:Turn[idle].(zero:Value[idle] | one:Value[idle]);
+
+# Go!
+%check;
