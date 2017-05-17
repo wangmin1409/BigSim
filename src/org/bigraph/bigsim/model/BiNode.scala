@@ -30,7 +30,4 @@ class BiNode(b: Bigraph, child: TSPair) {
   def GetChild: List[TSPair] = {
     return null;
   }
-  
-  
-  
 }

@@ -18,7 +18,7 @@ abstract class BGMTerm {
 case class BGMControl(n: String, arity: Int, active: Boolean, binding: Boolean) extends BGMTerm //add binding control
 case class BGMNode(n: String, active: Boolean, ctrl: BGMControl) extends BGMTerm
 case class BGMName(n: String, isouter: Boolean) extends BGMTerm
-case class BGMRule(n: String, redex: String, reactum: String, exp: String) extends BGMTerm
+case class BGMRule(n: String, m: String, redex: String, reactum: String, exp: String) extends BGMTerm  //add reactionrule belongs to which process
 case class BGMAgent(n: String) extends BGMTerm
 case class BGMProp(n: String, p: String) extends BGMTerm
 case class BGMNil() extends BGMTerm
@@ -108,13 +108,13 @@ object BGMTerm {
 
     // BGMRule
     t.filter(_ match {
-      case BGMRule(_, _, _, _) => true
+      case BGMRule(_,_, _, _, _) => true
       case _                   => false
     }).map(rr => {
       val rrp = rr.asInstanceOf[BGMRule]
       val redex = TermParser.apply(rrp.redex);
       val reactum = TermParser.apply(rrp.reactum);
-      b.rules.add(new ReactionRule(rrp.n, redex, reactum, rrp.exp)); //toBigraph时把反应规则解析到Bigraph
+      b.rules.add(new ReactionRule(rrp.n, rrp.m, redex, reactum, rrp.exp)); //toBigraph时把反应规则解析到Bigraph
       println("rrp:" + rrp) //lbj
       println("redex:" + redex) //lbj
       println("reactum:" + reactum) //lbj
@@ -295,14 +295,14 @@ object BGMParser extends RegexParsers {
     "%inner" ~> (ws ~> ident) ^^ { x => BGMName(x, false) } |
     "%name" ~> (ws ~> ident) ^^ { x => BGMName(x, false) } |
     "%rule" ~> (ws ~> ident ~ (ws ~> exp) ~ ("{" ~> exp <~ "}")) ^^ { //有约束条件的反应规则
-      case i ~ s ~ k => {
+      case i ~ n ~ s ~ k => {
         val bdrr = s.split("<-")
         val rr = s.split("->")
         if (bdrr.length > 1) { //add by lbj BackDerivation Rules
           GlobalCfg.isBackDerivation = true
-          BGMRule(i, bdrr(1), bdrr(0), k)
+          BGMRule(i, n, bdrr(1), bdrr(0), k)
         } else { //非回朔规则就认为是正常规则
-          BGMRule(i, rr(0), rr(1), k)
+          BGMRule(i, n, rr(0), rr(1), k)
         }
       }
     } |
