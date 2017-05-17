@@ -36,12 +36,8 @@ class MCEnumFeature(b: Bigraph) {
   var steps: Int = 0;
   var reachedAgent: Map[Long, Boolean] = Map();
   
+ 
   
-  var rr: ReactionRule = null;
-  var br: Bigraph = null;
-  var biNode: BiNode = new BiNode(br,rr,"");
-  var activeTrans: Set[ReactionRule] = null;
-  biNode.addChild(new BiNode(b,null,null));
   
   
   def step(): Boolean = {
@@ -58,6 +54,9 @@ class MCEnumFeature(b: Bigraph) {
     }
     /** get the top element of working queue */
     var v: Vertex = workQueue.dequeue();
+    BiNode.isContains(v.bigraph);
+    //在BiNodeList中取得当前BiNode
+    var biCurNode: BiNode = BiNode.curNode;
     
     /** if the current agent has been reachedAgent, then stop */
     if (reachedAgent.contains(v.hash)) {//又回到刚才到过的节点，出现环，跳出本次循环，进入下一次循环
@@ -80,15 +79,27 @@ class MCEnumFeature(b: Bigraph) {
 
     matches.map(it => {
       var rr: ReactionRule = it.rule;
+      BiNode.activeTrans.add(rr);
 
       /** apply match to turn into new agent */
       var nb: Bigraph = b.applyMatch(it);
       if (nb.root == null) nb.root = new Nil();
       var nv: Vertex = new Vertex(nb, v, rr);
       
-      var curNode: BiNode = new BiNode(nb,rr,rr.pName);
-      biNode.addChild(curNode);
-      println(biNode.toString())
+      //判断生成的Bigraph是否已经存在
+      if(BiNode.isContains(nb)) {
+        var biT: BiNode = BiNode.curNode;
+        biT.TSP += (rr -> biCurNode);
+        biCurNode.addChild(biT);
+        BiNode.addBiNode(biT);
+      } else {
+        var tsp: Map[ReactionRule, BiNode] = null;
+        tsp += (rr -> biCurNode);
+        var biF: BiNode = new BiNode(nb,tsp);
+        biCurNode.addChild(biF);
+        BiNode.addBiNode(biF);
+      }
+     
       
       if (!GlobalCfg.checkLocal) {
         if (MCMainSimulator.g.lut.contains(nv.hash)) {
