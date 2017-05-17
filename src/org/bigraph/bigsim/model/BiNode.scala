@@ -16,22 +16,19 @@ object BiNode{
     var res: BiNode = null;
     return res;
   }
-    
-    
+     
 }
 
-
-class TSPair(t: ReactionRule, s: BiNode, pn: String){
-  var T: ReactionRule = t; //trans
-  var S: BiNode = s;  //state
-  var pid: String = pn; //this trans belongs which process
-  
-}
-
-
-class BiNode(b: Bigraph, childTrans: ListBuffer[TSPair]) {
+class BiNode(b: Bigraph, rule:ReactionRule,name:String) {
   var bigraph: Bigraph = b;
-  var childList: ListBuffer[TSPair] = childTrans;
+  var T: ReactionRule = rule; //rules happened
+  var pid: String = name;   //rules belong
+  var childList: ListBuffer[BiNode] = ListBuffer();
+  
+  def addChild(node:BiNode){
+    childList.append(node)
+  }
+
   var isTotalExpansion:Boolean = true;   //默认完全展开
 
   var hash: Int = {//根据当前偶图的root生成唯一的hashCode
@@ -40,19 +37,19 @@ class BiNode(b: Bigraph, childTrans: ListBuffer[TSPair]) {
     else "".hashCode();
   }
   
-  def addTSElem(ts: TSPair): Unit = {
+  def addTSElem(ts: BiNode): Unit = {
     childList.append(ts);
   }
   
-  def GetEnable: List[TSPair] = {
+  def GetEnable: List[BiNode] = {
     return null;
   }
   
-  def SetAmple(ample:List[TSPair]) = {
+  def SetAmple(ample:List[BiNode]) = {
     
   }
   
-   def GetAmple: List[TSPair] = {
+   def GetAmple: List[BiNode] = {
     return null;
   }
 
