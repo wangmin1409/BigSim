@@ -1,5 +1,7 @@
 package org.bigraph.bigsim
 
+import org.bigraph.bigsim.model
+
 class POR {
   def check_c1 = {
     
