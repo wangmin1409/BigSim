@@ -26,6 +26,19 @@ class ReactionRule(n: String, red: Term, react: Term, exp: String) {
   var name: String = n
   var redex: Term = red
   var reactum: Term = react
+  var express: String = exp;
+ 
+  
+  //add by wm
+  var hash: Int = {
+    var s: StringBuilder = new StringBuilder();
+    s.append(name + ":");
+    s.append(redex.toString() + " ->");
+    s.append(reactum.toString() + " ");
+    s.append(express);
+    s.toString().hashCode();
+  }
+ 
 
   /** If a reaction rule contains data model, calculate it and split it */
   DataSpliter.preOrderData(redex, "root", this)
