@@ -31,16 +31,6 @@ class BiNode(b: Bigraph, rule:ReactionRule,name:String) {
 
   var isTotalExpansion:Boolean = true;   //默认完全展开
 
-  var hash: Int = {//根据当前偶图的root生成唯一的hashCode
-    if (bigraph.root != null)
-      bigraph.root.toString.hashCode();
-    else "".hashCode();
-  }
-  
-  def addTSElem(ts: BiNode): Unit = {
-    childList.append(ts);
-  }
-  
   def GetEnable: List[BiNode] = {
     return null;
   }
