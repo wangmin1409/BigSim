@@ -12,14 +12,9 @@ object BiNode{
   
 }
 
-class TSPair{
-  var T: ReactionRule; //trans
-  var S: BiNode;  //state
-  var pid: String; //this trans belongs which process
-}
 class BiNode(b: Bigraph, childPair: Map[Int, Int]) {
   var bigraph: Bigraph = b;
-  var childPair: Map[Int, Int]
+  var childPair: Map[Int, Int] = null
   var hash: Int = {//根据当前偶图的root生成唯一的hashCode
     if (bigraph.root != null)
       bigraph.root.toString.hashCode();
@@ -29,7 +24,10 @@ class BiNode(b: Bigraph, childPair: Map[Int, Int]) {
   def GetChild: List[TSPair] = {
     return null;
   }
-  
-  
-  
+}
+
+class TSPair{
+  var T: ReactionRule = null; //trans
+  var S: BiNode = null;  //state
+  var pid: String = ""; //this trans belongs which process
 }
