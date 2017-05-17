@@ -19,6 +19,7 @@ import org.bigraph.bigsim.parser.BGMTerm
 import org.bigraph.bigsim.parser.HMM
 import org.bigraph.bigsim.data.Data
 import jdk.nashorn.internal.objects.Global
+import org.bigraph.bigsim.model.BiNode;
 /**
  * @author amy
  */

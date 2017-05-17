@@ -13,6 +13,7 @@ import org.bigraph.bigsim.model.Nil
 import scala.collection.immutable.TreeMap
 import org.bigraph.bigsim.data.Data
 import org.bigraph.bigsim.strategy.PatternFlow
+import org.bigraph.bigsim.model.BiNode;
 
 /**
  * @author amy
@@ -50,18 +51,16 @@ class MCMainSimulator(b: Bigraph) extends MCSimulator {
       println("MCMainSimulator::simulate(): no reaction rules");
     }
     
-    //默认不考虑时间，用枚举策略
-    GlobalCfg.checkTime = false;
+    var enumFeature = new MCEnumFeature(b);
+    var biNode: BiNode = new BiNode(b,null);
+    BiNode.addBiNode(biNode);
     
-    if (!GlobalCfg.checkTime) {
-      var enumFeature = new MCEnumFeature(b);
-      while (enumFeature.step()) {
-        MCSimulator.matchGC
-      };
-      println("Graph: " + MCMainSimulator.g.lut.size);
-      MCMainSimulator.g.dumpPath //打印到data和path文件
-      MCMainSimulator.g.dumpDotFile //打印到dot文件
+    while (enumFeature.step()) {
+      MCSimulator.matchGC
     }
+    println("Graph: " + MCMainSimulator.g.lut.size);
+    MCMainSimulator.g.dumpPath //打印到data和path文件
+    MCMainSimulator.g.dumpDotFile //打印到dot文件
     MCMainSimulator.matchGC; //Test，可能无用
   }
  
