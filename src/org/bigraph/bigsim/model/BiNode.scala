@@ -2,7 +2,7 @@ package org.bigraph.bigsim.model
 
 import com.sun.org.apache.xpath.internal.operations.Bool
 import scala.collection.mutable.ListBuffer
-
+import scala.collection.mutable.Set
 
 
 

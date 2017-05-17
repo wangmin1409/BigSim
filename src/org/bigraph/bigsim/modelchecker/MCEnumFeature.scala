@@ -40,7 +40,7 @@ class MCEnumFeature(b: Bigraph) {
   var rr: ReactionRule = null;
   var br: Bigraph = null;
   var biNode: BiNode = new BiNode(br,rr,"");
-  var activeTrans: Set[ReactionRule] = null;
+ 
   biNode.addChild(new BiNode(b,null,null));
   
   
@@ -80,6 +80,7 @@ class MCEnumFeature(b: Bigraph) {
 
     matches.map(it => {
       var rr: ReactionRule = it.rule;
+      BiNode.activeTrans.add(rr);
 
       /** apply match to turn into new agent */
       var nb: Bigraph = b.applyMatch(it);
