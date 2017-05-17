@@ -13,13 +13,14 @@ object BiNode{
 }
 
 class TSPair{
-  var T: ReactionRule; //trans
-  var S: BiNode;  //state
-  var pid: String; //this trans belongs which process
+  var T: ReactionRule = null; //trans
+  var S: BiNode = null;  //state
+  var pid: String = null; //this trans belongs which process
 }
-class BiNode(b: Bigraph, childPair: Map[Int, Int]) {
+
+
+class BiNode(b: Bigraph, child: TSPair) {
   var bigraph: Bigraph = b;
-  var childPair: Map[Int, Int]
   var hash: Int = {//根据当前偶图的root生成唯一的hashCode
     if (bigraph.root != null)
       bigraph.root.toString.hashCode();

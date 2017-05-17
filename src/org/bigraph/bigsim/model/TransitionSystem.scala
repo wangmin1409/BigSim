@@ -11,18 +11,10 @@ object TransitionSystem {
     return res;
   }
   
-  def GetChild: List[BiNode] = {
-    var res: List[BiNode] = null;
-    return res;
-  }
+  
   
   def GetTransFromNode(parBiNode: BiNode, childBiNode: BiNode): ReactionRule = {
     return null;
-  }
-  
-  def GetPidFromTrans(rr:Reaction) = {
-    return null;
-    
   }
 }
 
