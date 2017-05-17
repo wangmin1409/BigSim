@@ -8,8 +8,26 @@ import jdk.nashorn.internal.ir.ContinueNode
 
 object POR {
   
-  def check_c1(transMap:Map[String,List[BiNode]]):Boolean = {
+  def dep(b1:BiNode,b2:BiNode):Boolean = {
+    b1.childList.foreach { child =>
+      if(child==b2){
+        if(b2.bigraph == child.bigraph){
+          return true;
+        }
+      }  
+    }
     return false;
+  }
+  
+  
+  def check_c1(pid:String,transMap:Map[String,List[BiNode]]):Boolean = {
+    transMap.keys.foreach { key =>  
+        if(key!=pid){
+          
+        }
+    }
+    
+    return true;
   }
   
   def check_c2(trans:List[BiNode]):Boolean = {
@@ -36,10 +54,10 @@ object POR {
     }
     transMap.keys.foreach { key => 
         if(transMap(key)!=null){
-           if(check_c1(transMap)&&check_c2(transMap(key))&&check_c3(transMap(key))){
+           if(check_c1(key,transMap)&&check_c2(transMap(key))&&check_c3(transMap(key))){
              in.isTotalExpansion = false;
-             
              in.SetAmple(transMap(key))
+             return;
            }
         }
     }
