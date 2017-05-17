@@ -21,9 +21,10 @@ import scala.collection.mutable.Queue
  * version 0.2
  */
 
-class ReactionRule(n: String, red: Term, react: Term, exp: String) {
+class ReactionRule(n: String, m: String, red: Term, react: Term, exp: String) {
   /** Basic element of RR */
   var name: String = n
+  var pName: String = m 
   var redex: Term = red
   var reactum: Term = react
   var express: String = exp;
@@ -33,8 +34,9 @@ class ReactionRule(n: String, red: Term, react: Term, exp: String) {
   var hash: Int = {
     var s: StringBuilder = new StringBuilder();
     s.append(name + ":");
+    s.append(pName + ":");
     s.append(redex.toString() + " ->");
-    s.append(reactum.toString() + " ");
+    s.append(reactum.toString() + ":");
     s.append(express);
     s.toString().hashCode();
   }
@@ -319,8 +321,8 @@ class ReactionRule(n: String, red: Term, react: Term, exp: String) {
   var puseRules: Set[String] = Set()
   var defRules: Set[String] = Set() //其它有相同def的规则
 
-  def this(red: Term, react: Term) = this(null, red, react, "")
-  def this(n: String, red: Term, react: Term) = this(n, red, react, "")
+  def this(red: Term, react: Term) = this(null, null, red, react, "")
+  def this(n: String, m: String, red: Term, react: Term) = this(n, m, red, react, "")
 
   override def toString = {
     if (redex != null && reactum != null) {
@@ -466,7 +468,7 @@ object testRR {
     reactumS = "zone[idle,idle].network[idle,idle,idle,idle].(mobile[idle,idle,idle,idle,hasCAH1:edge,idle].(contextAware[hasCAH1:edge,idle,idle,powerIs1:edge,pointIs1:edge,lumIs1:edge,pressureIs1:edge].(power[powerIs1:edge] | pointXY[pointIs1:edge] | luminous[lumIs1:edge] | pressure[pressureIs1:edge]) | application[idle,idle,idle,idle].job1:job[idle]) | mobile[idle,idle,idle,idle,hasCAH2:edge,idle].(contextAware[hasCAH2:edge,idle,idle,powerIs2:edge,pointIs2:edge,lumIs2:edge,pressureIs2:edge].(power[powerIs2:edge] | pointXY[pointIs2:edge] | luminous[lumIs2:edge] | pressure[pressureIs2:edge]) | application[idle,idle,idle,idle].job2:job[idle]) | mobile[idle,idle,idle,idle,hasCAH3:edge,idle].(contextAware[hasCAH3:edge,idle,idle,powerIs3:edge,pointIs3:edge,lumIs3:edge,pressureIs3:edge].(power[powerIs3:edge] | pointXY[pointIs3:edge] | luminous[lumIs3:edge] | pressure[pressureIs3:edge]) | application[idle,idle,idle,idle].job3:job[idle])) | $0";
     redex = TermParser.apply(redexS)
     reactum = TermParser.apply(reactumS)
-    var r = new ReactionRule("r_28", redex, reactum, "time:5 cond:power +=5%;fee+=3");
+    var r = new ReactionRule("r_28", "P0", redex, reactum, "time:5 cond:power +=5%;fee+=3");
     var a = r.nodeMap
     println(a.toString)
 

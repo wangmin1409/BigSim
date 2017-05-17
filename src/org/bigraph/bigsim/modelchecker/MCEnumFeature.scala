@@ -43,7 +43,7 @@ class MCEnumFeature(b: Bigraph) {
     /** if the working queue is empty */
     if (workQueue.size == 0) {
       println("enum simulator::step Complete!");
-      MCEnumSimulator.matchGC;
+      MCMainSimulator.matchGC;
       return false;
     }
     /** get the top element of working queue */
@@ -93,7 +93,7 @@ class MCEnumFeature(b: Bigraph) {
       }
     });
     matches.clear();
-    MCEnumSimulator.matchGC;
+    MCMainSimulator.matchGC;
 
     if (GlobalCfg.printMode) {
       printf("%s:%s\n", "N_" + Math.abs(v.hash), v.bigraph.root.toString);
