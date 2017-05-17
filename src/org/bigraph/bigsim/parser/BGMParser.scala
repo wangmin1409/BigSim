@@ -294,7 +294,7 @@ object BGMParser extends RegexParsers {
     "%innername" ~> (ws ~> ident) ^^ { x => BGMName(x, false) } |
     "%inner" ~> (ws ~> ident) ^^ { x => BGMName(x, false) } |
     "%name" ~> (ws ~> ident) ^^ { x => BGMName(x, false) } |
-    "%rule" ~> (ws ~> ident ~ (ws ~> exp) ~ ("{" ~> exp <~ "}")) ^^ { //有约束条件的反应规则
+    "%rule" ~> ((ws ~> ident) ~ (ws ~> ident) ~ (ws ~> exp) ~ ("{" ~> exp <~ "}")) ^^ { //有约束条件的反应规则
       case i ~ n ~ s ~ k => {
         val bdrr = s.split("<-")
         val rr = s.split("->")
@@ -306,15 +306,15 @@ object BGMParser extends RegexParsers {
         }
       }
     } |
-    "%rule" ~> (ws ~> ident ~ (ws ~> exp)) ^^ { //没有约束条件的反应规则
-      case i ~ s => {
+    "%rule" ~> ((ws ~> ident) ~ (ws ~> ident) ~ (ws ~> exp)) ^^ { //没有约束条件的反应规则
+      case i ~ m ~ s => {
         val bdrr = s.split("<-")
         val rr = s.split("->")
         if (bdrr.length > 1) { //add by lbj BackDerivation Rules
           GlobalCfg.isBackDerivation = true
-          BGMRule(i, bdrr(1), bdrr(0), "")
+          BGMRule(i, m, bdrr(1), bdrr(0), "")
         } else { //非回朔规则就认为是正常规则
-          BGMRule(i, rr(0), rr(1), "")
+          BGMRule(i, m, rr(0), rr(1), "")
         }
       }
     } |
