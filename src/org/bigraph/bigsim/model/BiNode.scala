@@ -16,6 +16,7 @@ object BiNode{
     var res: BiNode = null;
     return res;
   }
+  var activeTrans: Set[ReactionRule] = null;
      
 }
 
