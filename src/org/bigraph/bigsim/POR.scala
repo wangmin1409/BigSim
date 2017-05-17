@@ -6,7 +6,52 @@ import java.lang.Boolean
 import jdk.nashorn.internal.ir.ContinueNode
 
 
+/*
+ *  this mod is for partial order reduction
+ *  author: yan wei
+ */
+
 object POR {
+  
+  def isDependent(state:BiNode,trans1:ReactionRule,trans2:ReactionRule):Boolean = {
+    var children = state.GetEnable
+    var flag1:Boolean = false;
+    var flag2:Boolean = false;
+    var node1:BiNode = null;
+    var node2:BiNode = null;
+    children.foreach { child => 
+      if(child.T ==trans1){
+        flag1 = true;
+        node1 = child;
+      }
+      if(child.T ==trans2){
+        flag2 = true;
+        node2 = child;
+      }
+    }
+    if(flag1&&flag2){
+      var f = false;
+      var ff = false;
+      var n:BiNode = null;
+      var nn:BiNode= null;
+       node1.childList.foreach { child => 
+           if(child.T ==trans2){
+             f = true;
+             n = child;
+           }
+       }
+        node2.childList.foreach { child => 
+           if(child.T ==trans1){
+             ff= true;
+             nn = child;
+           }
+       }
+       if(f&&ff&&(n==nn)){
+        return true;
+       } 
+    } 
+    return false;
+  }
   
   def dep(b1:BiNode,b2:BiNode):Boolean = {
     b1.childList.foreach { child =>
@@ -20,10 +65,19 @@ object POR {
   }
   
   
-  def check_c1(pid:String,transMap:Map[String,List[BiNode]]):Boolean = {
+  def check_c1(state:BiNode,pid:String,transMap:Map[String,List[BiNode]]):Boolean = {
     transMap.keys.foreach { key =>  
         if(key!=pid){
-          
+          var allTrans = BiNode.activeTrans;
+          var D = List();         //与当前变迁依赖的变迁集
+          var ts = transMap(key)
+          ts.foreach { node1 =>
+            allTrans.foreach { node2 => 
+              if(node1!=node2&&isDependent(state,node1.T,node2)){
+                
+              }  
+            }
+          }
         }
     }
     
@@ -54,7 +108,7 @@ object POR {
     }
     transMap.keys.foreach { key => 
         if(transMap(key)!=null){
-           if(check_c1(key,transMap)&&check_c2(transMap(key))&&check_c3(transMap(key))){
+           if(check_c1(in,key,transMap)&&check_c2(transMap(key))&&check_c3(transMap(key))){
              in.isTotalExpansion = false;
              in.SetAmple(transMap(key))
              return;
