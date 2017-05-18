@@ -93,7 +93,7 @@ class MCEnumFeature(b: Bigraph) {
         biCurNode.addChild(biT);
         BiNode.addBiNode(biT);
       } else {
-        var tsp: Map[ReactionRule, BiNode] = null;
+        var tsp: Map[ReactionRule, BiNode] = Map();
         tsp += (rr -> biCurNode);
         var biF: BiNode = new BiNode(nb,tsp);
         biCurNode.addChild(biF);

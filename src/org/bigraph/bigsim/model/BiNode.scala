@@ -15,7 +15,7 @@ object BiNode{
   
   var head:BiNode = null;
   
-  var allBiNodes: ListBuffer[BiNode] = null;
+  var allBiNodes: ListBuffer[BiNode] = ListBuffer();
   
   def addBiNode(b: BiNode): Unit = {
     allBiNodes.append(b);
@@ -33,7 +33,7 @@ object BiNode{
     curNode = null;
     return false;
   }
-  var activeTrans: Set[ReactionRule] = null;
+  var activeTrans: Set[ReactionRule] = Set()
 }
 
 
