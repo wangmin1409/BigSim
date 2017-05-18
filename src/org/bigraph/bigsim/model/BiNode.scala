@@ -34,6 +34,12 @@ object BiNode{
     return false;
   }
   var activeTrans: Set[ReactionRule] = Set()
+  
+  def printAllBiNode() = {
+    println("BiNode的数量" + allBiNodes.size + "\n");
+    allBiNodes.foreach { x => 
+      println(x.toString())}
+  }
 }
 
 
@@ -57,6 +63,22 @@ class BiNode(b: Bigraph, ff: Map[ReactionRule, BiNode]){
   
    def GetAmple: List[BiNode] = {
     return null;
+  }
+  override def toString = {
+    val s: StringBuffer = new StringBuffer();
+    s.append("BiNode: \n");
+    s.append("当前节点:" + bigraph.root + "\n");
+    /*for (key <- TSP.keySet.toArray) {
+      s.append("变迁内容：" + key.toString() + "\t");
+      s.append("变迁后Bigraph" + TSP.get(key));
+    }*/
+    s.append("子节点个数:" + childList.size + "\n");
+    childList.foreach { x => 
+      s.append("\tchild" + x.bigraph.root + "\n"); 
+      }
+ //   s.append("childList" + childList + "\n");
+    //s.append("TSP" + TSP.toList + "\n");
+    s.toString();
   }
 }
 

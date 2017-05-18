@@ -53,7 +53,7 @@ class MCMainSimulator(b: Bigraph) extends MCSimulator {
     
     var enumFeature = new MCEnumFeature(b);
     // set the head of the BiNode, initial Bigraph
-    var biNode: BiNode = new BiNode(b,null);
+    var biNode: BiNode = new BiNode(b,Map());
     BiNode.head = biNode;
     BiNode.addBiNode(biNode);
     
@@ -64,6 +64,7 @@ class MCMainSimulator(b: Bigraph) extends MCSimulator {
     MCMainSimulator.g.dumpPath //打印到data和path文件
     MCMainSimulator.g.dumpDotFile //打印到dot文件
     MCMainSimulator.matchGC; //Test，可能无用
+    
   }
  
   def dumpDotForward(dot: String): String = ""

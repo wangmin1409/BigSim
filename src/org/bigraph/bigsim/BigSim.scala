@@ -10,6 +10,7 @@ import org.bigraph.bigsim.simulator.Simulator
 import org.bigraph.bigsim.utils.GlobalCfg
 import org.bigraph.bigsim.simulator.SimulatorFactory
 import org.bigraph.bigsim.modelchecker.MCSimulator;
+import org.bigraph.bigsim.model.BiNode;
 
 
 
@@ -115,9 +116,8 @@ Usage: BigSim [options] <filename>
       System.exit(1)
     }
   }
-  
 
-
+                          
   override def main(args: Array[String]) = {
     var start = System.currentTimeMillis();
 
@@ -131,6 +131,7 @@ Usage: BigSim [options] <filename>
     var isMC:Boolean = true;
     if (isMC) {
       MCSimulator.simulate;
+      BiNode.printAllBiNode();
       //Verify.Calculate();
     } else {
       Simulator.simulate
