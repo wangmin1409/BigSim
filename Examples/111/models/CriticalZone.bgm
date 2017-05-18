@@ -26,7 +26,7 @@
 
 
 # Model
-%agent P0:ProcessZone | P1:ProcessZone | cz:CriticalZone.turn:Turn[idle].(zero:Value[idle] | one:Value[idle]);
+%agent P0:ProcessZone.nil | P1:ProcessZone.nil | cz:CriticalZone.turn:Turn[idle].(zero:Value[idle].nil | one:Value[idle].nil);
 
 # Go!
 %check;

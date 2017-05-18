@@ -89,13 +89,15 @@ class MCEnumFeature(b: Bigraph) {
       //判断生成的Bigraph是否已经存在
       if(BiNode.isContains(nb)) {
         var biT: BiNode = BiNode.curNode;
-        biT.TSP += (rr -> biCurNode);
+        biCurNode.TSP += (rr -> biT)
+        //biT.TSP += (rr -> biCurNode);
         biCurNode.addChild(biT);
-        BiNode.addBiNode(biT);
+        //BiNode.addBiNode(biT);
       } else {
         var tsp: Map[ReactionRule, BiNode] = Map();
-        tsp += (rr -> biCurNode);
-        var biF: BiNode = new BiNode(nb,tsp);
+        //tsp += (rr -> biCurNode);
+        var biF: BiNode = new BiNode(nb,Map());
+        biCurNode.TSP += (rr -> biF)
         biCurNode.addChild(biF);
         BiNode.addBiNode(biF);
       }
