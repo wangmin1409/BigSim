@@ -46,23 +46,26 @@ object BiNode{
 class BiNode(b: Bigraph, ff: Map[ReactionRule, BiNode]){
   var bigraph: Bigraph = b;
   var childList: ListBuffer[BiNode] = ListBuffer();
-  var TSP: Map[ReactionRule, BiNode] = ff;
+  var TSP: Map[ReactionRule, BiNode] = ff;  //变迁-状态对
+  
+  var ample:List[ReactionRule] = null;
+ 
   def addChild(node:BiNode){
     childList.append(node)
   }
 
   var isTotalExpansion:Boolean = true;   //默认完全展开
 
-  def GetEnable: List[BiNode] = {
-    return null;
+  def GetEnable: Map[ReactionRule, BiNode] = {
+    return TSP;
   }
   
-  def SetAmple(ample:List[BiNode]) = {
-    
+  def SetAmple(ample:List[ReactionRule]) = {
+    this.ample = ample;
   }
   
-   def GetAmple: List[BiNode] = {
-    return null;
+   def GetAmple: List[ReactionRule] = {
+    return ample;
   }
   override def toString = {
     val s: StringBuffer = new StringBuffer();

@@ -114,9 +114,20 @@ object Verify{
    
 }
 
+class AAA{
+  
+}
+
 
 object test extends App{
    override def main(args: Array[String]) = {     
-     
+        var a:Set[AAA] = Set();
+        var bbb = new AAA()
+       
+        a.add(bbb)
+        
+        bbb = new AAA();
+        a.add(bbb);
+        a.foreach { x => println(x) }
    }
 }
